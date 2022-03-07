@@ -2,19 +2,19 @@
     <div class="categories-wrapper pt-10" ng-cloack>
         <div class="container mx-auto display-flex justify-evenly font-gray-900">
             <li class="category" ng-click="ctrl.handleCategoryClick({'id': 0})"
-                ng-style="ctrl.state.selectedCategory === 0 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === 0 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 <!--                ng-style="!ctrl.state.selectedCategory ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">-->
                 כל המוצרים
             </li>
             <li class="category" ng-if="ctrl.shouldRenderPromoted()"
                 ng-click="ctrl.handleCategoryClick({'id': 1})"
-                ng-style="ctrl.state.selectedCategory === 1 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === 1 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 מבצעים
             </li>
             <li class="category"
                 ng-repeat="category in ctrl.state.data.categoriesData | limitTo: 10"
                 ng-click="ctrl.handleCategoryClick(category)"
-                ng-style="ctrl.state.selectedCategory === category.id ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === category.id ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 {{category.name}}&nbsp;
             </li>
             <div class="display-flex align-center relative" ng-if="ctrl.showMoreCategories()">
@@ -28,6 +28,7 @@
                             ng-repeat="category in ctrl.state.data.categoriesData | limitTo: ctrl.state.data.categoriesData.length : 10 "
                             ng-style="{ 'background': (isHover ? '#F5F3F0' : '#fff') }" ng-mouseenter="isHover = true;"
                             ng-mouseleave="isHover = false;"
+                            ng-click="ctrl.handleCategoryClick(category);"
                         >
                             {{category.name}}
                         </li>
@@ -36,7 +37,14 @@
             </div>
         </div>
     </div>
+    <h1>test</h1>
+    <div ng-if="ctrl.state.selectedCategory.id === 0">
+        <div ng-repeat="product in ctrl.state.data.productsData track by product.id">
+            {{product.product.name}}
+        </div>
+    </div>
+    <div ng-repeat=" product in ctrl.state.selectedCategory.children ">{{product.name}}</div>
+
     <li><a href="/cart">navigate to cart</a></li>
     <li><a href="/checkout">navigate to checkout</a></li>
-
 </div>

@@ -6,6 +6,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/store', {
             templateUrl: 'views/store.html',
+
             // controller: 'storeController'
         })
         .when('/cart', {
@@ -19,13 +20,12 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($http) {
+rexailApp.controller('appController', function ($http, $scope) {
     const ctrl = this;
     ctrl.state = {
         total: null,
         userComment: '',
-        selectedCategory: 0,
-        // toggleEven: false,
+        selectedCategory: {'id': 0},
         data: {
             storeData: [],
             productsData: []
@@ -56,9 +56,10 @@ rexailApp.controller('appController', function ($http) {
         return ctrl.state.data.productsData.length > 10
     }
 
-    ctrl.handleCategoryClick = function(category) {
-        ctrl.state.selectedCategory = category.id
+    ctrl.handleCategoryClick = function (category) {
+        ctrl.state.selectedCategory = category
     }
+
 })
 
 rexailApp.directive('cartItem', function () {
