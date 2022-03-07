@@ -4,8 +4,9 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 
     $routeProvider
-        .when('/', {
-            templateUrl: 'views/store.html', // controller: 'FirstController'
+        .when('/store', {
+            templateUrl: 'views/store.html',
+            // controller: 'storeController'
         })
         .when('/cart', {
             templateUrl: 'views/cart.html', controller: 'appController'
@@ -14,37 +15,36 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
             templateUrl: 'views/checkout.html', // controller: 'SecondController'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/store'
         });
 })
 
-rexailApp.controller('appController', function ($scope, $http) {
-    // Setting s3 imgBaseUrl for cartItem
-    $scope.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/';
-
-    function getStoreData() {
-         $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
-            .then(function (response) {
-                $scope.storeData = response.data.data;
-            });
+rexailApp.controller('appController', function ($http) {
+    const ctrl = this;
+    ctrl.state = {
+        total: null,
+        userComment: '',
+        toggleEven: false,
+        data: {
+            storeData: [],
+            productsData: []
+        },
+        errors: {
+            userComment: false,
+            prepSelect: false
+        }
     }
 
-    function getProductsData(encryptionKey) {
-          $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${encryptionKey}`)
-            .then(function (response) {
-                $scope.productsData = response.data.data;
-            });
-    }
-
-    async function getData() {
-        await getStoreData()
-        await getProductsData($scope.storeData.jsonWebEncryption)
-    }
-
-    // init Data fetch
-    getData();
-});
-
+    // Get data using http service
+    $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
+        .then(function (response) {
+            ctrl.state.data.storeData = response.data.data;
+            $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${ctrl.state.data.storeData.jsonWebEncryption}`)
+                .then(function (response) {
+                    ctrl.state.data.productsData = formatData(response.data.data);
+                });
+        });
+})
 
 rexailApp.directive('cartItem', function () {
     return {
@@ -53,17 +53,25 @@ rexailApp.directive('cartItem', function () {
     }
 })
 
-
 rexailApp.directive('navMenu', function () {
     return {
         templateUrl: 'directives/nav-menu.html', replace: true,
     }
 })
 
-// Utils
+// Util Functions
+function formatData(array) {
+    return Object.values(array.reduce((obj, current) => {
+        if (!obj[current.productCategory.id]) {
+            obj[current.productCategory.id] = {
+                id: current.productCategory.id,
+                name: current.productCategory.name,
+                children: []
+            }
+        }
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        obj[current.productCategory.id].children.push({id: current.product.id, name: current.product.name})
+
+        return obj
+    }, {}))
 }
