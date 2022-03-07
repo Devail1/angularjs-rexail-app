@@ -24,7 +24,8 @@ rexailApp.controller('appController', function ($http) {
     ctrl.state = {
         total: null,
         userComment: '',
-        toggleEven: false,
+        selectedCategory: 0,
+        // toggleEven: false,
         data: {
             storeData: [],
             productsData: []
@@ -47,11 +48,16 @@ rexailApp.controller('appController', function ($http) {
         });
 
     ctrl.shouldRenderPromoted = function () {
-        return ctrl.state.data.productsData.find(product => product.promoted) !== undefined
+        let expression = ctrl.state.data.productsData.find(product => product.promoted) !== undefined
+        return expression
     }
 
     ctrl.showMoreCategories = function () {
         return ctrl.state.data.productsData.length > 10
+    }
+
+    ctrl.handleCategoryClick = function(category) {
+        ctrl.state.selectedCategory = category.id
     }
 })
 
