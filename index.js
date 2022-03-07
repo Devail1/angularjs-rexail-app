@@ -18,8 +18,9 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($scope, $http, $filter, $interval) {
-    $scope.baseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/';
+rexailApp.controller('appController', function ($scope, $http) {
+    // Setting s3 imgBaseUrl for cartItem
+    $scope.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/';
 
     function getStoreData() {
          $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
@@ -48,6 +49,7 @@ rexailApp.controller('appController', function ($scope, $http, $filter, $interva
 rexailApp.directive('cartItem', function () {
     return {
         templateUrl: 'directives/cart-item.html',
+        replace: true,
     }
 })
 

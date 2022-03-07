@@ -18,7 +18,7 @@
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
         </svg>
       </button>
-      <img alt="product-thumbnail" class="item-thumbnail" ng-src={{baseUrl.concat(product.imageUrl)}}>
+      <img alt="product-thumbnail" class="item-thumbnail" ng-src={{imgBaseUrl.concat(product.imageUrl)}}>
     </div>
     <div class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5">
       <span class=" item-desc">
@@ -64,14 +64,14 @@
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15">
       <span class="item-price mobile-hide">
-        ₪{{product.price}}&hairsp;/&hairsp;{{product.unitType}}
+        ₪{{product.price}}&hairsp;/&hairsp;{{product.product.defaultSellingUnit.name}}
       </span>
       <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
       <div ng-if="product.isPromoted && product.oldPrice">
         <span class="text-muted mobile-hide">
-          ₪{{product.oldPrice}}/{{product.unitType}}
+          ₪{{product.oldPrice}}/{{product.product.defaultSellingUnit.name}}
         </span>
         <span class="text-muted mobile-show">
           ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
@@ -85,7 +85,7 @@
       <div class="display-flex flex-vertical">
         <div class="mx-auto mobile-hide text-bold item-quantity">{{product.quantity}}</div>
         <div class="display-flex justify-between align-center">
-          <div class="font-darkgray text-light mr-10 text-sm">{{product.unitType}}</div>
+          <div class="font-darkgray text-light mr-10 text-sm">{{product.product.defaultSellingUnit.name}}</div>
           <svg xmlns="http://www.w3.org/2000/svg" class="font-darkgray dropdown-arrow h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
