@@ -1,4 +1,4 @@
-const rexailApp = angular.module('rexail-app', ['ngRoute']);
+const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll']);
 
 rexailApp.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
@@ -6,8 +6,6 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/store', {
             templateUrl: 'views/store.html',
-
-            // controller: 'storeController'
         })
         .when('/cart', {
             templateUrl: 'views/cart.html', controller: 'appController'
@@ -58,6 +56,12 @@ rexailApp.controller('appController', function ($http, $scope) {
 
     ctrl.handleCategoryClick = function (category) {
         ctrl.state.selectedCategory = category
+    }
+
+    // Setting initial value for pagination limit (infinite scroll)
+    $scope.paginationLimit = 20
+    $scope.loadMore = function () {
+        $scope.paginationLimit = $scope.paginationLimit + 10
     }
 
 })

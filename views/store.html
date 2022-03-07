@@ -39,12 +39,16 @@
     </div>
     <h1>test</h1>
     <div ng-if="ctrl.state.selectedCategory.id === 0">
-        <div ng-repeat="product in ctrl.state.data.productsData track by product.id">
-            {{product.product.name}}
+        <div infinite-scroll="loadMore()" infinite-scroll-distance="3">
+            <div ng-repeat="product in ctrl.state.data.productsData.slice(0,paginationLimit) track by product.id ">
+                {{product.product.name}}
+            </div>
         </div>
     </div>
     <div ng-repeat=" product in ctrl.state.selectedCategory.children ">{{product.name}}</div>
 
     <li><a href="/cart">navigate to cart</a></li>
     <li><a href="/checkout">navigate to checkout</a></li>
+    <script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>
+
 </div>
