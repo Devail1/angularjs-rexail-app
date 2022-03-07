@@ -1,7 +1,31 @@
-
-<div>
-    <h1>I am Store</h1>
-    {{ctrl.state.data.productsData}}
+<div ng-cloack>
+    <div class="categories ">
+        <div class="container mx-auto display-flex justify-evenly font-gray-900">
+            <li class="category" ng-if="ctrl.shouldRenderPromoted()">מבצעים</li>
+            <li class="category">כל המוצרים</li>
+            <li class="category"
+                ng-repeat="category in ctrl.state.data.categoriesData | limitTo: 10">
+                {{category.name}}&nbsp;
+            </li>
+            <div class="display-flex align-center relative" ng-if="ctrl.showMoreCategories()">
+                <ul class="category" ng-mouseover="isOpened=true"
+                    ng-mouseleave="isOpened = false"> עוד
+                    &nbsp;
+                    <img src="assets/icons/icon-arrow-down.svg"/>
+                    <div ng-if="isOpened"
+                         class="categories show-more display-flex flex-vertical absolute pt-10 rounded-10">
+                        <li class="category show-more"
+                            ng-repeat="category in ctrl.state.data.categoriesData | limitTo: ctrl.state.data.categoriesData.length : 10 "
+                            ng-style="{ 'background': (isHover ? '#F5F3F0' : '#fff') }" ng-mouseenter="isHover = true;"
+                            ng-mouseleave="isHover = false;"
+                        >
+                            {{category.name}}
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
     <li><a href="/cart">navigate to cart</a></li>
     <li><a href="/checkout">navigate to checkout</a></li>
 

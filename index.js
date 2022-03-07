@@ -41,9 +41,18 @@ rexailApp.controller('appController', function ($http) {
             ctrl.state.data.storeData = response.data.data;
             $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${ctrl.state.data.storeData.jsonWebEncryption}`)
                 .then(function (response) {
-                    ctrl.state.data.productsData = formatData(response.data.data);
+                    ctrl.state.data.productsData = response.data.data
+                    ctrl.state.data.categoriesData = formatData(response.data.data);
                 });
         });
+
+    ctrl.shouldRenderPromoted = function () {
+        return ctrl.state.data.productsData.find(product => product.promoted) !== undefined
+    }
+
+    ctrl.showMoreCategories = function () {
+        return ctrl.state.data.productsData.length > 10
+    }
 })
 
 rexailApp.directive('cartItem', function () {
@@ -70,7 +79,7 @@ function formatData(array) {
             }
         }
 
-        obj[current.productCategory.id].children.push({id: current.product.id, name: current.product.name})
+        obj[current.productCategory.id].children.push(current.product)
 
         return obj
     }, {}))

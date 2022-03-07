@@ -1,5 +1,5 @@
 <body>
-  <div ng-class="{'border-none':$last}" id={{product.product.id}} class="cart-item display-flex align-center">
+  <div ng-class="{'border-none':$last}" id={{product.id}} class="cart-item display-flex align-center">
     <div class="thumbnail-container ml-10">
       <div ng-if="product.isPromoted" class="discount-badge-h display-flex align-center justify-center">
         <div class="display-flex">
@@ -22,7 +22,7 @@
     </div>
     <div class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5">
       <span class=" item-desc">
-        {{product.product.name}}
+        {{product.name}}
       </span>
       <div class="display-flex align-center">
         <svg ng-click="ctrl.increaseQuantity(product)" xmlns="http://www.w3.org/2000/svg" class="mobile-show item-increment h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
@@ -64,14 +64,14 @@
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15">
       <span class="item-price mobile-hide">
-        ₪{{product.price}}&hairsp;/&hairsp;{{product.product.defaultSellingUnit.name}}
+        ₪{{product.price}}&hairsp;/&hairsp;{{product.defaultSellingUnit.name}}
       </span>
       <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
       <div ng-if="product.isPromoted && product.oldPrice">
         <span class="text-muted mobile-hide">
-          ₪{{product.oldPrice}}/{{product.product.defaultSellingUnit.name}}
+          ₪{{product.oldPrice}}/{{product.defaultSellingUnit.name}}
         </span>
         <span class="text-muted mobile-show">
           ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
@@ -85,7 +85,7 @@
       <div class="display-flex flex-vertical">
         <div class="mx-auto mobile-hide text-bold item-quantity">{{product.quantity}}</div>
         <div class="display-flex justify-between align-center">
-          <div class="font-darkgray text-light mr-10 text-sm">{{product.product.defaultSellingUnit.name}}</div>
+          <div class="font-darkgray text-light mr-10 text-sm">{{product.defaultSellingUnit.name}}</div>
           <svg xmlns="http://www.w3.org/2000/svg" class="font-darkgray dropdown-arrow h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
