@@ -4,7 +4,7 @@
             <div class=" pt-20 display-flex align-center  justify-around  px-5 ">
                 <div class="search-box-container mr-auto ">
                     <label>
-                        <input ng-model="ctrl.state['searchQuery']" class="search-box border-white"
+                        <input ng-model="ctrl.state.searchQuery" class="search-box border-white"
                                ng-model-options="{debounce: 800}"
                                ng-minlength="3" placeholder="חיפוש מוצר"/>
                     </label>
@@ -45,7 +45,7 @@
             </div>
             <div class="search-box-container ml-10">
                 <label>
-                    <input ng-model="ctrl.state['searchQuery']" class="search-box"
+                    <input ng-model="ctrl.state.searchQuery" class="search-box"
                            ng-model-options="{debounce: 800}"
                            ng-minlength="3" placeholder="חיפוש מוצר"/>
                 </label>

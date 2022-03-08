@@ -1,7 +1,7 @@
 <body>
   <div ng-class="{'border-none':$last}" id={{product.id}} class="cart-item display-flex align-center">
     <div class="thumbnail-container ml-10">
-      <div ng-if="product.isPromoted" class="discount-badge-h display-flex align-center justify-center">
+      <div ng-if="product.promoted" class="discount-badge-h display-flex align-center justify-center">
         <div class="display-flex">
           <img class="h-20 w-20 font-green mr-15 discount-badge-icon" src="assets/discount.svg" alt="item-discount" />
           <div class="discount-badge-text font-white mr-10">מבצע</div>
@@ -69,7 +69,7 @@
       <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
-      <div ng-if="product.isPromoted && product.oldPrice">
+      <div ng-if="product.promoted && product.oldPrice">
         <span class="text-muted mobile-hide">
           ₪{{product.oldPrice}}/{{product.defaultSellingUnit.name}}
         </span>
@@ -97,7 +97,7 @@
     </div>
     <div class="label-wrapper mobile-hide mt-15">
       <div class="mx-auto mobile-hide text-bold item-sum">₪{{(product.quantity * product.price).toFixed(2)}}</div>
-      <div ng-if="product.isPromoted && product.oldPrice" class="font-darkgray text-light text-linethrough text-sm">
+      <div ng-if="product.promoted && product.oldPrice" class="font-darkgray text-light text-linethrough text-sm">
         ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
       </div>
     </div>

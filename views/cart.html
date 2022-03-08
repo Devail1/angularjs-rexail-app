@@ -65,7 +65,7 @@
                 </div>
             </div>
             <ul id="cart-items-container">
-                <li cart-item ng-repeat="product in ctrl.state.data.productsData | filter: ctrl.state['searchQuery'] | limitTo: 10"></li>
+                <li cart-item ng-repeat="product in ctrl.state.data.productsData | filter: ctrl.state.searchQuery | limitTo: 10"></li>
                 <li ng-if="!productsData.length" class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
                     <span class="text-lg text-bold mt-10 ml-10">העגלה שלכם ריקה</span>
                     <svg class="h-36 w-36" viewBox="0 0 256 256" xml:space="preserve">
@@ -316,11 +316,12 @@
       שערוך. עלות סופית לפני שקילה.
     </span>
 </div>
-<div class="mobile-hide">
-    <div class="desktop-footer px-28 display-flex font-white text-light align-center justify-between">
-        <div class="credits">@ קמעונאי און ליין בע"מ, 2021. כל הזכויות שמורות.</div>
-        <div> <a href="#">תנאי שימוש</a> &nbsp;|&nbsp; <a href="#">הצהרת נגישות</a></div>
-        <img class="c-p " src="assets/logo-powered-by.svg" alt="powered-by" />
-    </div>
-</div>
+    <footer></footer>
+<!--<div class="mobile-hide">-->
+<!--    <div class="desktop-footer px-28 display-flex font-white text-light align-center justify-between">-->
+<!--        <div class="credits">@ קמעונאי און ליין בע"מ, 2021. כל הזכויות שמורות.</div>-->
+<!--        <div> <a href="#">תנאי שימוש</a> &nbsp;|&nbsp; <a href="#">הצהרת נגישות</a></div>-->
+<!--        <img class="c-p " src="assets/logo-powered-by.svg" alt="powered-by" />-->
+<!--    </div>-->
+<!--</div>-->
 </div>

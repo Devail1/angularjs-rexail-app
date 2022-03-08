@@ -56,19 +56,46 @@ html, body {
     background-attachment: fixed;
 }
 
+.store-bg {
+    background-color: #eef1ef
+}
+
+.store-items-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 22px;
+    grid-row-gap: 22px;
+}
+
+.cart-preview {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    min-width: 320px;
+    height: 530px;
+    background-color: #fff;
+    position: sticky;
+    top: 160px;
+    margin-right: 22px;
+    overflow: hidden;
+}
+
+.cart-preview-header {
+    height: 70px;
+    background-color: #005350;
+}
+
 .categories-wrapper {
+    z-index: 10;
     width: 100%;
     height: 60px;
     background-color: #fff;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.06);
-}
-
-.categories .show-more {
-    top: 37px;
+    position: sticky;
+    top: 80px;
 }
 
 .category {
-    padding: 14px 10px;
+    padding: 15px 10px;
     cursor: pointer;
 }
 
@@ -81,12 +108,28 @@ html, body {
     width: 150px;
     margin: 5px 0;
     color: #333333;
+    z-index: 10;
 }
 
-.category .show-more:hover {
-    color: #333333;
+.category-show-more:hover {
+    margin-bottom: 0;
+}
+.categories-show-more {
+    margin-top: 15px;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
+.sort-items {
+    width: 140px;
+    height: 30px;
+    border-radius: 15px;
+    border: solid 1px #c6cbcb;
+    font-size: 14px;
+    color: #999;
+    padding: 6px 14.3px 6px 12px;
+}
 
 .text-title {
     font-family: "Heebo", sans-serif;
@@ -181,6 +224,10 @@ html, body {
     background-color: #fff;
 }
 
+.store-widget {
+    width: 100%;
+}
+
 .cart-item {
     position: relative;
     height: 180px;
@@ -267,6 +314,10 @@ html, body {
     margin-top: 20px;
 }
 
+.store-item * > .item-thumbnail {
+    max-width: unset;
+}
+
 .discount-badge-v ~ .item-tag-wrapper {
     top: 10px;
 }
@@ -294,6 +345,17 @@ html, body {
     height: 600px;
     background-color: #fff;
     margin: 0 8px 40px 8px;
+    padding: 15px 10px;
+    white-space: normal;
+    overflow: visible;
+}
+
+.store-item {
+    position: relative;
+    min-width: 400px;
+    height: 600px;
+    background-color: #fff;
+    /*margin: 0 8px 40px 8px;*/
     padding: 15px 10px;
     white-space: normal;
     overflow: visible;
@@ -449,6 +511,13 @@ html, body {
     height: 28px;
 }
 
+.icon-arrow-down {
+    width: 12px;
+    height: 12px;
+    margin: 3px 0;
+    color: #33cc66;
+    object-fit: contain;
+}
 
 /* Search box */
 .search-box-container {
@@ -1161,6 +1230,13 @@ html, body {
         min-width: auto;
         height: 320px;
         width: 220px;
+        text-align: center;
+    }
+
+    .store-item {
+        min-width: auto;
+        height: 300px;
+        width: 208px;
         text-align: center;
     }
 

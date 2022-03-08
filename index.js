@@ -23,7 +23,7 @@ rexailApp.controller('appController', function ($http, $scope) {
     ctrl.state = {
         total: null,
         userComment: '',
-        selectedCategory: {'id': 0},
+        selectedCategory: {'id': 0, name: 'כל המוצרים'},
         data: {
             storeData: [],
             productsData: []
@@ -56,19 +56,44 @@ rexailApp.controller('appController', function ($http, $scope) {
 
     ctrl.handleCategoryClick = function (category) {
         ctrl.state.selectedCategory = category
+        console.log(ctrl)
     }
+
+    // Setting imgBaseUrl
+    ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
 
     // Setting initial value for pagination limit (infinite scroll)
     $scope.paginationLimit = 20
     $scope.loadMore = function () {
         $scope.paginationLimit = $scope.paginationLimit + 10
     }
-
 })
 
 rexailApp.directive('cartItem', function () {
     return {
         templateUrl: 'directives/cart-item.html',
+        replace: true,
+    }
+})
+
+
+rexailApp.directive('storeItem', function () {
+    return {
+        templateUrl: 'directives/store-item.html',
+        replace: true,
+        scope: {
+            id: '=',
+            name: '=',
+            defaultSellingUnit: '=',
+            product: '=',
+            imgUrl: '='
+        }
+    }
+})
+
+rexailApp.directive('footer', function () {
+    return {
+        templateUrl: 'directives/footer.html',
         replace: true,
     }
 })
@@ -90,7 +115,18 @@ function formatData(array) {
             }
         }
 
-        obj[current.productCategory.id].children.push(current.product)
+        obj[current.productCategory.id].children.push({
+            id: current.product.id,
+            name: current.product.name,
+            defaultSellingUnit: current.product.defaultSellingUnit,
+            imageUrl: current.imageUrl,
+            productSellingUnits: current.productSellingUnits,
+            price: current.price,
+            promoted: current.promoted,
+            oldPrice: current.oldPrice,
+            originalPrice: current.originalPrice,
+            productQuality: current.productQuality
+        })
 
         return obj
     }, {}))
