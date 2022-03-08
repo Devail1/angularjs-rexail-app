@@ -118,6 +118,7 @@ function formatData(array) {
         obj[current.productCategory.id].children.push({
             id: current.product.id,
             name: current.product.name,
+            fullName: current.fullName,
             defaultSellingUnit: current.product.defaultSellingUnit,
             imageUrl: current.imageUrl,
             productSellingUnits: current.productSellingUnits,

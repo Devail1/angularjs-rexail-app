@@ -2,18 +2,18 @@
     <div class="categories-wrapper pt-10" ng-cloack>
         <div class="container mx-auto display-flex justify-evenly font-gray-900">
             <li class="category" ng-click="ctrl.handleCategoryClick({'id': 0, name: 'כל המוצרים'})"
-                ng-style="ctrl.state.selectedCategory.id === 0 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === 0 ? { 'color': '#33cc66', 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 כל המוצרים
             </li>
             <li class="category" ng-if="ctrl.shouldRenderPromoted()"
                 ng-click="ctrl.handleCategoryClick({'id': 1, name: 'מבצעים'})"
-                ng-style="ctrl.state.selectedCategory.id === 1 ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === 1 ? { 'color': '#33cc66', 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 מבצעים
             </li>
             <li class="category"
                 ng-repeat="category in ctrl.state.data.categoriesData | limitTo: 10"
                 ng-click="ctrl.handleCategoryClick(category)"
-                ng-style="ctrl.state.selectedCategory.id === category.id ? { 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
+                ng-style="ctrl.state.selectedCategory.id === category.id ? { 'color': '#33cc66', 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 {{category.name}}&nbsp;
             </li>
             <div class="display-flex align-center relative" ng-if="ctrl.showMoreCategories()">
@@ -36,10 +36,6 @@
         </div>
     </div>
     <div class="container mx-auto pt-20">
-<!--        <div class="display-flex justify-between align-center">-->
-<!--            <h1 class="font-heebo font-blue">{{ctrl.state.selectedCategory.name}}</h1>-->
-<!--            <div class="select-unit rounded-10 ">מיין לפי</div>-->
-<!--        </div>-->
         <div class="display-flex relative">
             <div class="store-widget">
                         <div class="display-flex justify-between align-center">
