@@ -388,10 +388,10 @@ html, body {
 }
 
 .item-tag-wrapper {
-    position: relative;
-    margin-top: -15px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
     margin-left: auto;
-    margin-bottom: -40px;
 }
 
 .item-tag {
@@ -399,6 +399,8 @@ html, body {
     padding: 5px 10px;
     margin: 5px 0;
     cursor: pointer;
+    font-size: 10px;
+    color: #005350;
 }
 
 /* Ribbon & Badge */
@@ -474,6 +476,12 @@ html, body {
     height: 56px;
 }
 
+.discount-badge-v.badge-sm {
+    width: 30px;
+    height: 40px;
+    top: -5px;
+}
+
 .discount-badge-v-side {
     position: absolute;
     bottom: -1px;
@@ -481,6 +489,13 @@ html, body {
     width: 36px;
     background-color: white;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    border-radius: 2px;
+}
+
+.discount-badge-v-side.badge-sm {
+    height: 6px;
+    right: -2.5px;
+    width: 36px;
 }
 
 .discount-badge-v-tip {
@@ -490,6 +505,13 @@ html, body {
     width: 15px;
     background-color: #242525;
     clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.discount-badge-v-tip.badge-sm {
+    height: 5px;
+    width: 6px;
+    right: -6px;
+    top: 0px;
 }
 
 .order-summary {

@@ -125,7 +125,8 @@ function formatData(array) {
             promoted: current.promoted,
             oldPrice: current.oldPrice,
             originalPrice: current.originalPrice,
-            productQuality: current.productQuality
+            productQuality: current.productQuality,
+            currentRelevancy: current.currentRelevancy
         })
 
         return obj
