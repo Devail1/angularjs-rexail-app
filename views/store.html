@@ -1,6 +1,6 @@
 <div ng-cloack class="store-bg">
-    <div class="categories-wrapper pt-10" ng-cloack>
-        <div class="container mx-auto display-flex justify-evenly font-gray-900">
+    <div class="categories-wrapper" ng-cloack>
+        <div class="container mx-auto h-full display-flex align-center justify-evenly font-gray-900">
             <li class="category" ng-click="ctrl.handleCategoryClick({'id': 0, name: 'כל המוצרים'})"
                 ng-style="ctrl.state.selectedCategory.id === 0 ? { 'color': '#33cc66', 'border-bottom': '2px solid #33cc66' , 'font-weight' : '600' } : {}">
                 כל המוצרים
@@ -19,7 +19,6 @@
             <div class="display-flex align-center relative" ng-if="ctrl.showMoreCategories()">
                 <ul class="category category-show-more" ng-mouseover="isOpened=true"
                     ng-mouseleave="isOpened = false"> עוד
-                    <img src="assets/icons/icon-arrow-down.svg"/>
                     <div ng-if="isOpened"
                          class="categories-show-more display-flex flex-vertical absolute pt-10 rounded-10">
                         <li class="category show-more"
