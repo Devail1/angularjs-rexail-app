@@ -54,6 +54,7 @@
                         <div ng-repeat="product in ctrl.state.data.productsData | filter: ctrl.state.searchQuery | limitTo: paginationLimit">
                             <store-item product="product" id="product.id" name="product.product.name"
                                         img-url="ctrl.imgBaseUrl"
+                                        increase-product-quantity="ctrl.increaseProductQuantity(product)"
                                         defaultSellingUnit="product.defaultSellingUnit"></store-item>
                         </div>
                     </div>
@@ -66,6 +67,10 @@
             </div>
             <div class="cart-preview rounded-10">
                 <div class="cart-preview-header"></div>
+                <div ng-repeat="product in ctrl.state.cartItems track by product.id">
+                    {{product.product.name}}
+                    {{product.quantity}}
+                </div>
             </div>
         </div>
     </div>

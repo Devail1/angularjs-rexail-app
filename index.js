@@ -21,6 +21,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 rexailApp.controller('appController', function ($http, $scope) {
     const ctrl = this;
     ctrl.state = {
+        cartItems: [],
         total: null,
         userComment: '',
         selectedCategory: {'id': 0, name: 'כל המוצרים'},
@@ -59,6 +60,15 @@ rexailApp.controller('appController', function ($http, $scope) {
         console.log(ctrl)
     }
 
+    ctrl.increaseProductQuantity = function (product) {
+        product.quantity = product.quantity ? product.quantity + product.product.defaultSellingUnit.amountJumps : product.product.defaultSellingUnit.amountJumps ;
+        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        // console.log('here',product)
+
+        // product.quantity++;
+        // ctrl.state.total = calculateTotal();
+    }
+
     // Setting imgBaseUrl
     ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
 
@@ -86,7 +96,8 @@ rexailApp.directive('storeItem', function () {
             name: '=',
             defaultSellingUnit: '=',
             product: '=',
-            imgUrl: '='
+            imgUrl: '=',
+            increaseProductQuantity: '&'
         }
     }
 })
