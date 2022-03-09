@@ -61,8 +61,9 @@ rexailApp.controller('appController', function ($http, $scope) {
     }
 
     ctrl.increaseProductQuantity = function (product) {
+        console.log(product)
         product.quantity = product.quantity ? product.quantity + product.product.defaultSellingUnit.amountJumps : product.product.defaultSellingUnit.amountJumps ;
-        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        !ctrl.state.cartItems.includes(product) &&   ctrl.state.cartItems.push(product)
         // console.log('here',product)
 
         // product.quantity++;
@@ -127,18 +128,20 @@ function formatData(array) {
         }
 
         obj[current.productCategory.id].children.push({
-            id: current.product.id,
-            name: current.product.name,
-            fullName: current.fullName,
-            defaultSellingUnit: current.product.defaultSellingUnit,
-            imageUrl: current.imageUrl,
-            productSellingUnits: current.productSellingUnits,
-            price: current.price,
-            promoted: current.promoted,
-            oldPrice: current.oldPrice,
-            originalPrice: current.originalPrice,
-            productQuality: current.productQuality,
-            currentRelevancy: current.currentRelevancy
+            product: {
+                id: current.product.id,
+                name: current.product.name,
+                fullName: current.fullName,
+                defaultSellingUnit: current.product.defaultSellingUnit,
+                imageUrl: current.imageUrl,
+                productSellingUnits: current.productSellingUnits,
+                price: current.price,
+                promoted: current.promoted,
+                oldPrice: current.oldPrice,
+                originalPrice: current.originalPrice,
+                productQuality: current.productQuality,
+                currentRelevancy: current.currentRelevancy
+            }
         })
 
         return obj

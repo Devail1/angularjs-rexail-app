@@ -4,7 +4,7 @@
             <span class="mb-80">{{product.fullName}}</span>
             <div>
                 <span class="font-heebo text-xl text-bolder">₪{{product.price}}</span>/
-                <span class="unit-label text-bold">{{product.product.defaultSellingUnit.name || product.defaultSellingUnit.name}}</span>
+                <span class="unit-label text-bold">{{product.defaultSellingUnit.name}}</span>
             </div>
             <div ng-if="!product.quantity" class="add-to-cart-btn" ng-click="increaseProductQuantity()">
                 <img src="assets/icons/icon-plus.svg"/>
@@ -38,7 +38,7 @@
         </svg>
     </div>
     <div class="display-flex flex-vertical align-center px-20">
-        <img alt="product-thumbnail" class="item-thumbnail " ng-src="{{imgUrl + product.imageUrl}}">
+        <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail " ng-src="{{imgUrl + product.imageUrl}}">
         <span class="text-xl text-center">{{product.name || name}}</span>
         <div class="display-flex mt-10">
             <div ng-if="product.currentRelevancy.name === 'low'">
@@ -79,7 +79,7 @@
     <div class="display-flex flex-vertical align-center">
         <div>
             <span class="font-heebo text-xl text-bolder">₪{{product.price}}</span>/
-            <span class="unit-label text-sm text-bold">{{product.product.defaultSellingUnit.name || product.defaultSellingUnit.name}}</span>
+            <span class="unit-label text-sm text-bold">{{product.defaultSellingUnit.name}}</span>
         </div>
     </div>
     <div class="toggle-unit-wrapper display-flex flex-vertical align-center ">

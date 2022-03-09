@@ -1,4 +1,4 @@
-<div ng-cloack class="store-bg">
+<div ng-cloak class="store-bg">
     <div class="categories-wrapper" ng-cloack>
         <div class="container mx-auto h-full display-flex align-center justify-evenly font-gray-900">
             <li class="category" ng-click="ctrl.handleCategoryClick({'id': 0, name: 'כל המוצרים'})"
@@ -37,44 +37,48 @@
     <div class="container mx-auto pt-20">
         <div class="display-flex relative">
             <div class="store-widget">
-                        <div class="display-flex justify-between align-center">
-                            <h1 class="font-heebo font-blue">{{ctrl.state.selectedCategory.name}}</h1>
-                            <div class="sort-items c-p display-flex justify-between">
+                <div class="display-flex justify-between align-center">
+                    <h1 class="font-heebo font-blue">{{ctrl.state.selectedCategory.name}}</h1>
+                    <div class="sort-items c-p display-flex justify-between">
                                 <span>
                                     מיין לפי
                                 </span>
-                                <svg class="icon-arrow-down" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z" fill="currentColor" fill-rule="evenodd"/>
-                                </svg>
-                            </div>
-                        </div>
+                        <svg class="icon-arrow-down" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
+                                  fill="currentColor" fill-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
                 <div ng-if="ctrl.state.selectedCategory.id === 0">
                     <div infinite-scroll="loadMore()" infinite-scroll-distance="3" class="store-items-wrapper mt-30">
                         <div ng-repeat="product in ctrl.state.data.productsData | filter: ctrl.state.searchQuery | limitTo: paginationLimit">
-                            <store-item product="product" id="product.id" name="product.product.name"
-                                        img-url="ctrl.imgBaseUrl"
-                                        increase-product-quantity="ctrl.increaseProductQuantity(product)"
-                                        defaultSellingUnit="product.defaultSellingUnit"></store-item>
+                            <store-item product="product"
+                            img-url="ctrl.imgBaseUrl"
+                            increase-product-quantity="ctrl.increaseProductQuantity(product)"
+                            defaultSellingUnit="product.defaultSellingUnit"></store-item>
                         </div>
                     </div>
                 </div>
                 <div class="store-items-wrapper mt-30">
                     <div ng-repeat="product in ctrl.state.selectedCategory.children  | filter: ctrl.state.searchQuery">
-                        <store-item product="product" img-url="ctrl.imgBaseUrl"></store-item>
+                        <store-item product="product.product" img-url="ctrl.imgBaseUrl"
+                                    increase-product-quantity="ctrl.increaseProductQuantity(product)"></store-item>
                     </div>
                 </div>
             </div>
             <div class="cart-preview rounded-10">
                 <div class="cart-preview-header"></div>
-                <div ng-repeat="product in ctrl.state.cartItems track by product.id">
+                <div ng-repeat="product in ctrl.state.cartItems track by product.product.id">
                     {{product.product.name}}
-                    {{product.quantity}}
+                    {{product.product.quantity}}
                 </div>
             </div>
         </div>
     </div>
-    <li><a href="/cart">navigate to cart</a></li>
-    <li><a href="/checkout">navigate to checkout</a></li>
+    <ul>
+        <li><a href="/cart">navigate to cart</a></li>
+        <li><a href="/checkout">navigate to checkout</a></li>
+    </ul>
     <footer></footer>
     <!--    <script src="node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>-->
 </div>
