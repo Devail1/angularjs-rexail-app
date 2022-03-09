@@ -14,6 +14,8 @@
 
 button {
     border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 ul, li {
@@ -603,6 +605,10 @@ html, body {
     font-family: "Heebo", sans-serif;
 }
 
+.font-size-18 {
+    font-size: 18px;
+}
+
 .text-linethrough {
     text-decoration: line-through;
 }
@@ -883,12 +889,24 @@ html, body {
 }
 
 /* Margin Bottom */
+.mb-auto {
+    margin-bottom: auto;
+}
+
 .mb-80 {
     margin-bottom: 80px;
 }
 
+.mb-60 {
+    margin-bottom: 60px;
+}
+
 .mb-40 {
     margin-bottom: 40px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
 }
 
 .mb-20 {
@@ -905,6 +923,10 @@ html, body {
 
 .mb-5 {
     margin-bottom: 5px;
+}
+
+.mb-4 {
+    margin-bottom: 4px;
 }
 
 .nmb-10 {
@@ -1269,10 +1291,26 @@ html, body {
         height: 300px;
         width: 208px;
         display: none;
-        padding-top: 65px;
+        padding-top: 50px;
         text-align: center;
         text-wrap: normal;
         border-radius: 10px;
+    }
+    .store-item-overlay:hover ~ .product-price-wrapper {
+        visibility: hidden;
+    }
+
+    .store-item-overlay:hover ~ .product-info-wrapper span {
+        visibility: hidden;
+    }
+
+    .store-item-overlay:hover ~ .product-info-wrapper > .product-rating-wrapper {
+        visibility: hidden;
+    }
+
+    .product-rating-wrapper {
+        align-self: center;
+        top: 80px;
     }
 
     .store-item:hover .store-item-overlay {
@@ -1292,6 +1330,7 @@ html, body {
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 15px;
     }
     .item-card-info {
         display: none;
@@ -1416,7 +1455,9 @@ html, body {
         margin-left: -15% !important;
     }
 
+
     /* Desktop Utils */
+
     .flex-horizontal {
         flex-direction: row;
     }

@@ -21,17 +21,10 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 rexailApp.controller('appController', function ($http, $scope) {
     const ctrl = this;
     ctrl.state = {
-        cartItems: [],
-        total: null,
-        userComment: '',
-        selectedCategory: {'id': 0, name: 'כל המוצרים'},
-        data: {
-            storeData: [],
-            productsData: []
-        },
-        errors: {
-            userComment: false,
-            prepSelect: false
+        cartItems: [], total: null, userComment: '', selectedCategory: null, data: {
+            storeData: [], categoriesData: []
+        }, errors: {
+            userComment: false, prepSelect: false
         }
     }
 
@@ -41,34 +34,38 @@ rexailApp.controller('appController', function ($http, $scope) {
             ctrl.state.data.storeData = response.data.data;
             $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${ctrl.state.data.storeData.jsonWebEncryption}`)
                 .then(function (response) {
-                    ctrl.state.data.productsData = response.data.data
+                    // Formatting data products by categories
                     ctrl.state.data.categoriesData = formatData(response.data.data);
+                    // Setting initial category
+                    ctrl.state.selectedCategory = ctrl.state.data.categoriesData[0]
                 });
         });
 
-    ctrl.shouldRenderPromoted = function () {
-        let expression = ctrl.state.data.productsData.find(product => product.promoted) !== undefined
-        return expression
-    }
 
     ctrl.showMoreCategories = function () {
-        return ctrl.state.data.productsData.length > 10
+        return ctrl.state.data.categoriesData.length > 10
     }
 
     ctrl.handleCategoryClick = function (category) {
+        // console.log(category)
         ctrl.state.selectedCategory = category
-        console.log(ctrl)
+        console.log(ctrl.state.selectedCategory)
     }
 
     ctrl.increaseProductQuantity = function (product) {
         console.log(product)
-        product.quantity = product.quantity ? product.quantity + product.product.defaultSellingUnit.amountJumps : product.product.defaultSellingUnit.amountJumps ;
-        !ctrl.state.cartItems.includes(product) &&   ctrl.state.cartItems.push(product)
-        // console.log('here',product)
-
-        // product.quantity++;
-        // ctrl.state.total = calculateTotal();
+        if (product.product) product = product.product
+        product.quantity = product.quantity ? product.quantity + product.defaultSellingUnit.amountJumps : product.defaultSellingUnit.amountJumps;
+        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
     }
+
+    ctrl.decreaseProductQuantity = function (product) {
+        console.log(product)
+        if (product.quantity > product.defaultSellingUnit.amountJumps) product.quantity = product.quantity - product.defaultSellingUnit.amountJumps
+        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+    }
+
+
 
     // Setting imgBaseUrl
     ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
@@ -82,31 +79,22 @@ rexailApp.controller('appController', function ($http, $scope) {
 
 rexailApp.directive('cartItem', function () {
     return {
-        templateUrl: 'directives/cart-item.html',
-        replace: true,
+        templateUrl: 'directives/cart-item.html', replace: true,
     }
 })
 
 
 rexailApp.directive('storeItem', function () {
     return {
-        templateUrl: 'directives/store-item.html',
-        replace: true,
-        scope: {
-            id: '=',
-            name: '=',
-            defaultSellingUnit: '=',
-            product: '=',
-            imgUrl: '=',
-            increaseProductQuantity: '&'
+        templateUrl: 'directives/store-item.html', replace: true, scope: {
+            product: '=', imgUrl: '=', increaseProductQuantity: '&', decreaseProductQuantity: '&'
         }
     }
 })
 
 rexailApp.directive('footer', function () {
     return {
-        templateUrl: 'directives/footer.html',
-        replace: true,
+        templateUrl: 'directives/footer.html', replace: true,
     }
 })
 
@@ -121,29 +109,33 @@ function formatData(array) {
     return Object.values(array.reduce((obj, current) => {
         if (!obj[current.productCategory.id]) {
             obj[current.productCategory.id] = {
-                id: current.productCategory.id,
-                name: current.productCategory.name,
-                children: []
+                id: current.productCategory.id, name: current.productCategory.name, children: []
             }
         }
 
-        obj[current.productCategory.id].children.push({
-            product: {
-                id: current.product.id,
-                name: current.product.name,
-                fullName: current.fullName,
-                defaultSellingUnit: current.product.defaultSellingUnit,
-                imageUrl: current.imageUrl,
-                productSellingUnits: current.productSellingUnits,
-                price: current.price,
-                promoted: current.promoted,
-                oldPrice: current.oldPrice,
-                originalPrice: current.originalPrice,
-                productQuality: current.productQuality,
-                currentRelevancy: current.currentRelevancy
-            }
-        })
+        let productModel = {
+            id: current.product.id,
+            name: current.product.name,
+            fullName: current.fullName,
+            defaultSellingUnit: current.product.defaultSellingUnit,
+            imageUrl: current.imageUrl,
+            productSellingUnits: current.productSellingUnits,
+            price: current.price,
+            promoted: current.promoted,
+            oldPrice: current.oldPrice,
+            originalPrice: current.originalPrice,
+            productQuality: current.productQuality,
+            currentRelevancy: current.currentRelevancy
+        }
+
+        if (current.product.id) obj['0'].children.push(productModel)
+        if (current.promoted) obj['1'].children.push(productModel)
+
+        obj[current.productCategory.id].children.push(productModel)
 
         return obj
-    }, {}))
+    }, {
+        0: {id: 0, name: 'כל המוצרים', children: []},
+        1: {id: 1, name: 'מבצעים', children: []}
+    }))
 }
