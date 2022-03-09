@@ -609,6 +609,10 @@ html, body {
     font-size: 18px;
 }
 
+.font-size-16 {
+    font-size: 16px;
+}
+
 .text-linethrough {
     text-decoration: line-through;
 }
