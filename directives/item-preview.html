@@ -1,0 +1,54 @@
+<div id={{product.id}} class="item-preview display-flex align-center">
+    <div class="thumbnail-container ml-10">
+        <div ng-if="product.promoted" class="discount-badge-h display-flex align-center justify-center">
+            <div class="display-flex">
+                <img class="h-20 w-20 font-green mr-15 discount-badge-icon" src="assets/icons/icon-discount.svg"
+                     alt="item-discount"/>
+                <div class="discount-badge-text font-white mr-10">מבצע</div>
+            </div>
+            <div class="discount-badge-h-side"></div>
+            <div class="discount-badge-h-tip"></div>
+        </div>
+        <button class="cart-preview-btn" type="button" ng-click="removeProduct()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red c-p remove-item-btn preview-btn"
+                 viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </button>
+        <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
+             ng-src="{{imgBaseUrl + product.imageUrl}}">
+    </div>
+    <span class="font-size-14 preview-desc">
+        {{product.name}}, {{product.productQuality.name}}
+      </span>
+    <div class="display-flex flex-vertical align-center mx-auto">
+        <div class="plus-minus-preview-container"></div>
+        <span class="font-size-16 text-bold">
+        {{product.quantity}}
+      </span>
+        <span class="font-size-13 font-gray-600">
+        {{product.defaultSellingUnit.name}}
+      </span>
+        <div class="plus-minus-preview-container"></div>
+    </div>
+    <div class="item-price-wrapper display-flex flex-vertical align-center mr-auto ml-5">
+        <span class="item-price font-size-16 text-bolder ml-10">
+        ₪{{(product.price * product.quantity).toFixed(2)}}
+      </span>
+    </div>
+    <!-- Discount Ribbon -->
+    <div class=" discount-ribbon-wrapper" ng-if="$index == (ctrl.state.products.length / 2).toFixed(0)">
+        <div class="discount-ribbon absolute display-flex align-center px-20">
+            <div class="discount-ribbon-tip-right"></div>
+            <div class="discount-ribbon-tip-left"></div>
+            <img class="h-36 w-36 font-green mr-15" src="/assets/icons/icon-discount.svg" alt="item-discount"/>
+            <div class="text-lg font-white mr-10 font-heebo">
+                <span class="text-bold ">זכית בהנחה!</span>
+                <span> 2 מארזי ענבים ב₪44</span>
+            </div>
+            <span class="mr-auto text-lg font-white font-heebo ml-5"> ₪14.00 - </span>
+        </div>
+    </div>
+</div>

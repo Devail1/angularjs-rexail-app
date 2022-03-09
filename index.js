@@ -21,7 +21,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 rexailApp.controller('appController', function ($http, $scope) {
     const ctrl = this;
     ctrl.state = {
-        cartItems: [], total: null, userComment: '', selectedCategory: null, data: {
+        cartItems: [], total: '0.00', userComment: '', selectedCategory: null, data: {
             storeData: [], categoriesData: []
         }, errors: {
             userComment: false, prepSelect: false
@@ -41,31 +41,45 @@ rexailApp.controller('appController', function ($http, $scope) {
                 });
         });
 
-
     ctrl.showMoreCategories = function () {
         return ctrl.state.data.categoriesData.length > 10
     }
 
     ctrl.handleCategoryClick = function (category) {
-        // console.log(category)
         ctrl.state.selectedCategory = category
-        console.log(ctrl.state.selectedCategory)
+    }
+
+    ctrl.removeProduct = function (product) {
+        product.quantity = null
+        ctrl.state.cartItems = ctrl.state.cartItems.filter(item => item !== product)
+        ctrl.state.total = calculateTotal();
     }
 
     ctrl.increaseProductQuantity = function (product) {
-        console.log(product)
-        if (product.product) product = product.product
+        if (!product.defaultSellingUnit) product.defaultSellingUnit = { 'amountJumps' : 1}
         product.quantity = product.quantity ? product.quantity + product.defaultSellingUnit.amountJumps : product.defaultSellingUnit.amountJumps;
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        ctrl.state.total = calculateTotal();
     }
 
     ctrl.decreaseProductQuantity = function (product) {
-        console.log(product)
         if (product.quantity > product.defaultSellingUnit.amountJumps) product.quantity = product.quantity - product.defaultSellingUnit.amountJumps
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        ctrl.state.total = calculateTotal();
+
     }
 
+    ctrl.clearCart = function () {
+        ctrl.state.cartItems.forEach(item=> item.quantity = null)
+        ctrl.state.cartItems = []
+        ctrl.state.total = calculateTotal();
+    }
 
+    function calculateTotal() {
+        const initialValue = 0;
+        const sumWithInitial = ctrl.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
+        return sumWithInitial.toFixed(2)
+    }
 
     // Setting imgBaseUrl
     ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
@@ -83,11 +97,20 @@ rexailApp.directive('cartItem', function () {
     }
 })
 
-
 rexailApp.directive('storeItem', function () {
     return {
         templateUrl: 'directives/store-item.html', replace: true, scope: {
-            product: '=', imgUrl: '=', increaseProductQuantity: '&', decreaseProductQuantity: '&'
+            product: '=', imgBaseUrl: '=', increaseProductQuantity: '&', decreaseProductQuantity: '&'
+        }
+    }
+})
+
+rexailApp.directive('itemPreview', function () {
+    return {
+        templateUrl: 'directives/item-preview.html', replace: true,
+        scope: {
+            product: '=', imgBaseUrl: '=', removeProduct: '&',
+            increaseProductQuantity: '&', decreaseProductQuantity: '&'
         }
     }
 })

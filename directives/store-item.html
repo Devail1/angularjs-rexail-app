@@ -42,14 +42,14 @@
                 <span class="unit-label text-bold">{{product.defaultSellingUnit.name}}</span>
             </div>
             <div ng-if="!product.quantity " class="add-to-cart-btn" ng-click="increaseProductQuantity()">
-                <img src="assets/icons/icon-plus.svg"/>
+                <img ng-src="assets/icons/icon-plus.svg"/>
                 <span class="mr-5 text-bold">
                 הוספה לסל
                 </span>
             </div>
             <div ng-if="product.quantity" class="add-to-cart-btn ">
                 <button type="button" class="h-full w-full " ng-click="increaseProductQuantity()">
-                    <img src="assets/icons/icon-plus.svg"/>
+                    <img ng-src="assets/icons/icon-plus.svg"/>
                 </button>
                 <span class="text-lg mx-auto text-bold">
                 {{product.quantity}}
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="discount-badge-v badge-sm">
+    <div ng-if="product.promoted" class="discount-badge-v badge-sm">
         <div class="display-flex flex-vertical align-center">
             <img class="h-16 w-16 font-green mt-3" src="assets/icons/icon-discount.svg" alt="item-discount">
             <div class="font-white text-xs mt-2">מבצע</div>
@@ -78,7 +78,7 @@
     </div>
     <div class="display-flex flex-vertical align-center px-20 product-info-wrapper">
         <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
-             ng-src="{{imgUrl + product.imageUrl}}">
+             ng-src="{{imgBaseUrl + product.imageUrl}}">
         <span class="font-size-16 text-center mt-5">{{product.name}}</span>
         <div class="display-flex mt-10  product-rating-wrapper">
             <div ng-if="product.currentRelevancy.name === 'low'">
