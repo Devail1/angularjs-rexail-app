@@ -95,13 +95,12 @@ html, body {
 }
 
 .category {
-    padding: 15px 10px;
+    padding: 19px 10px;
     cursor: pointer;
 }
 
 .category:hover {
     color: #33cc66;
-    margin-bottom: -2.5px;
 }
 
 .category .show-more {
@@ -1095,7 +1094,7 @@ html, body {
     }
 
     .navbar-minimized {
-        background-color: #00535f;
+        background-color: #005350;
         height: 80px;
         color: white;
         display: block;
@@ -1285,10 +1284,14 @@ html, body {
     .add-to-cart-btn {
         margin-top: 30px;
         background-color: #33cc66;
-        width: 8rem;
-        height: 2rem;
+        min-width: 126px;
+        height: 30px;
         border-radius: 25px;
         color: #fff;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .item-card-info {
         display: none;

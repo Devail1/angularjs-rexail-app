@@ -6,13 +6,13 @@
                 <span class="font-heebo text-xl text-bolder">₪{{product.price}}</span>/
                 <span class="unit-label text-bold">{{product.product.defaultSellingUnit.name || product.defaultSellingUnit.name}}</span>
             </div>
-            <div ng-if="!product.quantity" class="add-to-cart-btn py-5 display-flex justify-center align-center c-p" ng-click="increaseProductQuantity()">
+            <div ng-if="!product.quantity" class="add-to-cart-btn" ng-click="increaseProductQuantity()">
                 <img src="assets/icons/icon-plus.svg"/>
-                <span class="text-lg mr-10 text-bold">
+                <span class="text-lg mr-5 text-bold">
                 הוספה לסל
                 </span>
             </div>
-            <div ng-if="product.quantity" class="add-to-cart-btn px-20 display-flex justify-center align-center c-p" ng-click="increaseProductQuantity()">
+            <div ng-if="product.quantity" class="add-to-cart-btn px-20" ng-click="increaseProductQuantity()">
                 <img src="assets/icons/icon-plus.svg"/>
                 <span class="text-lg mx-auto text-bold">
                 {{product.quantity}}
