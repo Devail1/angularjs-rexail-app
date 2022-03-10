@@ -33,20 +33,20 @@
                     <h1 class="font-heebo font-blue">{{ctrl.state.selectedCategory.name}}</h1>
                     <div class="sort-items c-p display-flex justify-between relative"
                          ng-click="toggleDropdown = !toggleDropdown"
-                         ng-class="toggleDropdown ? 'dropdown-active' : ''">
+                         ng-class="toggleDropdown || ctrl.selectedSortBy ? 'dropdown-active' : ''">
                                 <span class="font-blue">
-                                    מיין לפי
+                                    {{ctrl.selectedSortBy || 'מיין לפי'}}
                                 </span>
-                            <svg class="icon-arrow-down" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="icon-arrow-down" ng-style="toggleDropdown ? {'transform: 'rotate(180deg)'}" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
                                       fill="currentColor" fill-rule="evenodd"/>
                             </svg>
 
                         <ul ng-if="toggleDropdown" class="dropdown-menu absolute mt-30">
-                            <li class="dropdown-item" ng-click="ctrl.sortBy('name')">שם מוצר</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortBy('price-low')">מחיר מהנמוך לגבוה</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortBy()">מחיר מהגבוהה לנמוך</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortBy()">מוצרים במבצע</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('שם מוצר')">שם מוצר</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהנמוך לגבוה')">מחיר מהנמוך לגבוה</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהגבוהה לנמוך')">מחיר מהגבוהה לנמוך</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מוצרים במבצע')">מוצרים במבצע</li>
                         </ul>
                     </div>
 
@@ -118,9 +118,6 @@
 
         </div>
     </div>
-    <ul>
-        <li><a href="/cart">navigate to cart</a></li>
-        <li><a href="/checkout">navigate to checkout</a></li>
-    </ul>
+
     <footer></footer>
 </div>

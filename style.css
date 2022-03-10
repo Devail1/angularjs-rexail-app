@@ -184,11 +184,10 @@ html, body {
 }
 
 .dropdown-menu {
-    margin-right: -15px;
-    width: 140px;
+    margin-right: -14px;
+    width: 170px;
     padding: 10px 0;
     color: #333333;
-    border-radius: ;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
@@ -206,7 +205,7 @@ html, body {
 }
 
 .sort-items {
-    width: 140px;
+    width: 170px;
     height: 30px;
     border-radius: 15px;
     border: solid 1px #c6cbcb;
@@ -218,6 +217,11 @@ html, body {
 .sort-items.dropdown-active {
     border: solid 1px #33cc66;
     background-color: #fff;
+}
+
+.sort-items.dropdown-active > .icon-arrow-down{
+    transform: rotate(180deg);
+    transition: transform 0.5s;
 }
 
 .text-title {
@@ -666,6 +670,7 @@ html, body {
     margin: 3px 0;
     color: #33cc66;
     object-fit: contain;
+    transition: transform 0.5s;
 }
 
 /* Search box */

@@ -18,13 +18,21 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($http, $scope) {
+rexailApp.controller('appController', function ($http, $scope, $filter) {
     const ctrl = this;
     ctrl.state = {
-        cartItems: [], total: '0.00', userComment: '', selectedCategory: null, data: {
-            storeData: [], categoriesData: []
-        }, errors: {
-            userComment: false, prepSelect: false
+        cartItems: [],
+        total: '0.00',
+        userComment: '',
+        selectedCategory: null,
+        selectedSortBy: null,
+        data: {
+            storeData: [],
+            categoriesData: []
+        },
+        errors: {
+            userComment: false,
+            prepSelect: false
         }
     }
 
@@ -56,8 +64,7 @@ rexailApp.controller('appController', function ($http, $scope) {
     }
 
     ctrl.increaseProductQuantity = function (product) {
-        console.log(product)
-        if (!product.defaultSellingUnit) product.defaultSellingUnit = { 'amountJumps' : 1}
+        if (!product.defaultSellingUnit) product.defaultSellingUnit = {'amountJumps': 1}
         product.quantity = product.quantity ? product.quantity + product.defaultSellingUnit.amountJumps : product.defaultSellingUnit.amountJumps;
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
@@ -67,13 +74,29 @@ rexailApp.controller('appController', function ($http, $scope) {
         if (product.quantity > product.defaultSellingUnit.amountJumps) product.quantity = product.quantity - product.defaultSellingUnit.amountJumps
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
-
     }
 
     ctrl.clearCart = function () {
-        ctrl.state.cartItems.forEach(item=> item.quantity = null)
+        ctrl.state.cartItems.forEach(item => item.quantity = null)
         ctrl.state.cartItems = []
         ctrl.state.total = calculateTotal();
+    }
+
+    // Products Sort by value
+    ctrl.sortProductsBy = function (value) {
+        ctrl.selectedSortBy = value
+
+        if (value === 'שם מוצר')
+            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-name', true);
+
+        if (value === 'מחיר מהנמוך לגבוה')
+            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-price', true);
+
+        if (value === 'מחיר מהגבוהה לנמוך')
+            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'price', true);
+
+        if (value === 'מוצרים במבצע')
+            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
 
     function calculateTotal() {

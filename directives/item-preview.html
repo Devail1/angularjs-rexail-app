@@ -40,7 +40,9 @@
     <div class="item-price-wrapper display-flex flex-vertical align-center mr-auto ml-5">
         <span class="item-price font-size-16 text-bolder">
         ₪{{(product.price * product.quantity).toFixed(2)}}
-      </span>
+        </span>
+        <span ng-if="product.promoted && product.originalPrice"
+              class="font-heebo font-darkgray text-linethrough text-light font-size-13">₪{{(product.originalPrice * product.quantity).toFixed(2)}}</span>
     </div>
     <!-- Discount Ribbon -->
     <div class=" discount-ribbon-wrapper" ng-if="$index == (ctrl.state.products.length / 2).toFixed(0)">
