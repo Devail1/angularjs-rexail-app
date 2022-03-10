@@ -18,7 +18,11 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($http, $scope, $filter, $location) {
+rexailApp.controller('appController', function ($http, $rootScope,$scope, $filter, $location, $anchorScroll) {
+    $rootScope.$on("$locationChangeSuccess", function(){
+        $anchorScroll();
+    });
+
     const ctrl = this;
     ctrl.state = {
         cartItems: [],
@@ -65,6 +69,9 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
 
     ctrl.handleCategoryClick = function (category) {
         ctrl.state.selectedCategory = category
+
+        // scroll to top
+        $anchorScroll();
     }
 
     ctrl.removeProduct = function (product) {
@@ -104,7 +111,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         if (value === 'מוצרים במבצע')
             ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
-
 
     //Form validations
     ctrl.validateCart = function () {
