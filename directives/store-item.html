@@ -37,11 +37,16 @@
                     </svg>
                 </div>
             </div>
-            <div class="mt-30 mb-30">
+            <div class="mt-30 mb-5">
                 <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
                 <span class="unit-label text-bold">{{product.defaultSellingUnit.name}}</span>
             </div>
-            <div ng-if="!product.quantity " class="add-to-cart-btn" ng-click="increaseProductQuantity()">
+            <div ng-if="product.promoted && product.originalPrice"
+                 class="font-darkgray text-linethrough text-light font-size-13">
+                <span class="font-heebo ">₪{{product.originalPrice}}</span>/
+                <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
+            </div>
+            <div ng-if="!product.quantity " class="add-to-cart-btn mt-30" ng-click="increaseProductQuantity()">
                 <img ng-src="assets/icons/icon-plus.svg"/>
                 <span class="mr-5 text-bold">
                 הוספה לסל
@@ -55,7 +60,7 @@
                 {{product.quantity}}
                 </span>
                 <button type="button" class="h-full w-full " ng-click="decreaseProductQuantity()">
-                <img class="mb-4" src="assets/icons/icon-minus.svg"/>
+                    <img class="mb-4" src="assets/icons/icon-minus.svg"/>
                 </button>
             </div>
         </div>
@@ -120,6 +125,11 @@
         <div>
             <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
             <span class="unit-label text-sm text-bold">{{product.defaultSellingUnit.name}}</span>
+        </div>
+        <div ng-if="product.promoted && product.originalPrice"
+             class="font-darkgray text-linethrough text-light font-size-13">
+            <span class="font-heebo ">₪{{product.originalPrice}}</span>/
+            <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
         </div>
     </div>
     <div class="toggle-unit-wrapper display-flex flex-vertical align-center ">

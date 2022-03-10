@@ -56,15 +56,16 @@ rexailApp.controller('appController', function ($http, $scope) {
     }
 
     ctrl.increaseProductQuantity = function (product) {
+        console.log(product)
         if (!product.defaultSellingUnit) product.defaultSellingUnit = { 'amountJumps' : 1}
         product.quantity = product.quantity ? product.quantity + product.defaultSellingUnit.amountJumps : product.defaultSellingUnit.amountJumps;
-        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
     }
 
     ctrl.decreaseProductQuantity = function (product) {
         if (product.quantity > product.defaultSellingUnit.amountJumps) product.quantity = product.quantity - product.defaultSellingUnit.amountJumps
-        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.push(product)
+        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
 
     }

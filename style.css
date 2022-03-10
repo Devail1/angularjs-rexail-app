@@ -74,7 +74,7 @@ html, body {
     width: 100%;
     height: 100px;
     display: flex;
-    padding: 18px 10px 18px;
+    padding: 18px 8px 18px 10px;
     overflow: visible;
     position: relative;
     justify-content: space-between;
@@ -85,26 +85,33 @@ html, body {
 .item-preview > .thumbnail-container > .item-thumbnail {
     max-width: 70px;
     max-height: 70px;
+    margin-bottom: 0;
 }
 
 .preview-desc {
     width: 94px;
 }
 
-.cart-items-preview-wrapper {
-    max-height: 330px;
-    overflow-y: auto;
+.cart-preview-items-count {
+     margin-right: -22px;
+     margin-left: 15px;
 }
 
 .cart-preview {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     min-width: 320px;
-    /*max-width: auto;*/
     height: 530px;
     background-color: #fff;
     position: sticky;
     top: 160px;
+    bottom: 0px;
     margin-right: 22px;
+}
+
+.cart-items-preview-wrapper {
+    max-height: 330px;
+    bottom: 0px;
+    overflow-y: auto;
 }
 
 .cart-preview-header {
@@ -169,10 +176,33 @@ html, body {
 }
 
 .categories-show-more {
+    right: -15px;
     margin-top: 15px;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
+}
+
+.dropdown-menu {
+    margin-right: -15px;
+    width: 140px;
+    padding: 10px 0;
+    color: #333333;
+    border-radius: ;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 10px 6px;
+}
+
+.dropdown-item:hover {
+    /*padding: 5px 3px;*/
+    /*color: #33cc66;*/
+    background-color: #d0d6d6;
 }
 
 .sort-items {
@@ -183,6 +213,11 @@ html, body {
     font-size: 14px;
     color: #999;
     padding: 6px 14.3px 6px 12px;
+}
+
+.sort-items.dropdown-active {
+    border: solid 1px #33cc66;
+    background-color: #fff;
 }
 
 .text-title {
@@ -595,10 +630,20 @@ html, body {
 }
 
 .plus-minus-preview-container {
+    margin: 3px 0;
     width: 16px;
     height: 16px;
     background-color: #33cc66;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.item-preview:hover *> .plus-minus-preview-container {
+    visibility: visible;
 }
 
 /* Upcoming Order*/
@@ -920,10 +965,6 @@ html, body {
     margin-right: auto;
 }
 
-.mr-46 {
-    margin-right: 46px;
-}
-
 .mr-35 {
     margin-right: 35px;
 }
@@ -1143,6 +1184,10 @@ html, body {
     height: 10px;
 }
 
+.h-8 {
+    height: 8px;
+}
+
 /* --Width */
 
 .w-full {
@@ -1218,6 +1263,9 @@ html, body {
     width: 10px;
 }
 
+.w-8 {
+    width: 8px;
+}
 
 /* ######################### Desktop Design ############################ */
 
@@ -1268,7 +1316,6 @@ html, body {
     .select-unit {
         height: 28px;
         width: 14vw;
-        /*padding-right: 30px;*/
         text-overflow: ellipsis;
         padding: 0 1.3em;
     }
@@ -1360,7 +1407,9 @@ html, body {
         padding-bottom: 0;
     }
 
-
+    .item-preview > .thumbnail-container > .discount-badge-h {
+        top: -18px;
+    }
 
     .item-preview:hover > .thumbnail-container > .cart-preview-btn > .remove-item-btn.preview-btn {
         visibility: visible;
@@ -1639,7 +1688,7 @@ html, body {
     }
 }
 
-/* ANGULAR ANIMATIONS */
+/* ANGULAR ANIMATIONS
 
 .cart-item.ng-enter {
     transition: 0.5s linear all;
@@ -1658,4 +1707,4 @@ html, body {
 
 .cart-item.ng-leave.ng-leave-active {
     opacity: 0;
-}
+} */

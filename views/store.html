@@ -31,15 +31,25 @@
             <div class="store-widget">
                 <div class="display-flex justify-between align-center">
                     <h1 class="font-heebo font-blue">{{ctrl.state.selectedCategory.name}}</h1>
-                    <div class="sort-items c-p display-flex justify-between">
+                    <div class="sort-items c-p display-flex justify-between relative"
+                         ng-click="toggleDropdown = !toggleDropdown"
+                         ng-class="toggleDropdown ? 'dropdown-active' : ''">
                                 <span class="font-blue">
                                     מיין לפי
                                 </span>
-                        <svg class="icon-arrow-down" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
-                                  fill="currentColor" fill-rule="evenodd"/>
-                        </svg>
+                            <svg class="icon-arrow-down" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
+                                      fill="currentColor" fill-rule="evenodd"/>
+                            </svg>
+
+                        <ul ng-if="toggleDropdown" class="dropdown-menu absolute mt-30">
+                            <li class="dropdown-item" ng-click="ctrl.sortBy('name')">שם מוצר</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortBy('price-low')">מחיר מהנמוך לגבוה</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortBy()">מחיר מהגבוהה לנמוך</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortBy()">מוצרים במבצע</li>
+                        </ul>
                     </div>
+
                 </div>
                 <div>
                     <div infinite-scroll="loadMore()" infinite-scroll-distance="3" class="store-items-wrapper mt-30">
@@ -57,13 +67,18 @@
                 <div class="cart-preview-header display-flex align-center px-16">
                     <img class="w-22 h-22 ml-10" ng-src="assets/icons/button-arrow-up.svg"/>
                     <img class="icon-basket" src="assets/icons/shape.svg"><span
-                        class="text-sm font-white absolute mr-46 mt-8"> {{ctrl.state.cartItems.length}}</span></img>
+                        class="text-sm font-white mt-8 cart-preview-items-count"> {{ctrl.state.cartItems.length}}</span></img>
                     <div class="display-flex flex-vertical font-white mr-8 ml-auto">
                         <span class="text-light font-size-14">סל הקניות שלי</span>
                         <span class="font-size-18">{{ctrl.state.total}}</span>
                     </div>
-                    <button type="button" class="proceed-to-checkout-btn font-white font-size-16" ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">המשך
-                        לתשלום
+                    <button type="button" class="proceed-to-checkout-btn font-white font-size-16"
+                            ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
+                        <span>
+                            <a href="/cart">
+                                המשך לתשלום
+                            </a>
+                        </span>
                     </button>
                 </div>
                 <div class="cart-preview-subheader px-16">
@@ -88,13 +103,19 @@
                     ></item-preview>
                 </div>
                 <div class="cart-preview-footer px-28 display-flex flex-vertical align-center justify-center">
-                    <button type="button" class="btn-green w-full" ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
-                        <span class="font-white checkout-text">המשך לתשלום</span>
-                        <span class="font-white total-sum">₪{{ctrl.state.total}}</span>
+                    <button type="button" class="btn-green w-full"
+                            ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
+                        <a class="w-full" href="/cart">
+                            <div class="display-flex align-center justify-between">
+                                <span class="font-white checkout-text">המשך לתשלום</span>
+                                <span class="font-white total-sum">₪{{ctrl.state.total}}</span>
+                            </div>
+                        </a>
                     </button>
                     <span class="font-darkgray font-size-14">שערוך. עלות סופית לפני שקילה.</span>
                 </div>
             </div>
+
         </div>
     </div>
     <ul>
