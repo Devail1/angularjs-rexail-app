@@ -27,10 +27,12 @@
                     <div class="text-title mb-5">{{ctrl.state.data.storeData.store.name}}</div>
                     <div class="display-flex align-center my-3 c-p">
                         <img class="ml-5" src="../assets/icons/icon-info-2.svg"/>
-                        אודות | אזורי חלוקה</div>
+                        אודות | אזורי חלוקה
+                    </div>
                     <div class="display-flex align-center my-3 c-p">
                         <img class="ml-5" src="../assets/icons/icon-location-2.svg"/>
-                        {{ctrl.state.data.storeData.store.businessFullAddressWithCity}}</div>
+                        {{ctrl.state.data.storeData.store.businessFullAddressWithCity}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,7 +45,7 @@
                 </a>
                 <h2 class="text-title mr-15">{{ctrl.state.store.name}}</h2>
             </div>
-            <div class="search-box-container ml-10">
+            <div ng-if="!ctrl.getCurrentPath().includes('checkout')" class="search-box-container ml-10">
                 <label>
                     <input ng-model="ctrl.state.searchQuery" class="search-box"
                            ng-model-options="{debounce: 800}"
@@ -51,7 +53,7 @@
                 </label>
                 <img class="search-icon" src="../assets/icons/icon-search.svg"/>
             </div>
-            <div class="display-flex align-center w-250">
+            <div ng-if="!ctrl.getCurrentPath().includes('checkout')" class="display-flex align-center w-250">
                 <img class="h-32 w-32" ng-src="assets/icons/icon-delivery-rounded.svg"/>
                 <div class="mr-10">
                     <span class="text-regular">משה דיין 20, תל אביב</span>
@@ -59,7 +61,7 @@
                     <span class="text-light">מחר, 12:00-16:00</span>
                 </div>
             </div>
-            <div class="display-flex c-p align-center">
+            <div ng-if="!ctrl.getCurrentPath().includes('checkout')" class="display-flex c-p align-center">
                 <img class="h-32 w-32" ng-src="assets/icons/icon-user.svg"/>
                 <div class="display-flex align-center mr-5 ml-5">
                     <span class="text-regular">היי אינסה!</span>
@@ -68,6 +70,12 @@
                               d="M19 9l-7 7-7-7"/>
                     </svg>
                 </div>
+            </div>
+            <div ng-if="ctrl.getCurrentPath().includes('checkout')" class="c-p">
+                <a class="display-flex align-center" href="/cart">
+                    <span class="ml-5">חזרה לסל הקניות</span>
+                    <img ng-src="assets/icons/icon-arrow-left.svg"/>
+                </a>
             </div>
         </div>
     </div>

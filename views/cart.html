@@ -16,9 +16,7 @@
         </svg>
         <div class="display-flex justify-between align-center">
             <div class="display-flex font-white align-center">
-        <span class="items-count text-bold">
-          {{productsData.length}}
-        </span>
+                <span class="items-count">{{ctrl.state.cartItems.length}}</span>
                 <img ng-src="assets/icons/icon-basket-white.svg"/>
                 <div class="text-title font-blue mr-5 mt-15 mb-5 ">
                     סל הקניות שלי
@@ -42,13 +40,13 @@
                     <div class="w-2-4">
                         <div class="display-flex align-center">
                             <span>מוצר</span>
-<!--                            <button type="button" class="mr-15 c-p" ng-click="ctrl.toggleSortByEvenQuan()"-->
-<!--                                    ng-class="ctrl.state.toggleEven ? 'font-green' : 'font-blue'">-->
-<!--                                <svg class="h-24 w-h-24 c-p " fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"-->
-<!--                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>-->
-<!--                                </svg>-->
-<!--                            </button>-->
+                            <!--                            <button type="button" class="mr-15 c-p" ng-click="ctrl.toggleSortByEvenQuan()"-->
+                            <!--                                    ng-class="ctrl.state.toggleEven ? 'font-green' : 'font-blue'">-->
+                            <!--                                <svg class="h-24 w-h-24 c-p " fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+                            <!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"-->
+                            <!--                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>-->
+                            <!--                                </svg>-->
+                            <!--                            </button>-->
                         </div>
                     </div>
                     <div class="display-flex justify-around w-2-4">
@@ -56,13 +54,13 @@
                         <span>איכות</span>
                         <div class="display-flex align-center">
                             <span class="ml-10">סה"כ</span>
-<!--                            <button type="button" class="mt-5" ng-click="ctrl.sortByItemTotal()">-->
-<!--                                <svg class="h-16 w-16 c-p font-blue" fill="none" viewBox="0 0 24 24"-->
-<!--                                     stroke="currentColor">-->
-<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-<!--                                          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>-->
-<!--                                </svg>-->
-<!--                            </button>-->
+                            <!--                            <button type="button" class="mt-5" ng-click="ctrl.sortByItemTotal()">-->
+                            <!--                                <svg class="h-16 w-16 c-p font-blue" fill="none" viewBox="0 0 24 24"-->
+                            <!--                                     stroke="currentColor">-->
+                            <!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+                            <!--                                          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>-->
+                            <!--                                </svg>-->
+                            <!--                            </button>-->
                         </div>
                         <span>הסר</span>
                     </div>
@@ -110,19 +108,22 @@
                         <span class="font-gray-600 mobile-hide">הערות למכין ההזמנה</span>
                     </div>
                     <label>
-                        <textarea ng-model="ctrl.state.userComment" class="order-comment rounded-10 font-size-16"></textarea>
+                        <textarea ng-model="ctrl.state.userComment"
+                                  class="order-comment rounded-10 font-size-16"></textarea>
                     </label>
-                    <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין ההזמנה
+                    <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין
+                        ההזמנה
                     </div>
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
-                    <div class="display-flex justify-between" >
+                    <div class="display-flex justify-between">
                         <span class="mobile-hide font-gray-900">סה"כ סל קניות </span>
                         <span class="mobile-hide item-price font-size-16">₪{{ctrl.state.total}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="button" ng-click="ctrl.validateCart()"
-                                class="mobile-hide h-45 btn-green rounded-10 border-gray-1px">
-                                <span class="mobile-hide font-white font-size-18 text-bold mx-auto my-auto">המשך לתשלום</span>
+                                class="mobile-hide h-45 btn-green rounded-10 border-gray-1px"
+                                ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
+                            <span class="mobile-hide font-white font-size-18 text-bold mx-auto my-auto">המשך לתשלום</span>
                         </button>
                         <span class="mobile-hide font-darkgray mt-10 font-size-14">
                         שערוך. עלות סופית לפני שקילה.

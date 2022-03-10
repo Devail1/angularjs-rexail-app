@@ -293,6 +293,10 @@ html, body {
     opacity: 0.4;
 }
 
+.order-summary *> button.btn-disabled {
+    opacity: 0.4;
+}
+
 .user-profile-dropdown {
     background: transparent;
     color: #fff;
@@ -413,10 +417,10 @@ html, body {
 .items-count {
     position: absolute;
     color: #000;
-    margin-bottom: 16px;
+    margin-bottom: -8px;
     margin-right: 16px;
     font-weight: 500;
-    font-size: smaller;
+    font-size: 12px;
 }
 
 .item-thumbnail {
@@ -1406,7 +1410,7 @@ html, body {
     .remove-item-btn {
         margin-right: auto;
         top: 33%;
-        left: 4%;
+        left: 6%;
         width: 22px;
         height: 22px;
     }
@@ -1631,7 +1635,7 @@ html, body {
     .cart-item > .h-full {
         margin-top: 1rem;
         max-width: 33%;
-        margin-left: 4rem;
+        margin-left: 2.8rem;
     }
 
     .dropdown-arrow {
