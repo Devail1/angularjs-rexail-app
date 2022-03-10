@@ -1,6 +1,6 @@
-<div ng-class="{'border-none':$last}" id={{product.id}} class="cart-item display-flex align-center">
+<div id={{product.id}} class="cart-item display-flex align-center">
     <div class="thumbnail-container ml-10">
-        <div class="discount-badge-h display-flex align-center justify-center">
+        <div ng-if="product.promoted" class="discount-badge-h display-flex align-center justify-center">
             <div class="display-flex">
                 <img class="h-20 w-20 font-green mr-15 discount-badge-icon" src="assets/icons/icon-discount.svg"
                      alt="item-discount"/>
@@ -13,7 +13,7 @@
             פירות העונה במבצע של 2 יחידות ב47₪. בתוקף עד ה04.01.22
             <div class="tooltip-right-arrow"></div>
         </div>
-        <button ng-click="ctrl.removeProduct(product)">
+        <button ng-click="removeProduct(product)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red absolute c-p remove-item-btn mt-5"
                  viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -21,21 +21,22 @@
                       clip-rule="evenodd"/>
             </svg>
         </button>
-        <img alt="product-thumbnail" class="item-thumbnail" ng-src={{imgBaseUrl.concat(product.imageUrl)}}>
+        <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
+             ng-src="{{imgBaseUrl + product.imageUrl}}">
     </div>
     <div class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5">
       <span class=" item-desc">
         {{product.name}}
       </span>
         <div class="display-flex align-center">
-            <svg ng-click="ctrl.increaseQuantity(product)" xmlns="http://www.w3.org/2000/svg"
+            <svg ng-click="increaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
                  class="mobile-show item-increment h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                       d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
                       clip-rule="evenodd"/>
             </svg>
             <span class="text-bolder mx-5 text-lg my-auto mobile-show">{{product.quantity}}</span>
-            <svg ng-click="ctrl.decreaseQuantity(product)" xmlns="http://www.w3.org/2000/svg"
+            <svg ng-click="decreaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
                  class="mobile-show item-decrement h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
                       clip-rule="evenodd"/>
@@ -77,15 +78,15 @@
             </div>
         </form>
     </div>
-    <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15">
-      <span class="item-price mobile-hide">
+    <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
+      <span class="item-price mobile-hide font-size-16 text-light">
         ₪{{product.price}}&hairsp;/&hairsp;{{product.defaultSellingUnit.name}}
       </span>
         <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
         <div ng-if="product.promoted && product.oldPrice">
-        <span class="text-muted mobile-hide">
+        <span class="text-muted mobile-hide font-size-13 text-light">
           ₪{{product.oldPrice}}/{{product.defaultSellingUnit.name}}
         </span>
             <span class="text-muted mobile-show">
@@ -94,7 +95,7 @@
         </div>
     </div>
     <div class="label-wrapper mobile-hide flex-horizontal item-quantity-container mt-15">
-        <svg ng-click="ctrl.increaseQuantity(product)" xmlns="http://www.w3.org/2000/svg"
+        <svg ng-click="increaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
              class="mobile-hide item-increment h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
                   d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
@@ -110,7 +111,7 @@
                 </svg>
             </div>
         </div>
-        <svg ng-click="ctrl.decreaseQuantity(product)" xmlns="http://www.w3.org/2000/svg"
+        <svg ng-click="decreaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
              class="mobile-hide item-decrement h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
                   clip-rule="evenodd"/>

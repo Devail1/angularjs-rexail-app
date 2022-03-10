@@ -37,7 +37,7 @@
                                 <span class="font-blue">
                                     {{ctrl.selectedSortBy || 'מיין לפי'}}
                                 </span>
-                            <svg class="icon-arrow-down" ng-style="toggleDropdown ? {'transform: 'rotate(180deg)'}" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="icon-arrow-down" ng-style="toggleDropdown ? {'transform': 'rotate(180deg)'} : {'transform': 'rotate(0deg)'}" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
                                       fill="currentColor" fill-rule="evenodd"/>
                             </svg>
@@ -66,7 +66,7 @@
             <div class="cart-preview rounded-10">
                 <div class="cart-preview-header display-flex align-center px-16">
                     <img class="w-22 h-22 ml-10" ng-src="assets/icons/button-arrow-up.svg"/>
-                    <img class="icon-basket" src="assets/icons/shape.svg"><span
+                    <img class="icon-basket" ng-src="assets/icons/icon-basket-green.svg"><span
                         class="text-sm font-white mt-8 cart-preview-items-count"> {{ctrl.state.cartItems.length}}</span></img>
                     <div class="display-flex flex-vertical font-white mr-8 ml-auto">
                         <span class="text-light font-size-14">סל הקניות שלי</span>
@@ -107,12 +107,12 @@
                             ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
                         <a class="w-full" href="/cart">
                             <div class="display-flex align-center justify-between">
-                                <span class="font-white checkout-text">המשך לתשלום</span>
-                                <span class="font-white total-sum">₪{{ctrl.state.total}}</span>
+                                <span class="font-heebo text-bold font-white checkout-text">המשך לתשלום</span>
+                                <span class="font-heebo text-bold font-white total-sum">₪{{ctrl.state.total}}</span>
                             </div>
                         </a>
                     </button>
-                    <span class="font-darkgray font-size-14">שערוך. עלות סופית לפני שקילה.</span>
+                    <span class="font-darkgray font-size-14 mt-5">שערוך. עלות סופית לפני שקילה.</span>
                 </div>
             </div>
 

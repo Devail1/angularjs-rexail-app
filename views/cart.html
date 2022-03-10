@@ -1,4 +1,5 @@
-<div class="bg">
+<div class="cart-bg">
+
     <div class="container mx-auto px-28 pt-20">
         <div class="back-btn c-p mb-5">
             <div class="display-flex align-center font-blue">
@@ -6,8 +7,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>
                 <span class="text-bold">
-                <a href="/store">          חזרה לחנות
-                </a>
+                <a href="/store">חזרה לחנות</a>
         </span>
             </div>
         </div>
@@ -19,10 +19,8 @@
         <span class="items-count text-bold">
           {{productsData.length}}
         </span>
-                <svg class="h-45 w-45 mb-5 font-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
-                </svg>
-                <div class="text-title font-blue mr-5 mt-15 mb-20 ">
+                <img ng-src="assets/icons/icon-basket-white.svg"/>
+                <div class="text-title font-blue mr-5 mt-15 mb-5 ">
                     סל הקניות שלי
                 </div>
             </div>
@@ -44,13 +42,13 @@
                     <div class="w-2-4">
                         <div class="display-flex align-center">
                             <span>מוצר</span>
-                            <button type="button" class="mr-15 c-p" ng-click="ctrl.toggleSortByEvenQuan()"
-                                    ng-class="ctrl.state.toggleEven ? 'font-green' : 'font-blue'">
-                                <svg class="h-24 w-h-24 c-p " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
-                                </svg>
-                            </button>
+<!--                            <button type="button" class="mr-15 c-p" ng-click="ctrl.toggleSortByEvenQuan()"-->
+<!--                                    ng-class="ctrl.state.toggleEven ? 'font-green' : 'font-blue'">-->
+<!--                                <svg class="h-24 w-h-24 c-p " fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"-->
+<!--                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
                         </div>
                     </div>
                     <div class="display-flex justify-around w-2-4">
@@ -58,22 +56,29 @@
                         <span>איכות</span>
                         <div class="display-flex align-center">
                             <span class="ml-10">סה"כ</span>
-                            <button type="button" class="mt-5" ng-click="ctrl.sortByItemTotal()">
-                                <svg class="h-16 w-16 c-p font-blue" fill="none" viewBox="0 0 24 24"
-                                     stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
-                                </svg>
-                            </button>
+<!--                            <button type="button" class="mt-5" ng-click="ctrl.sortByItemTotal()">-->
+<!--                                <svg class="h-16 w-16 c-p font-blue" fill="none" viewBox="0 0 24 24"-->
+<!--                                     stroke="currentColor">-->
+<!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+<!--                                          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
                         </div>
                         <span>הסר</span>
                     </div>
                 </div>
                 <ul id="cart-items-container">
-                    <li cart-item
-                        ng-repeat="product in ctrl.state.data.productsData | filter: ctrl.state.searchQuery | limitTo: 10"></li>
-                    <li ng-if="!productsData.length"
-                        class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
+                    <cart-item ng-repeat="product in ctrl.state.cartItems | filter: ctrl.state.searchQuery"
+                               ng-class="{'border-none':$last}"
+                               product="product"
+                               img-base-url="ctrl.imgBaseUrl"
+                               increase-product-quantity="ctrl.increaseProductQuantity(product)"
+                               decrease-product-quantity="ctrl.decreaseProductQuantity(product)"
+                               remove-product="ctrl.removeProduct(product)"
+                               validate-cart="ctrl.validateCart()"
+                    ></cart-item>
+                    <div ng-if="!ctrl.state.cartItems.length"
+                         class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
                         <span class="text-lg text-bold mt-10 ml-10">העגלה שלכם ריקה</span>
                         <svg class="h-36 w-36" viewBox="0 0 256 256" xml:space="preserve">
               <g transform="translate(128 128) scale(0.72 0.72)" style="">
@@ -94,35 +99,32 @@
                 </g>
               </g>
             </svg>
-                    </li>
+                    </div>
                 </ul>
             </div>
             <div class="display-flex flex-vertical mt-10">
-                <span class="text-title font-blue text-xl mb-20 mobile-show mt-20"> הערות למכין ההזמנה</span>
+                <span class="text-title font-gray-600 text-xl mb-20 mobile-show mt-20"> הערות למכין ההזמנה</span>
                 <div class="order-summary rounded-10">
                     <span class="font-heebo text-lgr text-bolder font-blue mobile-hide py-5 my-5 border-bottom-gray-2px">סיכום הזמנה</span>
                     <div class="mt-15 mb-10">
-                        <span class="font-darkgray mobile-hide">הערות למכין ההזמנה</span>
+                        <span class="font-gray-600 mobile-hide">הערות למכין ההזמנה</span>
                     </div>
                     <label>
-                        <textarea ng-model="ctrl.state.userComment" class="order-comment rounded-10 text-lg"></textarea>
+                        <textarea ng-model="ctrl.state.userComment" class="order-comment rounded-10 font-size-16"></textarea>
                     </label>
-                    <div ng-if="ctrl.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין ההזמנה
+                    <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין ההזמנה
                     </div>
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
-                    <div class="display-flex justify-between">
-                        <span class="mobile-hide font-darkgray">סה"כ סל קניות </span>
-                        <span class="mobile-hide item-price ">₪{{ctrl.state.total}}</span>
+                    <div class="display-flex justify-between" >
+                        <span class="mobile-hide font-gray-900">סה"כ סל קניות </span>
+                        <span class="mobile-hide item-price font-size-16">₪{{ctrl.state.total}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
-                            <button type="button" ng-click="ctrl.validateForm()"
-                                    class="mobile-hide h-45 btn-green rounded-10 border-gray-1px">
-                        <a class="mx-auto my-auto" href="/checkout">
-
-                                <span class="mobile-hide mt-5 font-white text-xl">המשך</span>
-                                <span class="mobile-hide font-darkgray mt-10">
-                            </button>
-                        </a>
+                        <button type="button" ng-click="ctrl.validateCart()"
+                                class="mobile-hide h-45 btn-green rounded-10 border-gray-1px">
+                                <span class="mobile-hide font-white font-size-18 text-bold mx-auto my-auto">המשך לתשלום</span>
+                        </button>
+                        <span class="mobile-hide font-darkgray mt-10 font-size-14">
                         שערוך. עלות סופית לפני שקילה.
                         </span>
                     </div>

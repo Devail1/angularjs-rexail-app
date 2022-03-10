@@ -18,7 +18,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($http, $scope, $filter) {
+rexailApp.controller('appController', function ($http, $scope, $filter, $location) {
     const ctrl = this;
     ctrl.state = {
         cartItems: [],
@@ -48,6 +48,16 @@ rexailApp.controller('appController', function ($http, $scope, $filter) {
                     ctrl.state.selectedCategory = ctrl.state.data.categoriesData[0]
                 });
         });
+
+    function calculateTotal() {
+        const initialValue = 0;
+        const sumWithInitial = ctrl.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
+        return sumWithInitial.toFixed(2)
+    }
+
+    ctrl.getCurrentPath = function () {
+        return $location.path();
+    }
 
     ctrl.showMoreCategories = function () {
         return ctrl.state.data.categoriesData.length > 10
@@ -85,25 +95,33 @@ rexailApp.controller('appController', function ($http, $scope, $filter) {
     // Products Sort by value
     ctrl.sortProductsBy = function (value) {
         ctrl.selectedSortBy = value
-
         if (value === 'שם מוצר')
             ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-name', true);
-
         if (value === 'מחיר מהנמוך לגבוה')
             ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-price', true);
-
         if (value === 'מחיר מהגבוהה לנמוך')
             ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'price', true);
-
         if (value === 'מוצרים במבצע')
             ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
 
-    function calculateTotal() {
-        const initialValue = 0;
-        const sumWithInitial = ctrl.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
-        return sumWithInitial.toFixed(2)
-    }
+
+    //Form validations
+    ctrl.validateCart = function () {
+        // Getting all products with preparation order prop
+        // let prepProducts = ctrl.state.products.filter(product => product['prepOptions']);
+        // Getting all products with selected preparation order
+        // let validPrepProducts = prepProducts.filter(product => product['prepOptions'] && product['selectedPrep'])
+
+        // Check if user comment is empty
+        ctrl.state.errors.userComment = !ctrl.state.userComment.length
+
+        // Check if all product's preparation methods are selected
+        // ctrl.errors.prepSelect = (validPrepProducts.length !== prepProducts.length)
+
+        // Redirect to /checkout if there are no errors
+        if (!ctrl.state.errors.userComment) $location.path('/checkout').replace();
+    };
 
     // Setting imgBaseUrl
     ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
@@ -117,37 +135,56 @@ rexailApp.controller('appController', function ($http, $scope, $filter) {
 
 rexailApp.directive('cartItem', function () {
     return {
-        templateUrl: 'directives/cart-item.html', replace: true,
+        templateUrl: 'directives/cart-item.html',
+        replace: true,
+        scope : {
+            product: '=',
+            imgBaseUrl: '=',
+            increaseProductQuantity: '&',
+            decreaseProductQuantity: '&',
+            removeProduct: '&'
+        }
     }
 })
 
 rexailApp.directive('storeItem', function () {
     return {
-        templateUrl: 'directives/store-item.html', replace: true, scope: {
-            product: '=', imgBaseUrl: '=', increaseProductQuantity: '&', decreaseProductQuantity: '&'
+        templateUrl: 'directives/store-item.html',
+        replace: true,
+        scope: {
+            product: '=',
+            imgBaseUrl: '=',
+            increaseProductQuantity: '&',
+            decreaseProductQuantity: '&'
         }
     }
 })
 
 rexailApp.directive('itemPreview', function () {
     return {
-        templateUrl: 'directives/item-preview.html', replace: true,
+        templateUrl: 'directives/item-preview.html',
+        replace: true,
         scope: {
-            product: '=', imgBaseUrl: '=', removeProduct: '&',
-            increaseProductQuantity: '&', decreaseProductQuantity: '&'
+            product: '=',
+            imgBaseUrl: '=',
+            removeProduct: '&',
+            increaseProductQuantity: '&',
+            decreaseProductQuantity: '&'
         }
     }
 })
 
 rexailApp.directive('footer', function () {
     return {
-        templateUrl: 'directives/footer.html', replace: true,
+        templateUrl: 'directives/footer.html',
+        replace: true,
     }
 })
 
 rexailApp.directive('navMenu', function () {
     return {
-        templateUrl: 'directives/nav-menu.html', replace: true,
+        templateUrl: 'directives/nav-menu.html',
+        replace: true,
     }
 })
 

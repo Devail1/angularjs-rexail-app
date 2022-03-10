@@ -1,5 +1,5 @@
 <div ng-cloak>
-    <div class="navbar-maximized">
+    <div ng-if="ctrl.getCurrentPath().includes('store')" class="navbar-maximized">
         <div class="container mx-auto font-white relative">
             <div class=" pt-20 display-flex align-center  justify-around  px-5 ">
                 <div class="search-box-container mr-auto ">
@@ -51,14 +51,8 @@
                 </label>
                 <img class="search-icon" src="../assets/icons/icon-search.svg"/>
             </div>
-            <div class="display-flex w-250">
-                <div class="circle-icon">
-                    <svg class="delivery-icon mr-3 mt-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                              d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
-                    </svg>
-                </div>
+            <div class="display-flex align-center w-250">
+                <img class="h-32 w-32" ng-src="assets/icons/icon-delivery-rounded.svg"/>
                 <div class="mr-10">
                     <span class="text-regular">משה דיין 20, תל אביב</span>
                     <br/>
@@ -66,10 +60,7 @@
                 </div>
             </div>
             <div class="display-flex c-p align-center">
-                <svg class="w-45 h-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                          d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+                <img class="h-32 w-32" ng-src="assets/icons/icon-user.svg"/>
                 <div class="display-flex align-center mr-5 ml-5">
                     <span class="text-regular">היי אינסה!</span>
                     <svg class="mr-10 h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
