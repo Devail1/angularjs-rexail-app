@@ -18,11 +18,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($http, $rootScope,$scope, $filter, $location, $anchorScroll) {
-    $rootScope.$on("$locationChangeSuccess", function(){
-        $anchorScroll();
-    });
-
+rexailApp.controller('appController', function ($http, $scope, $filter, $location, $anchorScroll) {
     const ctrl = this;
     ctrl.state = {
         cartItems: [],
@@ -68,6 +64,7 @@ rexailApp.controller('appController', function ($http, $rootScope,$scope, $filte
     }
 
     ctrl.handleCategoryClick = function (category) {
+        console.log(ctrl.state)
         ctrl.state.selectedCategory = category
 
         // scroll to top
@@ -134,6 +131,8 @@ rexailApp.controller('appController', function ($http, $rootScope,$scope, $filte
 
     // Setting initial value for pagination limit (infinite scroll)
     $scope.paginationLimit = 20
+
+    // http get pagination goes here
     $scope.loadMore = function () {
         $scope.paginationLimit = $scope.paginationLimit + 10
     }

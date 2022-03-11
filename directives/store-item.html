@@ -48,11 +48,11 @@
             </div>
             <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
                 <div class="toggle-unit-container ">
-                    <div class="toggle-unit  display-flex justify-center align-center">
-                        <span>ק"ג</span>
-                    </div>
-                    <div class="toggle-unit selected  display-flex justify-center align-center">
-                        <span>יח'</span>
+                    <div ng-repeat="productSellingUnit in product.productSellingUnits"
+                         ng-class="(product.productSellingUnits.length === 1 ||
+                            productSellingUnit.sellingUnit.name === product.defaultSellingUnit.name) ? 'selected' : ''"
+                         class="toggle-unit  display-flex justify-center align-center">
+                        <span>{{productSellingUnit.sellingUnit.name}}</span>
                     </div>
                 </div>
             </div>
