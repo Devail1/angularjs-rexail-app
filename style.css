@@ -490,17 +490,22 @@ html, body {
     background-color: #e9eded;
     color: black;
     display: flex;
+    height: 26px;
+    border-radius: 15px;
+    margin-top: 20px;
+    margin-bottom: -20px;
 }
 
 .toggle-unit {
     width: auto;
-    padding: 0 20px;
-    height: 52px;
+    padding: 0 .7rem;
+    height: 26px;
     cursor: pointer;
+    border-radius: 15px;
+
 }
 
 .toggle-unit.selected {
-    height: 52px;
     color: white;
     background-color: #005350;
 }
@@ -1588,9 +1593,9 @@ html, body {
         display: none !important;
     }
 
-    .toggle-unit-wrapper {
-        display: none !important;
-    }
+    /*.toggle-unit-wrapper {*/
+    /*    display: none !important;*/
+    /*}*/
 
     img ~ .text-xl {
         font-size: large;

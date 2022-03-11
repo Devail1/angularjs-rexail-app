@@ -46,7 +46,17 @@
                 <span class="font-heebo ">₪{{product.originalPrice}}</span>/
                 <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
             </div>
-            <div ng-if="!product.quantity " class="add-to-cart-btn mt-30" ng-click="increaseProductQuantity()">
+            <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
+                <div class="toggle-unit-container ">
+                    <div class="toggle-unit  display-flex justify-center align-center">
+                        <span>ק"ג</span>
+                    </div>
+                    <div class="toggle-unit selected  display-flex justify-center align-center">
+                        <span>יח'</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!product.quantity " class="add-to-cart-btn" ng-click="increaseProductQuantity()">
                 <img ng-src="assets/icons/icon-plus.svg"/>
                 <span class="mr-5 text-bold">
                 הוספה לסל
@@ -130,22 +140,6 @@
              class="font-darkgray text-linethrough text-light font-size-13">
             <span class="font-heebo ">₪{{product.originalPrice}}</span>/
             <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
-        </div>
-    </div>
-    <div class="toggle-unit-wrapper display-flex flex-vertical align-center ">
-        <div class="toggle-unit-container rounded-25">
-            <div class="toggle-unit text-xl rounded-25 display-flex justify-center align-center">
-                <span>ק"ג</span>
-            </div>
-            <div class="toggle-unit selected text-xl rounded-25 display-flex justify-center align-center">
-                <span>יח'</span>
-            </div>
-        </div>
-        <div class="mt-15 btn-green rounded-50 display-flex justify-center align-center  ">
-            <svg class="h-20 w-20 font-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 4v16m8-8H4"/>
-            </svg>
-            <span class="font-white text-bolder text-xl mr-10">הוספה לסל</span>
         </div>
     </div>
 </div>
