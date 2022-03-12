@@ -49,7 +49,7 @@
             <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
                 <div class="toggle-unit-container ">
                     <div ng-repeat="productSellingUnit in product.productSellingUnits"
-                         ng-click="handleQuantityUnitSelect(productSellingUnit)"
+                         ng-click="handleQuantityUnitSelect(product, productSellingUnit)"
                          ng-class="(product.productSellingUnits.length === 1 ||
                             productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.name) ? 'selected' : ''"
                          class="toggle-unit  display-flex justify-center align-center"

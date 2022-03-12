@@ -154,13 +154,10 @@ rexailApp.directive('storeItem', function () {
             imgBaseUrl: '=',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
-            // handleQuantityUnitSelect: '&',
         },
         link: function(scope) {
-            scope.handleQuantityUnitSelect = function (product) {
-                console.log('product', product)
-                // let currentPrimary = product.primaryQuantityUnit
-                // console.log('currentPrimary', currentPrimary)
+            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
+                product.primaryQuantityUnit = quantityUnit.sellingUnit
             }
         }
     }
@@ -173,7 +170,7 @@ rexailApp.directive('itemPreview', function () {
             imgBaseUrl: '=',
             removeProduct: '&',
             increaseProductQuantity: '&',
-            decreaseProductQuantity: '<'
+            decreaseProductQuantity: '&'
         }
     }
 })
@@ -195,7 +192,9 @@ function formatData(array) {
     return Object.values(array.reduce((obj, current) => {
         if (!obj[current.productCategory.id]) {
             obj[current.productCategory.id] = {
-                id: current.productCategory.id, name: current.productCategory.name, children: []
+                id: current.productCategory.id,
+                name: current.productCategory.name,
+                children: []
             }
         }
 
