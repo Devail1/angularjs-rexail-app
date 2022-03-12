@@ -39,19 +39,21 @@
             </div>
             <div class="mt-30 mb-5">
                 <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
-                <span class="unit-label text-bold">{{product.defaultSellingUnit.name}}</span>
+                <span class="unit-label text-bold">{{product.primaryQuantityUnit.name}}</span>
             </div>
             <div ng-if="product.promoted && product.originalPrice"
                  class="font-darkgray text-linethrough text-light font-size-13">
                 <span class="font-heebo ">₪{{product.originalPrice}}</span>/
-                <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
+                <span class="font-heebo ">{{product.primaryQuantityUnit.name}}</span>
             </div>
             <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
                 <div class="toggle-unit-container ">
                     <div ng-repeat="productSellingUnit in product.productSellingUnits"
+                         ng-click="handleQuantityUnitSelect(productSellingUnit)"
                          ng-class="(product.productSellingUnits.length === 1 ||
-                            productSellingUnit.sellingUnit.name === product.defaultSellingUnit.name) ? 'selected' : ''"
-                         class="toggle-unit  display-flex justify-center align-center">
+                            productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.name) ? 'selected' : ''"
+                         class="toggle-unit  display-flex justify-center align-center"
+                    >
                         <span>{{productSellingUnit.sellingUnit.name}}</span>
                     </div>
                 </div>
@@ -134,12 +136,12 @@
     <div class="display-flex flex-vertical align-center product-price-wrapper">
         <div>
             <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
-            <span class="unit-label text-sm text-bold">{{product.defaultSellingUnit.name}}</span>
+            <span class="unit-label text-sm text-bold">{{product.primaryQuantityUnit.name}}</span>
         </div>
         <div ng-if="product.promoted && product.originalPrice"
              class="font-darkgray text-linethrough text-light font-size-13">
             <span class="font-heebo ">₪{{product.originalPrice}}</span>/
-            <span class="font-heebo "> {{product.defaultSellingUnit.name}}</span>
+            <span class="font-heebo "> {{product.primaryQuantityUnit.name}}</span>
         </div>
     </div>
 </div>

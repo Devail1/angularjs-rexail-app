@@ -37,15 +37,21 @@
                                 <span class="font-blue">
                                     {{ctrl.selectedSortBy || 'מיין לפי'}}
                                 </span>
-                            <svg class="icon-arrow-down" ng-style="toggleDropdown ? {'transform': 'rotate(180deg)'} : {'transform': 'rotate(0deg)'}" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
-                                      fill="currentColor" fill-rule="evenodd"/>
-                            </svg>
+                        <svg class="icon-arrow-down"
+                             ng-style="toggleDropdown ? {'transform': 'rotate(180deg)'} : {'transform': 'rotate(0deg)'}"
+                             viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
+                                  fill="currentColor" fill-rule="evenodd"/>
+                        </svg>
 
                         <ul ng-if="toggleDropdown" class="dropdown-menu absolute mt-30">
                             <li class="dropdown-item" ng-click="ctrl.sortProductsBy('שם מוצר')">שם מוצר</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהנמוך לגבוה')">מחיר מהנמוך לגבוה</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהגבוהה לנמוך')">מחיר מהגבוהה לנמוך</li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהנמוך לגבוה')">מחיר מהנמוך
+                                לגבוה
+                            </li>
+                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהגבוהה לנמוך')">מחיר מהגבוהה
+                                לנמוך
+                            </li>
                             <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מוצרים במבצע')">מוצרים במבצע</li>
                         </ul>
                     </div>

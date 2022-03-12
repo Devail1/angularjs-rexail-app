@@ -21,18 +21,10 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 rexailApp.controller('appController', function ($http, $scope, $filter, $location, $anchorScroll) {
     const ctrl = this;
     ctrl.state = {
-        cartItems: [],
-        total: '0.00',
-        userComment: '',
-        selectedCategory: null,
-        selectedSortBy: null,
-        data: {
-            storeData: [],
-            categoriesData: []
-        },
-        errors: {
-            userComment: false,
-            prepSelect: false
+        cartItems: [], total: '0.00', userComment: '', selectedCategory: null, selectedSortBy: null, data: {
+            storeData: [], categoriesData: []
+        }, errors: {
+            userComment: false, prepSelect: false
         }
     }
 
@@ -64,11 +56,18 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     }
 
     ctrl.handleCategoryClick = function (category) {
+        /* ~~~ Debug comment to remove ~~~*/
         console.log(ctrl.state)
         ctrl.state.selectedCategory = category
 
         // scroll to top
         $anchorScroll();
+    }
+
+    ctrl.handleQuantityUnitSelect = function (product) {
+        let currentPrimary = product.primaryQuantityUnit
+        console.log('product', product)
+        console.log('currentPrimary', currentPrimary)
     }
 
     ctrl.removeProduct = function (product) {
@@ -78,14 +77,14 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     }
 
     ctrl.increaseProductQuantity = function (product) {
-        if (!product.defaultSellingUnit) product.defaultSellingUnit = {'amountJumps': 1}
-        product.quantity = product.quantity ? product.quantity + product.defaultSellingUnit.amountJumps : product.defaultSellingUnit.amountJumps;
+        if (!product.primaryQuantityUnit) product.primaryQuantityUnit = {'amountJumps': 1}
+        product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.amountJumps : product.primaryQuantityUnit.amountJumps;
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
     }
 
     ctrl.decreaseProductQuantity = function (product) {
-        if (product.quantity > product.defaultSellingUnit.amountJumps) product.quantity = product.quantity - product.defaultSellingUnit.amountJumps
+        if (product.quantity > product.primaryQuantityUnit.amountJumps) product.quantity = product.quantity - product.primaryQuantityUnit.amountJumps
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
     }
@@ -99,14 +98,10 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     // Products Sort by value
     ctrl.sortProductsBy = function (value) {
         ctrl.selectedSortBy = value
-        if (value === 'שם מוצר')
-            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-name', true);
-        if (value === 'מחיר מהנמוך לגבוה')
-            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-price', true);
-        if (value === 'מחיר מהגבוהה לנמוך')
-            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'price', true);
-        if (value === 'מוצרים במבצע')
-            ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
+        if (value === 'שם מוצר') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-name', true);
+        if (value === 'מחיר מהנמוך לגבוה') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-price', true);
+        if (value === 'מחיר מהגבוהה לנמוך') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'price', true);
+        if (value === 'מוצרים במבצע') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
 
     //Form validations
@@ -142,54 +137,56 @@ rexailApp.directive('cartItem', function () {
     return {
         templateUrl: 'directives/cart-item.html',
         replace: true,
-        scope : {
+        scope: {
             product: '=',
             imgBaseUrl: '=',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
             removeProduct: '&'
-        }
+        },
     }
 })
 
 rexailApp.directive('storeItem', function () {
     return {
-        templateUrl: 'directives/store-item.html',
-        replace: true,
-        scope: {
+        templateUrl: 'directives/store-item.html', replace: true, scope: {
             product: '=',
             imgBaseUrl: '=',
             increaseProductQuantity: '&',
-            decreaseProductQuantity: '&'
+            decreaseProductQuantity: '&',
+            // handleQuantityUnitSelect: '&',
+        },
+        link: function(scope) {
+            scope.handleQuantityUnitSelect = function (product) {
+                console.log('product', product)
+                // let currentPrimary = product.primaryQuantityUnit
+                // console.log('currentPrimary', currentPrimary)
+            }
         }
     }
 })
 
 rexailApp.directive('itemPreview', function () {
     return {
-        templateUrl: 'directives/item-preview.html',
-        replace: true,
-        scope: {
+        templateUrl: 'directives/item-preview.html', replace: true, scope: {
             product: '=',
             imgBaseUrl: '=',
             removeProduct: '&',
             increaseProductQuantity: '&',
-            decreaseProductQuantity: '&'
+            decreaseProductQuantity: '<'
         }
     }
 })
 
 rexailApp.directive('footer', function () {
     return {
-        templateUrl: 'directives/footer.html',
-        replace: true,
+        templateUrl: 'directives/footer.html', replace: true,
     }
 })
 
 rexailApp.directive('navMenu', function () {
     return {
-        templateUrl: 'directives/nav-menu.html',
-        replace: true,
+        templateUrl: 'directives/nav-menu.html', replace: true,
     }
 })
 
@@ -203,18 +200,17 @@ function formatData(array) {
         }
 
         let productModel = {
-            id: current.product.id,
+            id: current.id,
             name: current.product.name,
             fullName: current.fullName,
-            defaultSellingUnit: current.product.defaultSellingUnit,
             imageUrl: current.imageUrl,
-            productSellingUnits: current.productSellingUnits,
             price: current.price,
             promoted: current.promoted,
-            oldPrice: current.oldPrice,
             originalPrice: current.originalPrice,
             productQuality: current.productQuality,
-            currentRelevancy: current.currentRelevancy
+            currentRelevancy: current.currentRelevancy,
+            primaryQuantityUnit: current.product.primaryQuantityUnit,
+            productSellingUnits: current.productSellingUnits,
         }
 
         if (current.product.id) obj['0'].children.push(productModel)
@@ -224,7 +220,6 @@ function formatData(array) {
 
         return obj
     }, {
-        0: {id: 0, name: 'כל המוצרים', children: []},
-        1: {id: 1, name: 'מבצעים', children: []}
+        0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
     }))
 }

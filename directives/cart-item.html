@@ -80,14 +80,14 @@
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
       <span class="item-price mobile-hide font-size-16 text-light">
-        ₪{{product.price}}&hairsp;/&hairsp;{{product.defaultSellingUnit.name}}
+        ₪{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.name}}
       </span>
         <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
         <div ng-if="product.promoted && product.oldPrice">
         <span class="text-muted mobile-hide font-size-13 text-light">
-          ₪{{product.oldPrice}}/{{product.defaultSellingUnit.name}}
+          ₪{{product.oldPrice}}/{{product.primaryQuantityUnit.name}}
         </span>
             <span class="text-muted mobile-show">
           ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
@@ -104,7 +104,7 @@
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-bold item-quantity">{{product.quantity}}</div>
             <div class="display-flex justify-between align-center">
-                <div class="font-darkgray text-light mr-10 text-sm">{{product.defaultSellingUnit.name}}</div>
+                <div class="font-darkgray text-light mr-10 text-sm">{{product.primaryQuantityUnit.name}}</div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="font-darkgray dropdown-arrow h-10 w-10" fill="none"
                      viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
