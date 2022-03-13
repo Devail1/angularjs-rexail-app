@@ -130,7 +130,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         ctrl.state.errors.cart.productComment = (validPrepProducts.length !== prepProducts.length)
 
         // Redirect to /checkout if there are no errors
-        if (!ctrl.state.cart.errors.userComment) $location.path('/checkout').replace();
+        if (!ctrl.state.errors.cart.userComment && !ctrl.state.errors.cart.productComment) $location.path('/checkout').replace();
     };
 
     // Setting imgBaseUrl

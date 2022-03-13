@@ -49,11 +49,11 @@
                             <!--                            </button>-->
                         </div>
                     </div>
-                    <div class="display-flex justify-around w-2-4">
+                    <div class="display-flex justify-between w-2-4">
                         <span>מחיר ליחידה</span>
                         <span>איכות</span>
                         <div class="display-flex align-center">
-                            <span class="ml-10">סה"כ</span>
+                            <span>סה"כ</span>
                             <!--                            <button type="button" class="mt-5" ng-click="ctrl.sortByItemTotal()">-->
                             <!--                                <svg class="h-16 w-16 c-p font-blue" fill="none" viewBox="0 0 24 24"-->
                             <!--                                     stroke="currentColor">-->
@@ -112,7 +112,7 @@
                         <textarea ng-model="ctrl.state.userComment"
                                   class="order-comment rounded-10 font-size-16"></textarea>
                     </label>
-                    <div ng-if="ctrl.state.cart.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין
+                    <div ng-if="ctrl.state.errors.cart.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין
                         ההזמנה
                     </div>
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
