@@ -6,9 +6,32 @@
 </head>
 <body>
 <div class="checkout-bg">
-    <div class="wizard-steps-container">
-
+    <div class="container mx-auto pt-25">
+        <div class="wizard-steps-container display-flex align-center justify-around font-white">
+            <div class="display-flex align-center">
+                <img ng-src="assets/icons/progress-bar-completed.svg" />
+                <div class="mr-10 font-size-16 text-bold">פרטים אישיים</div>
+            </div>
+            <div class="display-flex align-center">
+                <img ng-src="assets/icons/progress-bar-completed.svg" />
+                <div class="mr-10 font-size-16 text-bold">תיאום הגעה</div>
+            </div>
+            <div class="display-flex align-center">
+                <div class="w-36 h-36 circle-icon bg-white font-blue font-size-18 font-heebo text-center text-bold">3</div>
+                <div class="mr-10 font-size-16 text-bold">תשלום</div>
+            </div>
+        </div>
+        <div class="widget-wrapper">
+            <div class="checkout-widget rounded-10">
+                    <div class="text-title font-blue">תשלום</div>
+                    <span class="font-size-16 font-blue text-bold">בחרו אמצעי תשלום</span>
+            </div>
+            <div class="order-summary rounded-10">
+                <span class="font-heebo text-lgr text-bolder font-blue mobile-hide py-5 my-5 border-bottom-gray-2px">סיכום הזמנה</span>
+            </div>
+        </div>
     </div>
+    <footer></footer>
 </div>
 
 </body>

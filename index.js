@@ -34,9 +34,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
                 userComment: false,
                 productComment: false
             },
-            checkout: {
-
-            }
+            checkout: {}
         }
     }
 
@@ -74,12 +72,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
 
         // scroll to top
         $anchorScroll();
-    }
-
-    ctrl.handleQuantityUnitSelect = function (product) {
-        let currentPrimary = product.primaryQuantityUnit
-        console.log('product', product)
-        console.log('currentPrimary', currentPrimary)
     }
 
     ctrl.removeProduct = function (product) {
@@ -145,26 +137,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     }
 })
 
-rexailApp.directive('cartItem', function () {
-    return {
-        templateUrl: 'directives/cart-item.html',
-        replace: true,
-        scope: {
-            product: '=',
-            imgBaseUrl: '=',
-            increaseProductQuantity: '&',
-            decreaseProductQuantity: '&',
-            removeProduct: '&',
-            errors: '=',
-        },
-        link: function (scope) {
-            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                product.primaryQuantityUnit = quantityUnit.sellingUnit
-            }
-        }
-    }
-})
-
 rexailApp.directive('storeItem', function () {
     return {
         templateUrl: 'directives/store-item.html', replace: true, scope: {
@@ -176,6 +148,9 @@ rexailApp.directive('storeItem', function () {
         link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
                 product.primaryQuantityUnit = quantityUnit.sellingUnit
+                if (product.primaryQuantityUnit.amountJumps === 1) {
+                    product.quantity = Math.round(product.quantity)
+                }
             }
         }
     }
@@ -195,6 +170,32 @@ rexailApp.directive('itemPreview', function () {
         link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
                 product.primaryQuantityUnit = quantityUnit.sellingUnit
+                if (product.primaryQuantityUnit.amountJumps === 1) {
+                    product.quantity = Math.round(product.quantity)
+                }
+            }
+        }
+    }
+})
+
+rexailApp.directive('cartItem', function () {
+    return {
+        templateUrl: 'directives/cart-item.html',
+        replace: true,
+        scope: {
+            product: '=',
+            imgBaseUrl: '=',
+            increaseProductQuantity: '&',
+            decreaseProductQuantity: '&',
+            removeProduct: '&',
+            errors: '=',
+        },
+        link: function (scope) {
+            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
+                product.primaryQuantityUnit = quantityUnit.sellingUnit
+                if (product.primaryQuantityUnit.amountJumps === 1) {
+                    product.quantity = Math.round(product.quantity)
+                }
             }
         }
     }
