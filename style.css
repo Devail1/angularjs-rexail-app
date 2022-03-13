@@ -778,7 +778,7 @@ html, body {
 }
 
 .item-desc {
-    font-size: large;
+    font-size: 16px;
 }
 
 /*  */
@@ -1422,6 +1422,7 @@ html, body {
         width: 14vw;
         text-overflow: ellipsis;
         padding: 0 1.3em;
+        font-size: 14px;
     }
 
     .select-arrow {

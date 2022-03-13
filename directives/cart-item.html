@@ -42,7 +42,8 @@
         </div>
         <form class="select-form" ng-if="product.commentType">
             <label class="relative">
-                <svg ng-class="product.selectedPrep ? 'font-green' : 'font-red'" xmlns="http://www.w3.org/2000/svg"
+                <svg ng-class="!errors.cart.productComment || product.comment ? 'font-green' : 'font-red'"
+                     xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
                      preserveAspectRatio="xMidYMid meet">
                     <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none"
@@ -51,18 +52,19 @@
                         <path d="M1297 1502 l-1299 -1299 29 -11 c99 -41 331 -54 507 -27 636 96 1423 550 2296 1324 130 115 560 522 560 530 0 10 -774 781 -785 781 -6 0 -594 -584 -1308 -1298z"/>
                     </g>
                 </svg>
-                <select ng-model="product.selectedPrep" ng-options="option.label for option in product.prepOptions"
-                        ng-class="product.selectedPrep ? 'border-green' : 'border-red'"
+                <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
+                        ng-class="!errors.cart.productComment || product.comment ? 'border-green' : 'border-red'"
                         class="select-unit c-p mt-10 rounded-25 w-max-300 display-flex align-center justify-between">
-                    <option value="">נא בחרו צורת חיתוך</option>
+                    <option value="">{{product.commentType.name}}</option>
                 </select>
-                <svg ng-class="product.selectedPrep ? 'font-green' : 'font-red'" xmlns="http://www.w3.org/2000/svg"
+                <svg ng-class="!errors.cart.productComment || product.comment ? 'font-green' : 'font-red'"
+                     xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 ml-10 select-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/>
                 </svg>
             </label>
             <!-- Show error label if there is an error in form validation -->
-            <div ng-if="ctrl.errors.prepSelect && !product.selectedPrep" class="mt-5 font-red text-md select-warning">
+            <div ng-if="errors.cart.productComment && !product.comment" class="mt-5 font-red text-md select-warning">
                 יש לבחור אפשרות אחת
             </div>
         </form>

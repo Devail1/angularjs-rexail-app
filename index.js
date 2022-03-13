@@ -21,10 +21,22 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 rexailApp.controller('appController', function ($http, $scope, $filter, $location, $anchorScroll) {
     const ctrl = this;
     ctrl.state = {
-        cartItems: [], total: '0.00', userComment: '', selectedCategory: null, selectedSortBy: null, data: {
-            storeData: [], categoriesData: []
+        cartItems: [],
+        total: '0.00',
+        userComment: '',
+        selectedCategory: null,
+        selectedSortBy: null,
+        data: {
+            storeData: [],
+            categoriesData: []
         }, errors: {
-            userComment: false, prepSelect: false
+            cart: {
+                userComment: false,
+                productComment: false
+            },
+            checkout: {
+
+            }
         }
     }
 
@@ -104,21 +116,21 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         if (value === 'מוצרים במבצע') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
 
-    //Form validations
+    //Cart validations
     ctrl.validateCart = function () {
         // Getting all products with preparation order prop
-        // let prepProducts = ctrl.state.products.filter(product => product['prepOptions']);
+        let prepProducts = ctrl.state.cartItems.filter(product => product.commentType);
         // Getting all products with selected preparation order
-        // let validPrepProducts = prepProducts.filter(product => product['prepOptions'] && product['selectedPrep'])
+        let validPrepProducts = prepProducts.filter(product => product.commentType && product.comment)
 
         // Check if user comment is empty
-        ctrl.state.errors.userComment = !ctrl.state.userComment.length
+        ctrl.state.errors.cart.userComment = !ctrl.state.userComment.length
 
         // Check if all product's preparation methods are selected
-        // ctrl.errors.prepSelect = (validPrepProducts.length !== prepProducts.length)
+        ctrl.state.errors.cart.productComment = (validPrepProducts.length !== prepProducts.length)
 
         // Redirect to /checkout if there are no errors
-        if (!ctrl.state.errors.userComment) $location.path('/checkout').replace();
+        if (!ctrl.state.cart.errors.userComment) $location.path('/checkout').replace();
     };
 
     // Setting imgBaseUrl
@@ -142,9 +154,10 @@ rexailApp.directive('cartItem', function () {
             imgBaseUrl: '=',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
-            removeProduct: '&'
+            removeProduct: '&',
+            errors: '=',
         },
-        link: function(scope) {
+        link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
                 product.primaryQuantityUnit = quantityUnit.sellingUnit
             }
@@ -179,7 +192,7 @@ rexailApp.directive('itemPreview', function () {
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&'
         },
-        link: function(scope) {
+        link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
                 product.primaryQuantityUnit = quantityUnit.sellingUnit
             }

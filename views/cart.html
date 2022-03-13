@@ -74,6 +74,7 @@
                                decrease-product-quantity="ctrl.decreaseProductQuantity(product)"
                                remove-product="ctrl.removeProduct(product)"
                                validate-cart="ctrl.validateCart()"
+                               errors="ctrl.state.errors"
                     ></cart-item>
                     <div ng-if="!ctrl.state.cartItems.length"
                          class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
@@ -111,7 +112,7 @@
                         <textarea ng-model="ctrl.state.userComment"
                                   class="order-comment rounded-10 font-size-16"></textarea>
                     </label>
-                    <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין
+                    <div ng-if="ctrl.state.cart.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות למכין
                         ההזמנה
                     </div>
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
