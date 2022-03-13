@@ -30,9 +30,19 @@
         <span class="font-size-16 text-bold">
         {{product.quantity}}
       </span>
-        <span class="font-size-13 font-gray-600">
-        {{product.primaryQuantityUnit.name}}
-      </span>
+        <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
+             ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
+            <span class="font-size-13 font-gray-600 unit-label c-p"
+                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.name}}
+            <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
+                 class="h-7 w-7 font-green mr-2 dropdown-arrow">
+            </span>
+            <div ng-if="toggleDropdown" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
+                    <span ng-repeat="productSellingUnit in product.productSellingUnits"
+                          ng-click="handleQuantityUnitSelect(product, productSellingUnit)"
+                          class="dropdown-item ">{{productSellingUnit.sellingUnit.name}}</span>
+            </div>
+        </div>
         <div class="plus-minus-preview-container" ng-click="decreaseProductQuantity()">
             <img class="h-8 w-8" ng-src="assets/icons/icon-minus.svg">
         </div>

@@ -38,8 +38,10 @@
                 </div>
             </div>
             <div class="mt-30 mb-5">
-                <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
-                <span class="unit-label text-bold">{{product.primaryQuantityUnit.name}}</span>
+                <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>
+                <span ng-if="product.primaryQuantityUnit.name"> &hairsp;/&hairsp;
+                    <span class="font-heebo text-bold">{{product.primaryQuantityUnit.name}}</span>
+                </span>
             </div>
             <div ng-if="product.promoted && product.originalPrice"
                  class="font-darkgray text-linethrough text-light font-size-13">
@@ -135,8 +137,10 @@
     </div>
     <div class="display-flex flex-vertical align-center product-price-wrapper">
         <div>
-            <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>/
-            <span class="unit-label text-sm text-bold">{{product.primaryQuantityUnit.name}}</span>
+            <span class="font-heebo font-size-18 text-bolder">₪{{product.price}}</span>
+            <span ng-if="product.primaryQuantityUnit.name"> &hairsp;/&hairsp;
+                <span class="font-heebo text-sm text-bold">{{product.primaryQuantityUnit.name}}</span>
+            </span>
         </div>
         <div ng-if="product.promoted && product.originalPrice"
              class="font-darkgray text-linethrough text-light font-size-13">

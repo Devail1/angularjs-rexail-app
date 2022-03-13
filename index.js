@@ -144,6 +144,11 @@ rexailApp.directive('cartItem', function () {
             decreaseProductQuantity: '&',
             removeProduct: '&'
         },
+        link: function(scope) {
+            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
+                product.primaryQuantityUnit = quantityUnit.sellingUnit
+            }
+        }
     }
 })
 
@@ -155,7 +160,7 @@ rexailApp.directive('storeItem', function () {
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
         },
-        link: function(scope) {
+        link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
                 product.primaryQuantityUnit = quantityUnit.sellingUnit
             }
@@ -165,12 +170,19 @@ rexailApp.directive('storeItem', function () {
 
 rexailApp.directive('itemPreview', function () {
     return {
-        templateUrl: 'directives/item-preview.html', replace: true, scope: {
+        templateUrl: 'directives/item-preview.html',
+        replace: true,
+        scope: {
             product: '=',
             imgBaseUrl: '=',
             removeProduct: '&',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&'
+        },
+        link: function(scope) {
+            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
+                product.primaryQuantityUnit = quantityUnit.sellingUnit
+            }
         }
     }
 })
@@ -210,6 +222,7 @@ function formatData(array) {
             currentRelevancy: current.currentRelevancy,
             primaryQuantityUnit: current.product.primaryQuantityUnit,
             productSellingUnits: current.productSellingUnits,
+            commentType: current.commentType
         }
 
         if (current.product.id) obj['0'].children.push(productModel)

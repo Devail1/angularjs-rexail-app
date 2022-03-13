@@ -29,18 +29,7 @@
         {{product.name}}
       </span>
         <div class="display-flex align-center">
-            <svg ng-click="increaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
-                 class="mobile-show item-increment h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                      clip-rule="evenodd"/>
-            </svg>
             <span class="text-bolder mx-5 text-lg my-auto mobile-show">{{product.quantity}}</span>
-            <svg ng-click="decreaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
-                 class="mobile-show item-decrement h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
-                      clip-rule="evenodd"/>
-            </svg>
             <div class="select-unit my-3 border-green rounded-25 display-flex align-center justify-between mr-10 mobile-show">
           <span class="text-lg mr-15">
             יח'
@@ -51,7 +40,7 @@
                 </svg>
             </div>
         </div>
-        <form class="select-form" ng-if="product.prepOptions">
+        <form class="select-form" ng-if="product.commentType">
             <label class="relative">
                 <svg ng-class="product.selectedPrep ? 'font-green' : 'font-red'" xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
@@ -95,27 +84,28 @@
         </div>
     </div>
     <div class="label-wrapper mobile-hide flex-horizontal item-quantity-container mt-15">
-        <svg ng-click="increaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
-             class="mobile-hide item-increment h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                  clip-rule="evenodd"/>
-        </svg>
+        <div class="plus-minus-preview-container" ng-click="increaseProductQuantity()">
+            <img class="h-8 w-8" ng-src="assets/icons/icon-plus.svg">
+        </div>
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-bold item-quantity">{{product.quantity}}</div>
-            <div class="display-flex justify-between align-center">
-                <div class="font-darkgray text-light mr-10 text-sm">{{product.primaryQuantityUnit.name}}</div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="font-darkgray dropdown-arrow h-10 w-10" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
+            <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
+                 ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
+            <span class="font-size-13 font-gray-600 unit-label c-p"
+                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.name}}
+            <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
+                 class="h-7 w-7 font-green mr-2 dropdown-arrow">
+            </span>
+                <div ng-if="toggleDropdown" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
+                    <span ng-repeat="productSellingUnit in product.productSellingUnits"
+                          ng-click="handleQuantityUnitSelect(product, productSellingUnit)"
+                          class="dropdown-item ">{{productSellingUnit.sellingUnit.name}}</span>
+                </div>
             </div>
         </div>
-        <svg ng-click="decreaseProductQuantity()" xmlns="http://www.w3.org/2000/svg"
-             class="mobile-hide item-decrement h-36 w-36 font-green" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
-                  clip-rule="evenodd"/>
-        </svg>
+        <div class="plus-minus-preview-container" ng-click="decreaseProductQuantity()">
+            <img class="h-8 w-8" ng-src="assets/icons/icon-minus.svg">
+        </div>
     </div>
     <div class="label-wrapper mobile-hide mt-15">
         <div class="mx-auto mobile-hide text-bold item-sum">₪{{(product.quantity * product.price).toFixed(2)}}</div>
