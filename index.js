@@ -58,6 +58,8 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
                     ctrl.state.data.categoriesData = formatData(response.data.data);
                     // Setting initial category
                     ctrl.state.selectedCategory = ctrl.state.data.categoriesData[0]
+                    // search auto-complete
+                    $scope.items = ctrl.state.data.categoriesData[0].children
                 });
         });
 
@@ -78,6 +80,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     ctrl.handleCategoryClick = function (category) {
         /* ~~~ Debug comment to remove ~~~*/
         console.log(ctrl.state)
+        console.log($scope)
         ctrl.state.selectedCategory = category
 
         // scroll to top
@@ -178,8 +181,30 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     $scope.loadMore = function () {
         $scope.paginationLimit = $scope.paginationLimit + 10
     }
+
+    // search auto-complete
+    $scope.showlist = false;
+    $scope.clearList = function(){
+        $scope.selected = null;
+        $scope.showlist = false;
+    }
+
+    $scope.selectedItem = function($event, item){
+        $scope.selected = item;
+        $scope.showlist = false;
+    }
 })
 
+// search autocomplete
+rexailApp.directive('autoComplete', function($timeout) {
+    return function(scope, iElement, iAttrs) {
+        iElement.bind("keypress", function(e){
+            scope.showlist = true;
+        })
+    };
+})
+
+// components
 rexailApp.directive('storeItem', function () {
     return {
         templateUrl: 'directives/store-item.html', replace: true, scope: {

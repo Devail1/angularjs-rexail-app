@@ -27,6 +27,16 @@
         </div>
     </div>
     <div class="container mx-auto pt-20">
+        <div>
+            <input auto-complete ui-items="items" ng-model="selected">
+            <button ng-click="clearList()">Clear
+            </button>
+            <ul ng-show="showlist">
+                <li ng-repeat="item in items | filter: selected" ng-click="selectedItem($event, item)">
+                    {{item.name}}
+                </li>
+            </ul>
+        </div>
         <div class="display-flex relative">
             <div class="store-widget">
                 <div class="display-flex justify-between align-center">
