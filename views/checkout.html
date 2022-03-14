@@ -9,25 +9,171 @@
     <div class="container mx-auto pt-25">
         <div class="wizard-steps-container display-flex align-center justify-around font-white">
             <div class="display-flex align-center">
-                <img ng-src="assets/icons/progress-bar-completed.svg" />
+                <img ng-src="assets/icons/progress-bar-completed.svg"/>
                 <div class="mr-10 font-size-16 text-bold">פרטים אישיים</div>
             </div>
             <div class="display-flex align-center">
-                <img ng-src="assets/icons/progress-bar-completed.svg" />
+                <img ng-src="assets/icons/progress-bar-completed.svg"/>
                 <div class="mr-10 font-size-16 text-bold">תיאום הגעה</div>
             </div>
             <div class="display-flex align-center">
-                <div class="w-36 h-36 circle-icon bg-white font-blue font-size-18 font-heebo text-center text-bold">3</div>
+                <div class="w-36 h-36 circle-icon bg-white font-blue font-size-18 font-heebo text-center text-bold">3
+                </div>
                 <div class="mr-10 font-size-16 text-bold">תשלום</div>
             </div>
         </div>
         <div class="widget-wrapper">
             <div class="checkout-widget rounded-10">
+                <div>
+
                     <div class="text-title font-blue">תשלום</div>
-                    <span class="font-size-16 font-blue text-bold">בחרו אמצעי תשלום</span>
+                    <span class="font-size-16 font-gray-900 text-bold">בחרו אמצעי תשלום</span>
+                    <div class="display-flex justify-evenly mt-14 mb-20">
+                        <div class="wizard-step-wrapper display-flex flex-vertical align-center justify-center active">
+                            <img ng-src="assets/icons/icon-credit-card-2.svg"/>
+                            <span>כרטיס אשראי</span>
+                        </div>
+                        <div class="wizard-step-wrapper display-flex flex-vertical align-center justify-center">
+                            <img ng-src="assets/icons/icon-cash.svg"/>
+                            <span>מזומן</span>
+                        </div>
+                        <div class="wizard-step-wrapper display-flex flex-vertical align-center justify-center">
+                            <img src="assets/icons/icon-cycle.svg"/>
+                            <span>תשלום בהקפה</span>
+                        </div>
+                        <div class="wizard-step-wrapper display-flex flex-vertical align-center justify-center">
+                            <img ng-src="assets/icons/icon-no-payment.svg"/>
+                            <span>ללא תשלום</span>
+                        </div>
+                    </div>
+                    <div class="checkout-form-wrapper mb-20">
+                        <div class="font-size-16 font-gray-900 text-bold mb-12">פרטי כרטיס אשראי</div>
+                        <div class="display-flex align-center justify-between mb-20">
+                            <div class="display-flex flex-vertical w-2-4">
+                                <span>שם בעל הכרטיס *</span>
+                                <input class="checkout-form-input" type="text"
+                                       ng-model="ctrl.state.formControl.cardHolderName"
+                                       ng-blur="ctrl.validateFormInput('card-holder-name')"
+                                       ng-class="ctrl.state.errors.checkout.cardHolderName === true ? 'invalid' : ctrl.state.errors.checkout.cardHolderName === false ? 'valid' : ''"/>
+                            </div>
+                            <div class="display-flex flex-vertical w-2-4">
+                                <span>ת.ז. בעל הכרטיס *</span>
+                                <input class="checkout-form-input" type="number"
+                                       ng-model="ctrl.state.formControl.cardHolderID"
+                                       ng-blur="ctrl.validateFormInput('card-holder-id')"
+                                       ng-class="ctrl.state.errors.checkout.cardHolderID === true ? 'invalid' : ctrl.state.errors.checkout.cardHolderID === false ? 'valid' : ''"/>
+                            </div>
+                        </div>
+                        <div class="display-flex align-center justify-between mb-20">
+                            <div class="display-flex flex-vertical justify-between w-2-4">
+                                <span>מספר כרטיס אשראי *</span>
+                                <input class="checkout-form-input" type="text"
+                                       ng-model="ctrl.state.formControl.cardNumber"
+                                       ng-blur="ctrl.validateFormInput('card-number')"
+                                       ng-class="ctrl.state.errors.checkout.cardNumber === true ? 'invalid' : ctrl.state.errors.checkout.cardNumber === false ? 'valid' : ''"/>
+
+                            </div>
+                            <div class="display-flex align-center justify-between w-2-4">
+                                <div class="display-flex flex-vertical  w-2-4">
+                                    <span>תוקף *</span>
+                                    <input class="checkout-form-input" id="exp" type="text" placeholder="MM/YY"
+                                           ng-keyup="ctrl.addSlashExp()"
+                                           ng-model="ctrl.state.formControl.cardExpirationDate"
+                                           ng-blur="ctrl.validateFormInput('card-expiration-date')"
+                                           ng-class="ctrl.state.errors.checkout.cardExpirationDate === true ? 'invalid' : ctrl.state.errors.checkout.cardExpirationDate === false ? 'valid' : ''"/>
+                                </div>
+                                <div class="display-flex flex-vertical w-2-4 relative">
+                                    <span>CVV *</span>
+                                    <input class="checkout-form-input" type="text"
+                                           ng-model="ctrl.state.formControl.cardCVV"
+                                           ng-blur="ctrl.validateFormInput('card-cvv')"
+                                           ng-class="ctrl.state.errors.checkout.cardCVV === true ? 'invalid' : ctrl.state.errors.checkout.cardCVV === false ? 'valid' : ''"/>
+                                    <img class="h-20 w-20 absolute input-placeholder credit-card-svg"
+                                         ng-src="/assets/icons/icon-credit-card.svg"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="display-flex align-center">
+                            <div class="custom-checkbox" ng-click="toggleCheckbox = !toggleCheckbox"
+                                 ng-class="toggleCheckbox ? 'unchecked' : 'checked'"></div>
+                            <span class="font-size-14 font-gray-900 mt-2">שמור את פרטי כרטיס האשראי להזמנות עתידיות</span>
+                            <img class="mr-8 mt-2" ng-src="assets/icons/icon-info-2.svg"/>
+                        </div>
+                        <div class="user-message mt-25 display-flex align-center mb-40">
+                            <img ng-src="assets/icons/icon-lock-dark.svg"/>
+                            <div class="mr-8">
+                                <span>הסליקה מתבצעת בצורה מאובטחת, פרטי התשלום מוגנים על ידי טכנולוגיות אבטחת מידע המתקדמות ביותר בשיתוף פעולה עם חברת Credit Guard.
+                                <span class="read-more-link">למד עוד</span></span>
+                            </div>
+                        </div>
+                        <div class="display-flex justify-between">
+                            <button class="btn-secondary">חזרה לתיאום הגעה</button>
+                            <button class="btn-primary display-flex align-center justify-center"
+                                    ng-class="ctrl.disableCheckoutForm() ? 'btn-disabled not-active' : ''">
+                                <img class="w-20 h-20 ml-4" ng-src="assets/icons/icon-lock-light.svg"/>
+                                סיום הזמנה&emsp;|&emsp;₪{{parseFloat(ctrl.state.total) + 30}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="order-summary rounded-10">
                 <span class="font-heebo text-lgr text-bolder font-blue mobile-hide py-5 my-5 border-bottom-gray-2px">סיכום הזמנה</span>
+                <div class="display-flex align-center justify-between border-bottom-gray-2px">
+                    <div class="display-flex flex-vertical my-18">
+                        <span class="font-size-13 font-gray-600 ">הערות למכין ההזמנה</span>
+                        <span class="font-size-15 font-gray-900 ">חסה טריה, גזרים קטנים, עגבניות…</span>
+                    </div>
+                    <img src="assets/icons/icon-edit.svg"/>
+                </div>
+                <div class="display-flex align-center justify-between border-bottom-gray-2px">
+                    <div class="display-flex flex-vertical my-18">
+                        <span class="font-size-13 font-gray-600 ">קוד קופון</span>
+                        <span class="font-size-15 font-gray-900 ">sweetapple20%</span>
+                        <span class="font-size-15 font-gray-600 ">חסכתם 60 ש״ח (20%)</span>
+                    </div>
+                    <img src="assets/icons/icon-edit.svg"/>
+                </div>
+                <div class="display-flex align-center justify-between border-bottom-gray-2px">
+                    <div class="display-flex flex-vertical my-18">
+                        <span class="font-size-13 font-gray-600 ">פרטים אישיים</span>
+                        <span class="font-size-15 font-gray-900 "> אינסה מלייב<br/> inesa@rexail.com</span>
+                    </div>
+                    <img src="assets/icons/icon-edit.svg"/>
+                </div>
+                <div class="display-flex align-center justify-between border-bottom-gray-2px">
+                    <div class="display-flex flex-vertical my-18">
+                        <span class="font-size-13 font-gray-600 ">כתובת</span>
+                        <span class="font-size-15 font-gray-900 "> דרך משה דיין 20, תל אביב <br/> קומה 3, דירה 10</span>
+                    </div>
+                    <img class="h-18 w-18" ng-src="assets/icons/icon-edit.svg"/>
+                </div>
+                <div class="display-flex align-center justify-between border-bottom-gray-2px">
+                    <div class="display-flex flex-vertical my-18">
+                        <span class="font-size-13 font-gray-600 ">משלוח</span>
+                        <span class="font-size-15 font-gray-900 "> חמישי 22.10<br/>בין השעות 12:00-16:00</span>
+                    </div>
+                    <img class="h-18 w-18" ng-src="assets/icons/icon-edit.svg"/>
+                </div>
+                <div class="display-flex justify-between align-center mt-25">
+                    <span class="font-size-15 font-gray-600 ">סה״כ סל קניות</span>
+                    <span class="font-size-16 font-heebo">₪{{ctrl.state.total}}</span>
+                </div>
+                <div class="display-flex justify-between align-center my-6">
+                    <span class="font-size-15 font-gray-600 ">הנחת קופון</span>
+                    <span class="font-size-16 font-heebo">₪60.00-</span>
+                </div>
+                <div class="display-flex justify-between align-center my-6">
+                    <span class="font-size-15 font-gray-600 ">משלוח</span>
+                    <span class="font-size-16 font-heebo">₪30.00</span>
+                </div>
+                <div class="display-flex justify-between align-center my-6">
+                    <span class="font-size-15 font-gray-600 text-bold">סה״כ לתשלום</span>
+                    <span class="font-size-16 font-heebo text-bold">₪{{parseFloat(ctrl.state.total) + 30}}</span>
+                </div>
+                <div class="text-center">
+                    <span class="font-darkgray font-size-14">שערוך. עלות סופית לפי שקילה.</span>
+                </div>
             </div>
         </div>
     </div>
