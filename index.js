@@ -122,11 +122,11 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
 
     // Checkout validations
     ctrl.validateFormInput = function (value) {
-        if (value === 'card-holder-name') ctrl.state.errors.checkout.cardHolderName = validateCardHolderName(ctrl.state.formControl.cardHolderName) ? false : true
-        if (value === 'card-holder-id') ctrl.state.errors.checkout.cardHolderID = validateCardHolderID(ctrl.state.formControl.cardHolderID) ? false : true
-        if (value === 'card-number') ctrl.state.errors.checkout.cardNumber = validateCardNumber(ctrl.state.formControl.cardNumber) ? false : true
-        if (value === 'card-expiration-date') ctrl.state.errors.checkout.cardExpirationDate = validateCardExpirationDate(ctrl.state.formControl.cardExpirationDate) ? false : true
-        if (value === 'card-cvv') ctrl.state.errors.checkout.cardCVV = validateCardCVV(ctrl.state.formControl.cardCVV) ? false : true
+        if (value === 'card-holder-name') ctrl.state.errors.checkout.cardHolderName = !validateCardHolderName(ctrl.state.formControl.cardHolderName)
+        if (value === 'card-holder-id') ctrl.state.errors.checkout.cardHolderID = !validateCardHolderID(ctrl.state.formControl.cardHolderID)
+        if (value === 'card-number') ctrl.state.errors.checkout.cardNumber = !validateCardNumber(ctrl.state.formControl.cardNumber)
+        if (value === 'card-expiration-date') ctrl.state.errors.checkout.cardExpirationDate = !validateCardExpirationDate(ctrl.state.formControl.cardExpirationDate)
+        if (value === 'card-cvv') ctrl.state.errors.checkout.cardCVV = !validateCardCVV(ctrl.state.formControl.cardCVV)
     }
 
     ctrl.addSlashExp = function () {

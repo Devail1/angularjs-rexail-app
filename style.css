@@ -434,12 +434,6 @@ button.btn-disabled {
     background-color: #e9eded;
 }
 
-.select-arrow {
-    position: absolute;
-    top: 24px;
-    right: 34vw;
-}
-
 .knife-icon {
     margin-top: 1.5rem;
     margin-right: 10px;
@@ -1624,8 +1618,6 @@ button.btn-disabled {
 
     .select-unit {
         height: 28px;
-        width: 14vw;
-        /*width: 100%;*/
         text-overflow: ellipsis;
         padding: 0 1.3em;
         font-size: 14px;
@@ -1633,8 +1625,8 @@ button.btn-disabled {
 
     .select-arrow {
         position: absolute;
-        top: 16px;
-        right: 12vw;
+        bottom: 8px;
+        left: 10px;
     }
 
     .knife-icon {
