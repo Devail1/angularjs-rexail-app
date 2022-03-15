@@ -29,7 +29,7 @@
         {{product.name}}
       </span>
         <div class="display-flex align-center">
-            <span class="text-bolder mx-5 text-lg my-auto mobile-show">{{product.quantity}}</span>
+            <span class="text-weight-700 mx-5 text-lg my-auto mobile-show">{{product.quantity}}</span>
             <div class="select-unit my-3 border-green rounded-25 display-flex align-center justify-between mr-10 mobile-show">
           <span class="text-lg mr-15">
             יח'
@@ -78,14 +78,14 @@
         </form>
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
-      <span class="item-price mobile-hide font-size-16 text-light">
+      <span class="item-price mobile-hide font-size-16 text-weight-300">
         ₪{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.name}}
       </span>
         <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
         <div ng-if="product.promoted && product.oldPrice">
-        <span class="text-muted mobile-hide font-size-13 text-light">
+        <span class="text-muted mobile-hide font-size-13 text-weight-300">
           ₪{{product.oldPrice}}/{{product.primaryQuantityUnit.name}}
         </span>
             <span class="text-muted mobile-show">
@@ -98,7 +98,7 @@
             <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-plus.svg">
         </div>
         <div class="display-flex flex-vertical">
-            <div class="mx-auto mobile-hide text-bold item-quantity">{{product.quantity}}</div>
+            <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
             <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
                  ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
             <span class="font-size-13 font-gray-600 unit-label c-p"
@@ -118,8 +118,8 @@
         </div>
     </div>
     <div class="label-wrapper mobile-hide mt-15">
-        <div class="mx-auto mobile-hide text-bold item-sum">₪{{(product.quantity * product.price).toFixed(2)}}</div>
-        <div ng-if="product.promoted && product.oldPrice" class="font-darkgray text-light text-linethrough text-sm">
+        <div class="mx-auto mobile-hide text-weight-500 item-sum">₪{{(product.quantity * product.price).toFixed(2)}}</div>
+        <div ng-if="product.promoted && product.oldPrice" class="font-darkgray text-weight-300 text-linethrough text-sm">
             ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
         </div>
     </div>
@@ -130,7 +130,7 @@
             <div class="discount-ribbon-tip-left"></div>
             <img class="h-36 w-36 font-green mr-15" src="/assets/icons/icon-discount.svg" alt="item-discount"/>
             <div class="text-lg font-white mr-10 font-heebo">
-                <span class="text-bold ">זכית בהנחה!</span>
+                <span class="text-weight-500 ">זכית בהנחה!</span>
                 <span> 2 מארזי ענבים ב₪44</span>
             </div>
             <span class="mr-auto text-lg font-white font-heebo ml-5"> ₪14.00 - </span>

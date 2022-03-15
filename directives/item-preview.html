@@ -27,7 +27,7 @@
         <div class="plus-minus-preview-container" ng-click="increaseProductQuantity()">
             <img class="h-8 w-8" ng-src="assets/icons/icon-plus.svg">
         </div>
-        <span class="font-size-16 text-bold">
+        <span class="font-size-16 text-weight-500">
         {{product.quantity}}
       </span>
         <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
@@ -48,11 +48,11 @@
         </div>
     </div>
     <div class="item-price-wrapper display-flex flex-vertical align-center mr-auto ml-5">
-        <span class="item-price font-size-16 text-bolder">
+        <span class="item-price font-size-16 text-weight-700">
         ₪{{(product.price * product.quantity).toFixed(2)}}
         </span>
         <span ng-if="product.promoted && product.originalPrice"
-              class="font-heebo font-darkgray text-linethrough text-light font-size-13">₪{{(product.originalPrice * product.quantity).toFixed(2)}}</span>
+              class="font-heebo font-darkgray text-linethrough text-weight-300 font-size-13">₪{{(product.originalPrice * product.quantity).toFixed(2)}}</span>
     </div>
     <!-- Discount Ribbon -->
     <div class=" discount-ribbon-wrapper" ng-if="$index == (ctrl.state.products.length / 2).toFixed(0)">
@@ -61,7 +61,7 @@
             <div class="discount-ribbon-tip-left"></div>
             <img class="h-36 w-36 font-green mr-15" src="/assets/icons/icon-discount.svg" alt="item-discount"/>
             <div class="text-lg font-white mr-10 font-heebo">
-                <span class="text-bold ">זכית בהנחה!</span>
+                <span class="text-weight-500 ">זכית בהנחה!</span>
                 <span> 2 מארזי ענבים ב₪44</span>
             </div>
             <span class="mr-auto text-lg font-white font-heebo ml-5"> ₪14.00 - </span>

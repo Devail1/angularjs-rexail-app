@@ -27,16 +27,16 @@
         </div>
     </div>
     <div class="container mx-auto pt-20">
-        <div>
-            <input auto-complete ui-items="items" ng-model="selected">
-            <button ng-click="clearList()">Clear
-            </button>
-            <ul ng-show="showlist">
-                <li ng-repeat="item in items | filter: selected" ng-click="selectedItem($event, item)">
-                    {{item.name}}
-                </li>
-            </ul>
-        </div>
+<!--        <div>-->
+<!--            <input auto-complete ui-items="items" ng-model="selected">-->
+<!--            <button ng-click="clearList()">Clear-->
+<!--            </button>-->
+<!--            <ul ng-show="showlist">-->
+<!--                <li ng-repeat="item in items | filter: selected" ng-click="selectedItem($event, item)">-->
+<!--                    {{item.name}}-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
         <div class="display-flex relative">
             <div class="store-widget">
                 <div class="display-flex justify-between align-center">
@@ -85,7 +85,7 @@
                     <img class="icon-basket" ng-src="assets/icons/icon-basket-green.svg"><span
                         class="text-sm font-white mt-8 cart-preview-items-count"> {{ctrl.state.cartItems.length}}</span></img>
                     <div class="display-flex flex-vertical font-white mr-8 ml-auto">
-                        <span class="text-light font-size-14">סל הקניות שלי</span>
+                        <span class="text-weight-300 font-size-14">סל הקניות שלי</span>
                         <span class="font-size-18">{{ctrl.state.total}}</span>
                     </div>
                     <button type="button" class="proceed-to-checkout-btn font-white font-size-16"
@@ -108,7 +108,7 @@
                 <div class="cart-items-preview-wrapper">
                     <div class="display-flex flex-vertical align-center pt-20" ng-if="!ctrl.state.cartItems.length">
                         <img ng-src="assets/img/empty-basket.png"/>
-                        <span class="mt-10 font-size-22 font-blue text-bolder font-heebo">סל הקניות שלכם ריק</span>
+                        <span class="mt-10 font-size-22 font-blue text-weight-700 font-heebo">סל הקניות שלכם ריק</span>
                         <span class="font-blue font-size-16">התחילו להוסיף מוצרים</span>
                     </div>
                     <item-preview ng-repeat="product in ctrl.state.cartItems track by product.id" product="product"
@@ -123,8 +123,8 @@
                             ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
                         <a class="w-full h-full" href="/cart">
                             <div class="display-flex align-center justify-between h-full">
-                                <span class="font-heebo text-bold font-white checkout-text">המשך לתשלום</span>
-                                <span class="font-heebo text-bold font-white total-sum">₪{{ctrl.state.total}}</span>
+                                <span class="font-heebo text-weight-500 font-white checkout-text">המשך לתשלום</span>
+                                <span class="font-heebo text-weight-500 font-white total-sum">₪{{ctrl.state.total}}</span>
                             </div>
                         </a>
                     </button>

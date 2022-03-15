@@ -594,6 +594,30 @@ button.btn-disabled {
 }
 
 /* Ribbon & Badge */
+
+.quantity-badge {
+    position: absolute;
+    bottom: -6px;
+    left: 10px;
+    min-width: 30px;
+    min-height: 40px;
+    background-color: #33cc66;
+    border-radius: 2px 2px 0 0;
+    padding: 0px 4px;
+
+}
+
+.quantity-badge-tip {
+    position: absolute;
+    bottom: 1px;
+    right: -5px;
+    width: 5px;
+    height: 5px;
+    background-color: #242525;
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+    transform: rotate(90deg)
+}
+
 .discount-ribbon {
     position: relative;
     background-color: #005350;
@@ -964,23 +988,31 @@ button.btn-disabled {
     font-size: 13px;
 }
 
+.font-size-10 {
+    font-size: 10px;
+}
+
 .text-linethrough {
     text-decoration: line-through;
 }
 
-.text-light {
+.text-weight-300 {
     font-weight: 300;
 }
 
-.text-regular {
+.text-weight-400 {
     font-weight: 400;
 }
 
-.text-bold {
+.text-weight-500 {
     font-weight: 500;
 }
 
-.text-bolder {
+.text-weight-600 {
+    font-weight: 600;
+}
+
+.text-weight-700 {
     font-weight: 700;
 }
 
@@ -1806,6 +1838,10 @@ button.btn-disabled {
     }
 
     .store-item-overlay:hover ~ .product-info-wrapper span {
+        visibility: hidden;
+    }
+
+    .store-item-overlay:hover ~ .quantity-badge {
         visibility: hidden;
     }
 

@@ -95,6 +95,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
 
     ctrl.increaseProductQuantity = function (product) {
         if (!product.primaryQuantityUnit) { product.primaryQuantityUnit = {'amountJumps': 1} }
+
         product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.amountJumps : product.primaryQuantityUnit.amountJumps;
         !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         ctrl.state.total = calculateTotal();
@@ -144,16 +145,16 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         let formValidations = Object.values(ctrl.state.errors.checkout)
 
         // checks whether an input form is invalid
-        const isNotValid = (element) => (element === true || element === null);
+        const isNotValid = (inputError) => (inputError === true || inputError === null);
 
         return formValidations.some(isNotValid)
     }
 
     // Cart validations
     ctrl.validateCart = function () {
-        // Getting all products with preparation order prop
+        // Getting all products with comments
         let prepProducts = ctrl.state.cartItems.filter(product => product.commentType);
-        // Getting all products with selected preparation order
+        // Getting all products with selected comment
         let validPrepProducts = prepProducts.filter(product => product.commentType && product.comment)
 
         // Check if user comment is empty
@@ -169,8 +170,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     // ctrl constants
     ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
 
-
-    /* ~~ $scope functions: ~~ */
+    // $scope constants & functions
     // Convert str to num expression in order to use in template
     $scope.parseFloat = parseFloat;
 
@@ -182,27 +182,27 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         $scope.paginationLimit = $scope.paginationLimit + 10
     }
 
-    // search auto-complete
-    $scope.showlist = false;
-    $scope.clearList = function(){
-        $scope.selected = null;
-        $scope.showlist = false;
-    }
-
-    $scope.selectedItem = function($event, item){
-        $scope.selected = item;
-        $scope.showlist = false;
-    }
+    // // search auto-complete
+    // $scope.showlist = false;
+    // $scope.clearList = function(){
+    //     $scope.selected = null;
+    //     $scope.showlist = false;
+    // }
+    //
+    // $scope.selectedItem = function($event, item){
+    //     $scope.selected = item;
+    //     $scope.showlist = false;
+    // }
 })
 
-// search autocomplete
-rexailApp.directive('autoComplete', function($timeout) {
-    return function(scope, iElement, iAttrs) {
-        iElement.bind("keypress", function(e){
-            scope.showlist = true;
-        })
-    };
-})
+// // search autocomplete
+// rexailApp.directive('autoComplete', function($timeout) {
+//     return function(scope, iElement, iAttrs) {
+//         iElement.bind("keypress", function(e){
+//             scope.showlist = true;
+//         })
+//     };
+// })
 
 // components
 rexailApp.directive('storeItem', function () {
@@ -215,10 +215,7 @@ rexailApp.directive('storeItem', function () {
         },
         link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                product.primaryQuantityUnit = quantityUnit.sellingUnit
-                if (product.primaryQuantityUnit.amountJumps === 1) {
-                    product.quantity = Math.round(product.quantity)
-                }
+                handleQuantityUnitSelect(product, quantityUnit)
             }
         }
     }
@@ -237,10 +234,7 @@ rexailApp.directive('itemPreview', function () {
         },
         link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                product.primaryQuantityUnit = quantityUnit.sellingUnit
-                if (product.primaryQuantityUnit.amountJumps === 1) {
-                    product.quantity = Math.round(product.quantity)
-                }
+                handleQuantityUnitSelect(product, quantityUnit)
             }
         }
     }
@@ -260,10 +254,7 @@ rexailApp.directive('cartItem', function () {
         },
         link: function (scope) {
             scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                product.primaryQuantityUnit = quantityUnit.sellingUnit
-                if (product.primaryQuantityUnit.amountJumps === 1) {
-                    product.quantity = Math.round(product.quantity)
-                }
+                handleQuantityUnitSelect(product, quantityUnit)
             }
         }
     }
@@ -281,6 +272,16 @@ rexailApp.directive('navMenu', function () {
     }
 })
 
+function handleQuantityUnitSelect(product, quantityUnit) {
+    // Assign to product the new quantity unit
+    product.primaryQuantityUnit = quantityUnit.sellingUnit
+
+    // Convert float to int if unit type is not supporting floats
+    if (product.primaryQuantityUnit.amountJumps === 1) {
+        product.quantity = product.quantity < 1 ? Math.round(product.quantity) : Math.floor(product.quantity)
+    }
+}
+
 function formatData(array) {
     return Object.values(array.reduce((obj, current) => {
         if (!obj[current.productCategory.id]) {
@@ -290,6 +291,9 @@ function formatData(array) {
                 children: []
             }
         }
+
+        // If there is only one selling unit, use it while ignoring the default value.
+        let primaryQuantityUnit = current.productSellingUnits.length === 1 ? current.productSellingUnits[0].sellingUnit : current.product.primaryQuantityUnit
 
         let productModel = {
             id: current.id,
@@ -301,18 +305,22 @@ function formatData(array) {
             originalPrice: current.originalPrice,
             productQuality: current.productQuality,
             currentRelevancy: current.currentRelevancy,
-            primaryQuantityUnit: current.product.primaryQuantityUnit,
+            primaryQuantityUnit: primaryQuantityUnit,
             productSellingUnits: current.productSellingUnits,
             commentType: current.commentType
         }
 
+        // Push to all products category
         if (current.product.id) obj['0'].children.push(productModel)
+        // Push to promoted products category
         if (current.promoted) obj['1'].children.push(productModel)
 
+        // Continue reformatting
         obj[current.productCategory.id].children.push(productModel)
 
         return obj
     }, {
+        // Initial state manually with default categories
         0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
     }))
 }
@@ -355,4 +363,3 @@ function validateCardCVV(value) {
     const validate = /^[0-9]{3,4}$/;
     return validate.test(string)
 }
-
