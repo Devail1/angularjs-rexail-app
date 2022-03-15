@@ -30,10 +30,10 @@
         <span class="font-size-16 text-weight-500">
         {{product.quantity}}
       </span>
-        <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
+        <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
              ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
             <span class="font-size-13 font-gray-600 unit-label c-p"
-                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.name}}
+                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
                  class="h-7 w-7 font-green mr-2 dropdown-arrow">
             </span>

@@ -1895,10 +1895,21 @@ button.btn-disabled {
 
 
     .desktop-footer {
-        margin-top: 73px;
         width: 100%;
         height: 62px;
         background-color: #333333;
+        margin-top: 73px;
+    }
+
+    .big-footer ~ .desktop-footer {
+        margin-top: 0px;
+    }
+
+    .big-footer {
+        margin-top: 73px;
+        height: 233px;
+        background-color: #005350;
+        bottom: 62px;
     }
 
     .mobile-footer {

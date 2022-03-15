@@ -79,14 +79,14 @@
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
       <span class="item-price mobile-hide font-size-16 text-weight-300">
-        ₪{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.name}}
+        ₪{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.sellingUnit.name}}
       </span>
         <span class="item-price mobile-show">
         ₪{{(product.price * product.quantity).toFixed(2)}}
       </span>
         <div ng-if="product.promoted && product.oldPrice">
         <span class="text-muted mobile-hide font-size-13 text-weight-300">
-          ₪{{product.oldPrice}}/{{product.primaryQuantityUnit.name}}
+          ₪{{product.oldPrice}}/{{product.primaryQuantityUnit.sellingUnit.name}}
         </span>
             <span class="text-muted mobile-show">
           ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
@@ -99,10 +99,10 @@
         </div>
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
-            <div ng-if="product.primaryQuantityUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
+            <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
                  ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
             <span class="font-size-13 font-gray-600 unit-label c-p"
-                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.name}}
+                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
                  class="h-7 w-7 font-green mr-2 dropdown-arrow">
             </span>

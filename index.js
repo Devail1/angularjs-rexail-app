@@ -78,9 +78,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     }
 
     ctrl.handleCategoryClick = function (category) {
-        /* ~~~ Debug comment to remove ~~~*/
-        console.log(ctrl.state)
-        console.log($scope)
         ctrl.state.selectedCategory = category
 
         // scroll to top
@@ -94,16 +91,17 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     }
 
     ctrl.increaseProductQuantity = function (product) {
-        if (!product.primaryQuantityUnit) { product.primaryQuantityUnit = {'amountJumps': 1} }
-
-        product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.amountJumps : product.primaryQuantityUnit.amountJumps;
-        !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
-        ctrl.state.total = calculateTotal();
+        console.log(product)
+        if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
+            product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
+            !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
+            ctrl.state.total = calculateTotal();
+        }
     }
 
     ctrl.decreaseProductQuantity = function (product) {
-        if (product.quantity > product.primaryQuantityUnit.amountJumps) {
-            product.quantity = product.quantity - product.primaryQuantityUnit.amountJumps
+        if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
+            product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
             !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
         } else ctrl.removeProduct(product)
         ctrl.state.total = calculateTotal();
@@ -135,8 +133,8 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
 
     ctrl.addSlashExp = function () {
         let expire_date = document.getElementById('exp').value;
-        if (expire_date.length == 2){
-            document.getElementById('exp').value = expire_date +'/';
+        if (expire_date.length == 2) {
+            document.getElementById('exp').value = expire_date + '/';
         }
     }
 
@@ -181,28 +179,7 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     $scope.loadMore = function () {
         $scope.paginationLimit = $scope.paginationLimit + 10
     }
-
-    // // search auto-complete
-    // $scope.showlist = false;
-    // $scope.clearList = function(){
-    //     $scope.selected = null;
-    //     $scope.showlist = false;
-    // }
-    //
-    // $scope.selectedItem = function($event, item){
-    //     $scope.selected = item;
-    //     $scope.showlist = false;
-    // }
 })
-
-// // search autocomplete
-// rexailApp.directive('autoComplete', function($timeout) {
-//     return function(scope, iElement, iAttrs) {
-//         iElement.bind("keypress", function(e){
-//             scope.showlist = true;
-//         })
-//     };
-// })
 
 // components
 rexailApp.directive('storeItem', function () {
@@ -273,12 +250,31 @@ rexailApp.directive('navMenu', function () {
 })
 
 function handleQuantityUnitSelect(product, quantityUnit) {
+    // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
+    // else, divide the price by the previous unit weight value.
+    if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {
+        product.price = (product.price * quantityUnit.estimatedUnitWeight).toFixed(2)
+        if (product.originalPrice) {
+            product.originalPrice = (product.originalPrice * quantityUnit.estimatedUnitWeight).toFixed(2)
+        }
+    } else if (product.primaryQuantityUnit.estimatedUnitWeight !== quantityUnit.estimatedUnitWeight) {
+        product.price = (product.price / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
+        if (product.originalPrice) {
+            product.originalPrice = (product.originalPrice / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
+        }
+    }
+
     // Assign to product the new quantity unit
-    product.primaryQuantityUnit = quantityUnit.sellingUnit
+    product.primaryQuantityUnit = quantityUnit
 
     // Convert float to int if unit type is not supporting floats
-    if (product.primaryQuantityUnit.amountJumps === 1) {
+    if (product.primaryQuantityUnit.sellingUnit.amountJumps === 1) {
         product.quantity = product.quantity < 1 ? Math.round(product.quantity) : Math.floor(product.quantity)
+    }
+
+    // Update product's quantity based on unit type max amount
+    if (product.quantity > product.primaryQuantityUnit.maxAmount) {
+        product.quantity = product.primaryQuantityUnit.maxAmount
     }
 }
 
@@ -292,8 +288,8 @@ function formatData(array) {
             }
         }
 
-        // If there is only one selling unit, use it while ignoring the default value.
-        let primaryQuantityUnit = current.productSellingUnits.length === 1 ? current.productSellingUnits[0].sellingUnit : current.product.primaryQuantityUnit
+        // If there is no primary quantity unit than use the first product selling unit.
+        let primaryQuantityUnit = !current.product.primaryQuantityUnit && current.productSellingUnits[0]
 
         let productModel = {
             id: current.id,
@@ -305,7 +301,7 @@ function formatData(array) {
             originalPrice: current.originalPrice,
             productQuality: current.productQuality,
             currentRelevancy: current.currentRelevancy,
-            primaryQuantityUnit: primaryQuantityUnit,
+            primaryQuantityUnit: current.primaryQuantityUnit ? current.primaryQuantityUnit : current.productSellingUnits[0],
             productSellingUnits: current.productSellingUnits,
             commentType: current.commentType
         }
@@ -328,7 +324,11 @@ function formatData(array) {
 // Util Functions
 function validateCardHolderID(IDnum) {
     if (!IDnum) return false
-    if (IDnum.length < 9) { while(IDnum.length < 9) { IDnum = '0' + IDnum; } }
+    if (IDnum.length < 9) {
+        while (IDnum.length < 9) {
+            IDnum = '0' + IDnum;
+        }
+    }
 
     let id = String(IDnum).trim();
     if ((id.length > 9) || (id.length < 5)) return false;
