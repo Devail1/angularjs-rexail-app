@@ -74,14 +74,14 @@
                 {{product.quantity}}
                 </span>
                 <button type="button" class="h-full w-full " ng-click="decreaseProductQuantity()">
-                    <img class="mb-4" src="assets/icons/icon-minus.svg"/>
+                    <img class="mb-4" ng-src="assets/icons/icon-minus.svg"/>
                 </button>
             </div>
         </div>
     </div>
     <div ng-if="product.promoted" class="discount-badge-v badge-sm">
         <div class="display-flex flex-vertical align-center">
-            <img class="h-16 w-16 font-green mt-3" src="assets/icons/icon-discount.svg" alt="item-discount">
+            <img class="h-16 w-16 font-green mt-3" ng-src="assets/icons/icon-discount.svg" alt="item-discount">
             <div class="font-white text-xs mt-2">מבצע</div>
             <div class="discount-badge-v-tip badge-sm"></div>
         </div>

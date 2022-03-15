@@ -9,7 +9,7 @@
                                ng-model-options="{debounce: 800}"
                                ng-minlength="3" placeholder="חיפוש מוצר"/>
                     </label>
-                    <img class="search-icon" src="../assets/icons/icon-search.svg"/>
+                    <img class="search-icon" ng-src="assets/icons/icon-search.svg"/>
                 </div>
                 <div class="display-flex align-center mr-auto justify-between w-250">
                     <div class="display-flex align-center justify-evenly w-full c-p ">
@@ -27,11 +27,11 @@
                 <div>
                     <div class="text-title mb-5">{{ctrl.state.data.storeData.store.name}}</div>
                     <div class="display-flex align-center my-3 c-p">
-                        <img class="ml-5" src="../assets/icons/icon-info-2.svg"/>
+                        <img class="ml-5" ng-src="assets/icons/icon-info-2.svg"/>
                         אודות | אזורי חלוקה
                     </div>
                     <div class="display-flex align-center my-3 c-p">
-                        <img class="ml-5" src="../assets/icons/icon-location-2.svg"/>
+                        <img class="ml-5" ng-src="assets/icons/icon-location-2.svg"/>
                         {{ctrl.state.data.storeData.store.businessFullAddressWithCity}}
                     </div>
                 </div>
@@ -42,7 +42,7 @@
         <div class="container mx-auto h-full display-flex align-center justify-between px-5 ">
             <div class="display-flex align-center">
                 <a href="#">
-                    <img class="logo-img round w-60 h-60" src="../assets/img/logo.png" alt="logo"/>
+                    <img class="logo-img round w-60 h-60" ng-src="assets/img/logo.png" alt="logo"/>
                 </a>
                 <div class="text-title mb-5 mr-10">{{ctrl.state.data.storeData.store.name}}</div>
             </div>
@@ -52,7 +52,7 @@
                            ng-model-options="{debounce: 800}"
                            ng-minlength="3" placeholder="חיפוש מוצר"/>
                 </label>
-                <img class="search-icon" src="../assets/icons/icon-search.svg"/>
+                <img class="search-icon" ng-src="assets/icons/icon-search.svg"/>
             </div>
             <div ng-if="!ctrl.getCurrentPath().includes('checkout')" class="display-flex align-center w-250">
                 <img class="h-32 w-32" ng-src="assets/icons/icon-delivery-rounded.svg"/>
