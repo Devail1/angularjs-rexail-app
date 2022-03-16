@@ -27,16 +27,6 @@
         </div>
     </div>
     <div class="container mx-auto pt-20">
-        <!--        <div>-->
-        <!--            <input auto-complete ui-items="items" ng-model="selected">-->
-        <!--            <button ng-click="clearList()">Clear-->
-        <!--            </button>-->
-        <!--            <ul ng-show="showlist">-->
-        <!--                <li ng-repeat="item in items | filter: selected" ng-click="selectedItem($event, item)">-->
-        <!--                    {{item.name}}-->
-        <!--                </li>-->
-        <!--            </ul>-->
-        <!--        </div>-->
         <div class="display-flex relative">
             <div class="store-widget">
                 <div class="display-flex justify-between align-center">
@@ -68,7 +58,10 @@
 
                 </div>
                 <div>
-                    <div infinite-scroll="loadMore()" infinite-scroll-distance="3" class="store-items-wrapper mt-30">
+                    <div ng-if="!ctrl.state.selectedCategory" id="loading-bar-spinner" class="spinner">
+                        <div class="spinner-icon"></div>
+                    </div>
+                    <div infinite-scroll="loadMore()" infinite-scroll-distance="0" class="store-items-wrapper mt-30">
                         <div ng-repeat="product in ctrl.state.selectedCategory.children  | filter: ctrl.state.searchQuery | limitTo: paginationLimit">
                             <store-item product="product"
                                         img-base-url="ctrl.imgBaseUrl"
@@ -135,6 +128,5 @@
             </div>
         </div>
     </div>
-
     <footer></footer>
 </div>

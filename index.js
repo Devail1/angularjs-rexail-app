@@ -58,8 +58,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
                     ctrl.state.data.categoriesData = formatData(response.data.data);
                     // Setting initial category
                     ctrl.state.selectedCategory = ctrl.state.data.categoriesData[0]
-                    // search auto-complete
-                    $scope.items = ctrl.state.data.categoriesData[0].children
                 });
         });
 
@@ -173,18 +171,20 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
     $scope.parseFloat = parseFloat;
 
     // Setting initial value for pagination limit (infinite scroll)
-    $scope.paginationLimit = 20
+    $scope.paginationLimit = 12
+    $scope.paginationStep = 12
 
     // http get pagination goes here
     $scope.loadMore = function () {
-        $scope.paginationLimit = $scope.paginationLimit + 10
+        $scope.paginationLimit = $scope.paginationLimit + $scope.paginationStep
     }
 })
 
 // components
 rexailApp.directive('storeItem', function () {
     return {
-        templateUrl: 'directives/store-item.html', replace: true, scope: {
+        templateUrl: 'directives/store-item.html', replace: true,
+        scope: {
             product: '=',
             imgBaseUrl: '=',
             increaseProductQuantity: '&',
@@ -321,7 +321,7 @@ function formatData(array) {
     }))
 }
 
-// Util Functions
+// Regex Util Functions (copied from regex101 library)
 function validateCardHolderID(IDnum) {
     if (!IDnum) return false
     if (IDnum.length < 9) {
