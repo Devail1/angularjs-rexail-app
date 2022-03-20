@@ -4,7 +4,10 @@ rexailApp.constant('IMG_BASE_URL', 'https://s3.eu-central-1.amazonaws.com/images
 rexailApp.constant('CURRENCY_SIGN', '₪');
 
 rexailApp.config(function ($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
 
     $routeProvider
         .when('/store', {
@@ -158,7 +161,7 @@ rexailApp.controller('appController', function ($rootScope, $scope, $http, $filt
 
 
 rexailApp.service('cartActionsService', function ($rootScope) {
-    this.increaseProductQuantity = function (product) {
+    this.onIncreaseProductQuantity = function (product) {
         if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
             product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
@@ -166,21 +169,21 @@ rexailApp.service('cartActionsService', function ($rootScope) {
         }
     }
 
-    this.decreaseProductQuantity = function (product) {
+    this.onDecreaseProductQuantity = function (product) {
         if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
             product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
-        } else this.removeProduct(product)
+        } else this.onRemoveProduct(product)
         $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
-    this.removeProduct = function (product) {
+    this.onRemoveProduct = function (product) {
         product.quantity = null
         $rootScope.globalState.cartItems = $rootScope.globalState.cartItems.filter(item => item.id !== product.id)
         $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
-    this.clearCart = function () {
+    this.onClearCart = function () {
         $rootScope.globalState.cartItems.forEach(item => item.quantity = null)
         $rootScope.globalState.cartItems = []
         $rootScope.globalState.cartTotal = this.calculateTotal();
@@ -191,106 +194,103 @@ rexailApp.service('cartActionsService', function ($rootScope) {
         const sumWithInitial = $rootScope.globalState.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
         return sumWithInitial.toFixed(2)
     }
+
 })
 
+
+rexailApp.controller('unitTypeSelectController', function () {
+    const ctrl = this;
+
+    this.onUnitTypeChange = function (product, quantityUnit) {
+        // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
+        // else, divide the price by the previous unit weight value.
+        if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {
+            product.price = (product.price * quantityUnit.estimatedUnitWeight).toFixed(2)
+            if (product.originalPrice) {
+                product.originalPrice = (product.originalPrice * quantityUnit.estimatedUnitWeight).toFixed(2)
+            }
+        } else if (product.primaryQuantityUnit.estimatedUnitWeight !== quantityUnit.estimatedUnitWeight) {
+            product.price = (product.price / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
+            if (product.originalPrice) {
+                product.originalPrice = (product.originalPrice / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
+            }
+        }
+
+        // Assign to product the new quantity unit
+        product.primaryQuantityUnit = quantityUnit
+
+        // Convert float to int if unit type is not supporting floats
+        if (product.primaryQuantityUnit.sellingUnit.amountJumps === 1) {
+            product.quantity = product.quantity < 1 ? Math.round(product.quantity) : Math.floor(product.quantity)
+        }
+
+        // Update product's quantity based on unit type max amount
+        if (product.quantity > product.primaryQuantityUnit.maxAmount) {
+            product.quantity = product.primaryQuantityUnit.maxAmount
+        }
+    }
+})
 
 // components
-rexailApp.directive('storeItem', function () {
-    return {
-        templateUrl: 'directives/store-item.html', replace: true,
-        scope: {
-            product: '=',
-            increaseProductQuantity: '&',
-            decreaseProductQuantity: '&',
-        },
-        link: function (scope) {
-            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                handleQuantityUnitSelect(product, quantityUnit)
-            }
+    rexailApp.directive('storeItem', function () {
+        return {
+            templateUrl: 'directives/store-item.html',
+            replace: true,
+            scope: {
+                product: '=',
+                onIncreaseProductQuantity: '&',
+                onDecreaseProductQuantity: '&',
+            },
+            controller: 'unitTypeSelectController',
+            controllerAs: 'ctrl',
         }
-    }
-})
+    })
 
-rexailApp.directive('itemPreview', function () {
-    return {
-        templateUrl: 'directives/item-preview.html',
-        replace: true,
-        scope: {
-            product: '=',
-            removeProduct: '&',
-            increaseProductQuantity: '&',
-            decreaseProductQuantity: '&'
-        },
-        link: function (scope) {
-            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                handleQuantityUnitSelect(product, quantityUnit)
-            }
+    rexailApp.directive('itemPreview', function () {
+        return {
+            templateUrl: 'directives/item-preview.html',
+            replace: true,
+            scope: {
+                product: '=',
+                onRemoveProduct: '&',
+                onIncreaseProductQuantity: '&',
+                onDecreaseProductQuantity: '&'
+            },
+            controller: 'unitTypeSelectController',
+            controllerAs: 'ctrl',
         }
-    }
-})
+    })
 
-rexailApp.directive('cartItem', function () {
-    return {
-        templateUrl: 'directives/cart-item.html',
-        replace: true,
-        scope: {
-            product: '=',
-            increaseProductQuantity: '&',
-            decreaseProductQuantity: '&',
-            removeProduct: '&',
-            errors: '=',
-        },
-        link: function (scope) {
-            scope.handleQuantityUnitSelect = function (product, quantityUnit) {
-                handleQuantityUnitSelect(product, quantityUnit)
-            }
+    rexailApp.directive('cartItem', function () {
+        return {
+            templateUrl: 'directives/cart-item.html',
+            replace: true,
+            scope: {
+                product: '=',
+                onIncreaseProductQuantity: '&',
+                onDecreaseProductQuantity: '&',
+                onRemoveProduct: '&',
+                errors: '=',
+            },
+            controller: 'unitTypeSelectController',
+            controllerAs: 'ctrl',
         }
-    }
-})
+    })
 
-rexailApp.directive('footer', function () {
-    return {
-        templateUrl: 'directives/footer.html', replace: true,
-    }
-})
-
-rexailApp.directive('navMenu', function () {
-    return {
-        templateUrl: 'directives/nav-menu.html',
-        replace: true,
-
-
-    }
-})
-
-function handleQuantityUnitSelect (product, quantityUnit) {
-    // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
-    // else, divide the price by the previous unit weight value.
-    if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {
-        product.price = (product.price * quantityUnit.estimatedUnitWeight).toFixed(2)
-        if (product.originalPrice) {
-            product.originalPrice = (product.originalPrice * quantityUnit.estimatedUnitWeight).toFixed(2)
+    rexailApp.directive('footerMenu', function () {
+        return {
+            templateUrl: 'directives/footer-menu.html', replace: true,
         }
-    } else if (product.primaryQuantityUnit.estimatedUnitWeight !== quantityUnit.estimatedUnitWeight) {
-        product.price = (product.price / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
-        if (product.originalPrice) {
-            product.originalPrice = (product.originalPrice / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
+    })
+
+    rexailApp.directive('navMenu', function () {
+        return {
+            templateUrl: 'directives/header-menu.html',
+            replace: true,
+
+
         }
-    }
-
-    // Assign to product the new quantity unit
-    product.primaryQuantityUnit = quantityUnit
-
-    // Convert float to int if unit type is not supporting floats
-    if (product.primaryQuantityUnit.sellingUnit.amountJumps === 1) {
-        product.quantity = product.quantity < 1 ? Math.round(product.quantity) : Math.floor(product.quantity)
-    }
-
-    // Update product's quantity based on unit type max amount
-    if (product.quantity > product.primaryQuantityUnit.maxAmount) {
-        product.quantity = product.primaryQuantityUnit.maxAmount
-    }
-}
+    })
 
 //
 // function formatData(array) {
@@ -337,44 +337,44 @@ function handleQuantityUnitSelect (product, quantityUnit) {
 // }
 
 // Regex Util Functions (copied from regex101 library)
-function validateCardHolderID(IDnum) {
-    if (!IDnum) return false
-    if (IDnum.length < 9) {
-        while (IDnum.length < 9) {
-            IDnum = '0' + IDnum;
+    function validateCardHolderID(IDnum) {
+        if (!IDnum) return false
+        if (IDnum.length < 9) {
+            while (IDnum.length < 9) {
+                IDnum = '0' + IDnum;
+            }
         }
+
+        let id = String(IDnum).trim();
+        if ((id.length > 9) || (id.length < 5)) return false;
+        if (isNaN(id)) return false;
+
+        return Array.from(id, Number).reduce((counter, digit, i) => {
+            const step = digit * ((i % 2) + 1);
+            return counter + (step > 9 ? step - 9 : step);
+        }) % 10 === 0;
     }
 
-    let id = String(IDnum).trim();
-    if ((id.length > 9) || (id.length < 5)) return false;
-    if (isNaN(id)) return false;
+    function validateCardHolderName(string) {
+        const validate = /^[a-zA-Z\u0590-\u05FF\u200f\u200e]([-']?[a-zA-Z\u0590-\u05FF\u200f\u200e]+)*( [a-zA-Z\u0590-\u05FF\u200f\u200e]([-']?[a-zA-Z\u0590-\u05FF\u200f\u200e]+)*)+$/;
+        return validate.test(string);
+    }
 
-    return Array.from(id, Number).reduce((counter, digit, i) => {
-        const step = digit * ((i % 2) + 1);
-        return counter + (step > 9 ? step - 9 : step);
-    }) % 10 === 0;
-}
+    function validateCardNumber(value) {
+        if (!value) return false
+        let string = value.trim()
+        const validate = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}(?:2131|1800|35\d{3})\d{11})$/;
+        return validate.test(string);
+    }
 
-function validateCardHolderName(string) {
-    const validate = /^[a-zA-Z\u0590-\u05FF\u200f\u200e]([-']?[a-zA-Z\u0590-\u05FF\u200f\u200e]+)*( [a-zA-Z\u0590-\u05FF\u200f\u200e]([-']?[a-zA-Z\u0590-\u05FF\u200f\u200e]+)*)+$/;
-    return validate.test(string);
-}
+    function validateCardExpirationDate(value) {
+        let string = String(value)
+        const validate = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+        return validate.test(string);
+    }
 
-function validateCardNumber(value) {
-    if (!value) return false
-    let string = value.trim()
-    const validate = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12}(?:2131|1800|35\d{3})\d{11})$/;
-    return validate.test(string);
-}
-
-function validateCardExpirationDate(value) {
-    let string = String(value)
-    const validate = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-    return validate.test(string);
-}
-
-function validateCardCVV(value) {
-    let string = String(value)
-    const validate = /^[0-9]{3,4}$/;
-    return validate.test(string)
-}
+    function validateCardCVV(value) {
+        let string = String(value)
+        const validate = /^[0-9]{3,4}$/;
+        return validate.test(string)
+    }

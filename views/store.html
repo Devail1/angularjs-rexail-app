@@ -1,6 +1,6 @@
 <div ng-cloak class="store-bg">
-    <div id="categories" class="categories-wrapper" ng-cloack>
-        <div class="container mx-auto h-full display-flex align-center justify-evenly font-gray-900">
+    <nav id="categories" class="categories-wrapper" ng-cloack>
+        <ul class="container mx-auto h-full display-flex align-center justify-evenly font-gray-900">
             <li class="category"
                 ng-repeat="category in globalState.categoriesData | limitTo: 10"
                 ng-if="category.children.length"
@@ -12,7 +12,7 @@
             <div class="display-flex align-center relative" ng-if="globalState.categoriesData.length > 10">
                 <ul class="category category-show-more" ng-mouseover="ctrl.state.isShowMoreCategoriesOpened=true"
                     ng-mouseleave="ctrl.state.isShowMoreCategoriesOpened = false"> עוד
-                    <div ng-if="ctrl.state.isShowMoreCategoriesOpened"
+                    <ul ng-if="ctrl.state.isShowMoreCategoriesOpened"
                          class="categories-show-more display-flex flex-vertical absolute pt-10 rounded-10">
                         <li class="category show-more"
                             ng-repeat="category in globalState.categoriesData | limitTo: globalState.categoriesData.length : 10 "
@@ -22,11 +22,11 @@
                         >
                             {{category.name}}
                         </li>
-                    </div>
+                    </ul>
                 </ul>
             </div>
-        </div>
-    </div>
+        </ul>
+    </nav>
     <div class="container mx-auto pt-20">
         <div class="display-flex relative">
             <div class="store-widget">
@@ -63,13 +63,12 @@
                     </div>
                     <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="0"
                          class="store-items-wrapper mt-30">
-                        <div ng-repeat="product in globalState.selectedCategory.children  | filter: state.searchQuery | limitTo: ctrl.state.paginationLimit">
+                        <article ng-repeat="product in globalState.selectedCategory.children  | filter: state.searchQuery | limitTo: ctrl.state.paginationLimit">
                             <store-item product="product"
-                                        increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
-                                        decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
-                                        handle-quantity-unit-select="ctrl.state.cartActions.handleQuantityUnitSelect(product)"
+                                        on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
+                                        on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
                             ></store-item>
-                        </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -95,7 +94,7 @@
                     </div>
                     <div class="cart-preview-subheader px-16">
                         <div class="c-p display-flex align-center h-full w-85 mr-auto"
-                             ng-click="ctrl.state.cartActions.clearCart()">
+                             ng-click="ctrl.state.cartActions.onClearCart()">
                             <img ng-src="assets/icons/icon-trash.svg"/>
                             <span class="mr-5 font-size-14">
                             מחיקת סל
@@ -111,9 +110,9 @@
                         </div>
                         <item-preview ng-repeat="product in globalState.cartItems track by product.id"
                                       product="product"
-                                      increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
-                                      decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
-                                      remove-product="ctrl.state.cartActions.removeProduct(product)"
+                                      on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
+                                      on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
+                                      remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
                         ></item-preview>
                     </div>
                     <div class="cart-preview-footer px-28 display-flex flex-vertical align-center justify-center">
@@ -132,5 +131,5 @@
             </div>
         </div>
     </div>
-    <footer></footer>
+    <footer-menu></footer-menu>
 </div>

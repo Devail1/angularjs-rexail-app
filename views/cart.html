@@ -21,7 +21,7 @@
                     סל הקניות שלי
                 </div>
             </div>
-            <div ng-click="ctrl.state.cartActions.clearCart()" class="clear-cart">
+            <div ng-click="ctrl.state.cartActions.onClearCart()" class="clear-cart">
                 <div class="display-flex c-p">
                     <svg class="h-20 w-20 font-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -54,9 +54,9 @@
                     <cart-item ng-repeat="product in globalState.cartItems"
                                ng-class="{'border-none':$last}"
                                product="product"
-                               increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
-                               decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
-                               remove-product="ctrl.state.cartActions.removeProduct(product)"
+                               on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
+                               on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
+                               remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
                                errors="ctrl.state.errors"
                     ></cart-item>
                     <div ng-if="!globalState.cartItems.length"
@@ -131,5 +131,5 @@
       שערוך. עלות סופית לפני שקילה.
     </span>
     </div>
-    <footer></footer>
+    <footer-menu></footer-menu>
 </div>
