@@ -15,7 +15,7 @@
         </svg>
         <div class="display-flex justify-between align-center mb-10">
             <div class="display-flex font-white align-center">
-                <span class="items-count">{{state.cartItems.length}}</span>
+                <span class="items-count">{{globalState.cartItems.length}}</span>
                 <img ng-src="assets/icons/icon-basket-white.svg"/>
                 <div class="text-title font-blue mr-5 mt-15 mb-5 ">
                     סל הקניות שלי
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <ul id="cart-items-container">
-                    <cart-item ng-repeat="product in state.cartItems"
+                    <cart-item ng-repeat="product in globalState.cartItems"
                                ng-class="{'border-none':$last}"
                                product="product"
                                increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
@@ -59,7 +59,7 @@
                                remove-product="ctrl.state.cartActions.removeProduct(product)"
                                errors="ctrl.state.errors"
                     ></cart-item>
-                    <div ng-if="!state.cartItems.length"
+                    <div ng-if="!globalState.cartItems.length"
                          class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
                         <span class="text-lg text-weight-500 mt-10 ml-10">העגלה שלכם ריקה</span>
                         <svg class="h-36 w-36" viewBox="0 0 256 256" xml:space="preserve">
@@ -95,20 +95,20 @@
                         <textarea ng-model="ctrl.state.formControl.userComment"
                                   class="order-comment rounded-10 font-size-16"></textarea>
                     </label>
-                    <div ng-if="ctrl.state.errors.cart.userComment" class="text-center mt-2 font-red">נא מלאו הערות
+                    <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות
                         למכין
                         ההזמנה
                     </div>
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
                     <div class="display-flex justify-between">
                         <span class="mobile-hide font-gray-900">סה"כ סל קניות </span>
-                        <span class="mobile-hide item-price font-size-16">{{ctrl.state.currencySign}}{{state.cartTotal}}</span>
+                        <span class="mobile-hide item-price font-size-16">{{ctrl.state.currencySign}}{{globalState.cartTotal}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="button"
                                 ng-click="ctrl.validateCart()"
                                 class="mobile-hide h-45 btn-green rounded-10 border-gray-1px"
-                                ng-class="{'btn-disabled not-active' : !state.cartItems.length}"
+                                ng-class="{'btn-disabled not-active' : !globalState.cartItems.length}"
                         >
                             <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">המשך לתשלום</span>
                         </button>
@@ -125,7 +125,7 @@
     <div class="mobile-footer px-28 display-flex flex-vertical align-center justify-center">
         <button type="button" id="submit-cart-btn" class="btn-green rounded-50 w-full mb-15">
             <span class="font-white text-xl checkout-text">המשך לתשלום</span>
-            <span class="font-white text-xl total-sum">{{ctrl.state.currencySign}}{{state.cartTotal}}</span>
+            <span class="font-white text-xl total-sum">{{ctrl.state.currencySign}}{{globalState.cartTotal}}</span>
         </button>
         <span class="font-darkgray text-lgr ">
       שערוך. עלות סופית לפני שקילה.

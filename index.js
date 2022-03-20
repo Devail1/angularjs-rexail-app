@@ -1,4 +1,4 @@
-const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll', 'cartModule', 'storeModule']);
+const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll', 'storeModule', 'cartModule']);
 
 rexailApp.constant('IMG_BASE_URL', 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/');
 rexailApp.constant('CURRENCY_SIGN', '₪');
@@ -29,7 +29,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
 })
 
 rexailApp.controller('appController', function ($rootScope, $scope, $http, $filter, $location, $anchorScroll, IMG_BASE_URL) {
-    $rootScope.state = {
+    $rootScope.globalState = {
         storeData: {},
         categoriesData: [],
         cartItems: [],
@@ -44,13 +44,13 @@ rexailApp.controller('appController', function ($rootScope, $scope, $http, $filt
         $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
             .then(function (response) {
                 // Loading store data to root scope
-                $rootScope.state.storeData = response.data.data;
-                $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${$rootScope.state.storeData.jsonWebEncryption}`)
+                $rootScope.globalState.storeData = response.data.data;
+                $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${$rootScope.globalState.storeData.jsonWebEncryption}`)
                     .then(function (response) {
                         // Formatting data products by categories
-                        $rootScope.state.categoriesData = formatData(response.data.data);
+                        $rootScope.globalState.categoriesData = formatData(response.data.data);
                         // Setting initial category
-                        $rootScope.state.selectedCategory = $rootScope.state.categoriesData[0]
+                        $rootScope.globalState.selectedCategory = $rootScope.globalState.categoriesData[0]
                     });
             });
     }
@@ -151,22 +151,6 @@ rexailApp.controller('appController', function ($rootScope, $scope, $http, $filt
         return formValidations.some(isNotValid)
     }
 
-    // Cart validations
-    ctrl.validateCart = function () {
-        // Getting all products with comments
-        let prepProducts = ctrl.state.cartItems.filter(product => product.commentType);
-        // Getting all products with selected comment
-        let validPrepProducts = prepProducts.filter(product => product.commentType && product.comment)
-
-        // Check if user comment is empty
-        ctrl.state.errors.cart.userComment = !ctrl.state.formControl.userComment.length
-
-        // Check if all product's preparation methods are selected
-        ctrl.state.errors.cart.productComment = (validPrepProducts.length !== prepProducts.length)
-
-        // Redirect to /checkout if there are no errors
-        if (!ctrl.state.errors.cart.userComment && !ctrl.state.errors.cart.productComment) $location.path('/checkout').replace();
-    };
 
     // Convert str to num expression in order to use in template
     $scope.parseFloat = parseFloat;
@@ -177,34 +161,34 @@ rexailApp.service('cartActionsService', function ($rootScope) {
     this.increaseProductQuantity = function (product) {
         if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
             product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
-            !$rootScope.state.cartItems.includes(product) && $rootScope.state.cartItems.unshift(product)
-            $rootScope.state.cartTotal = this.calculateTotal();
+            !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
+            $rootScope.globalState.cartTotal = this.calculateTotal();
         }
     }
 
     this.decreaseProductQuantity = function (product) {
         if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
             product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
-            !$rootScope.state.cartItems.includes(product) && $rootScope.state.cartItems.unshift(product)
+            !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
         } else this.removeProduct(product)
-        $rootScope.state.cartTotal = this.calculateTotal();
+        $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
     this.removeProduct = function (product) {
         product.quantity = null
-        $rootScope.state.cartItems = $rootScope.state.cartItems.filter(item => item.id !== product.id)
-        $rootScope.state.cartTotal = this.calculateTotal();
+        $rootScope.globalState.cartItems = $rootScope.globalState.cartItems.filter(item => item.id !== product.id)
+        $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
     this.clearCart = function () {
-        $rootScope.state.cartItems.forEach(item => item.quantity = null)
-        $rootScope.state.cartItems = []
-        $rootScope.state.cartTotal = this.calculateTotal();
+        $rootScope.globalState.cartItems.forEach(item => item.quantity = null)
+        $rootScope.globalState.cartItems = []
+        $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
     this.calculateTotal = function () {
         const initialValue = 0;
-        const sumWithInitial = $rootScope.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
+        const sumWithInitial = $rootScope.globalState.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
         return sumWithInitial.toFixed(2)
     }
 })
@@ -279,7 +263,7 @@ rexailApp.directive('navMenu', function () {
     }
 })
 
-function handleQuantityUnitSelect(product, quantityUnit) {
+function handleQuantityUnitSelect (product, quantityUnit) {
     // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
     // else, divide the price by the previous unit weight value.
     if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {

@@ -5,7 +5,7 @@ store.controller("storeController", function ($rootScope, $http, $filter, $ancho
     ctrl.state = {
         cartActions: cartActionsService,
         selectedSortBy: null,
-        searchQuery: $rootScope.state.searchQuery,
+        searchQuery: $rootScope.globalState.searchQuery,
         currencySign: CURRENCY_SIGN,
         // Setting initial value for pagination limit (infinite scroll)
         paginationLimit: 12,
@@ -18,7 +18,7 @@ store.controller("storeController", function ($rootScope, $http, $filter, $ancho
     }
 
     ctrl.handleCategoryClick = function (category) {
-        $rootScope.state.selectedCategory = category
+        $rootScope.globalState.selectedCategory = category
 
         // scroll to top
         $anchorScroll();
@@ -27,11 +27,14 @@ store.controller("storeController", function ($rootScope, $http, $filter, $ancho
     // Products Sort by value
     ctrl.sortProductsBy = function (value) {
         ctrl.state.selectedSortBy = value
-        if (value === 'שם מוצר') $rootScope.state.selectedCategory.children = $filter('orderBy')($rootScope.state.selectedCategory.children, '-name', true);
-        if (value === 'מחיר מהנמוך לגבוה') $rootScope.state.selectedCategory.children = $filter('orderBy')($rootScope.state.selectedCategory.children, '-price', true);
-        if (value === 'מחיר מהגבוהה לנמוך') $rootScope.state.selectedCategory.children = $filter('orderBy')($rootScope.state.selectedCategory.children, 'price', true);
-        if (value === 'מוצרים במבצע') $rootScope.state.selectedCategory.children = $filter('orderBy')($rootScope.state.selectedCategory.children, 'promoted', true);
+        if (value === 'שם מוצר') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, '-name', true);
+        if (value === 'מחיר מהנמוך לגבוה') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, '-price', true);
+        if (value === 'מחיר מהגבוהה לנמוך') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, 'price', true);
+        if (value === 'מוצרים במבצע') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, 'promoted', true);
     }
 
+    ctrl.handleQuantityUnitSelect = function (product, quantityUnit) {
+        handleQuantityUnitSelect(product, quantityUnit)
+    }
 });
 

@@ -1,11 +1,11 @@
 <div ng-cloak>
 
-    <div ng-if="state.getCurrentPath().includes('store')" class="navbar-maximized">
+    <div ng-if="globalState.getCurrentPath().includes('store')" class="navbar-maximized">
         <div class="container mx-auto font-white relative">
             <div class=" pt-20 display-flex align-center  justify-around  px-5 ">
                 <div class="search-box-container mr-auto ">
                     <label>
-                        <input ng-model="state.searchQuery" class="search-box border-white"
+                        <input ng-model="globalState.searchQuery" class="search-box border-white"
                                ng-model-options="{debounce: 800}"
                                ng-minlength="3" placeholder="חיפוש מוצר"/>
                     </label>
@@ -25,7 +25,7 @@
             <div class="display-flex align-center mt-30">
                 <img ng-src="assets/img/logo.png"/>
                 <div>
-                    <div class="text-title mb-5">{{state.storeData.store.name}}</div>
+                    <div class="text-title mb-5">{{globalState.storeData.store.name}}</div>
                     <div class="display-flex align-center my-3 c-p">
                         <svg class="ml-5 font-white" width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>5787A4CF-E477-4052-B600-AC339D58DC01</title>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="display-flex align-center my-3 c-p">
                         <img class="ml-5" ng-src="assets/icons/icon-location-2.svg"/>
-                        {{state.storeData.store.businessFullAddressWithCity}}
+                        {{globalState.storeData.store.businessFullAddressWithCity}}
                     </div>
                 </div>
             </div>
@@ -59,9 +59,9 @@
                 <a href="#">
                     <img class="logo-img round w-60 h-60" ng-src="assets/img/logo.png" alt="logo"/>
                 </a>
-                <div class="text-title mb-5 mr-10">{{state.storeData.store.name}}</div>
+                <div class="text-title mb-5 mr-10">{{globalState.storeData.store.name}}</div>
             </div>
-            <div ng-if="!state.getCurrentPath().includes('checkout')" class="search-box-container ml-10">
+            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="search-box-container ml-10">
                 <label>
                     <input ng-model="searchQuery" class="search-box"
                            ng-model-options="{debounce: 800}"
@@ -69,7 +69,7 @@
                 </label>
                 <img class="search-icon" ng-src="assets/icons/icon-search.svg"/>
             </div>
-            <div ng-if="!state.getCurrentPath().includes('checkout')" class="display-flex align-center w-250">
+            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="display-flex align-center w-250">
                 <img class="h-32 w-32" ng-src="assets/icons/icon-delivery-rounded.svg"/>
                 <div class="mr-10">
                     <span class="text-weight-400">משה דיין 20, תל אביב</span>
@@ -77,7 +77,7 @@
                     <span class="text-weight-300">מחר, 12:00-16:00</span>
                 </div>
             </div>
-            <div ng-if="!state.getCurrentPath().includes('checkout')" class="display-flex c-p align-center">
+            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="display-flex c-p align-center">
                 <img class="h-32 w-32" ng-src="assets/icons/icon-user.svg"/>
                 <div class="display-flex align-center mr-5 ml-5">
                     <span class="text-weight-400">היי אינסה!</span>
@@ -87,7 +87,7 @@
                     </svg>
                 </div>
             </div>
-            <div ng-if="state.getCurrentPath().includes('checkout')" class="c-p">
+            <div ng-if="globalState.getCurrentPath().includes('checkout')" class="c-p">
                 <a class="display-flex align-center" href="/cart">
                     <span class="ml-5">חזרה לסל הקניות</span>
                     <img ng-src="assets/icons/icon-arrow-left.svg"/>

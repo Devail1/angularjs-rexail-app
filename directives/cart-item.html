@@ -42,7 +42,7 @@
         </div>
         <form class="select-form" ng-if="product.commentType">
             <label class="display-flex relative w-full">
-                <svg ng-class="!errors.cart.productComment || product.comment ? 'font-green' : 'font-red'"
+                <svg ng-class="!errors.productComment || product.comment ? 'font-green' : 'font-red'"
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
                      preserveAspectRatio="xMidYMid meet">
@@ -53,11 +53,11 @@
                     </g>
                 </svg>
                 <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
-                        ng-class="!errors.cart.productComment || product.comment ? 'border-green' : 'border-red'"
+                        ng-class="!errors.productComment || product.comment ? 'border-green' : 'border-red'"
                         class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between">
                     <option value="">{{product.commentType.name}}</option>
                 </select>
-                <svg ng-class="!errors.cart.productComment || product.comment ? 'font-green' : 'font-red'" width="11"
+                <svg ng-class="!errors.productComment || product.comment ? 'font-green' : 'font-red'" width="11"
                      class="select-arrow"
                      height="11" viewBox="0 0 11 11" fill="currentColor"
                      xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@
                 </svg>
             </label>
             <!-- Show error label if there is an error in form validation -->
-            <div ng-if="errors.cart.productComment && !product.comment" class="mt-5 font-red text-md select-warning">
+            <div ng-if="errors.productComment && !product.comment" class="mt-5 font-red text-md select-warning">
                 יש לבחור אפשרות אחת
             </div>
         </form>

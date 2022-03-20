@@ -2,20 +2,20 @@
     <div id="categories" class="categories-wrapper" ng-cloack>
         <div class="container mx-auto h-full display-flex align-center justify-evenly font-gray-900">
             <li class="category"
-                ng-repeat="category in state.categoriesData | limitTo: 10"
+                ng-repeat="category in globalState.categoriesData | limitTo: 10"
                 ng-if="category.children.length"
                 ng-click="ctrl.handleCategoryClick(category)"
-                ng-class="{'selected': state.selectedCategory.id === category.id}"
+                ng-class="{'selected': globalState.selectedCategory.id === category.id}"
             >
                 {{category.name}}&nbsp;
             </li>
-            <div class="display-flex align-center relative" ng-if="state.categoriesData.length > 10">
+            <div class="display-flex align-center relative" ng-if="globalState.categoriesData.length > 10">
                 <ul class="category category-show-more" ng-mouseover="ctrl.state.isShowMoreCategoriesOpened=true"
                     ng-mouseleave="ctrl.state.isShowMoreCategoriesOpened = false"> עוד
                     <div ng-if="ctrl.state.isShowMoreCategoriesOpened"
                          class="categories-show-more display-flex flex-vertical absolute pt-10 rounded-10">
                         <li class="category show-more"
-                            ng-repeat="category in state.categoriesData | limitTo: state.categoriesData.length : 10 "
+                            ng-repeat="category in globalState.categoriesData | limitTo: globalState.categoriesData.length : 10 "
                             ng-mouseenter="ctrl.state.isShowMoreCategoriesHovered = true"
                             ng-mouseleave="ctrl.state.isShowMoreCategoriesHovered = false"
                             ng-click="ctrl.handleCategoryClick(category)"
@@ -31,7 +31,7 @@
         <div class="display-flex relative">
             <div class="store-widget">
                 <div class="display-flex justify-between align-center">
-                    <h1 class="font-heebo font-blue">{{state.selectedCategory.name}}</h1>
+                    <h1 class="font-heebo font-blue">{{globalState.selectedCategory.name}}</h1>
                     <div class="sort-items c-p display-flex justify-between relative"
                          ng-click="ctrl.state.isSortDropdownToggled = !ctrl.state.isSortDropdownToggled"
                          ng-class="{'dropdown-active': ctrl.state.isSortDropdownToggled, 'selected-sort': ctrl.state.selectedSortBy }">
@@ -58,15 +58,16 @@
 
                 </div>
                 <div>
-                    <div ng-if="!state.selectedCategory" id="loading-bar-spinner" class="spinner">
+                    <div ng-if="!globalState.selectedCategory" id="loading-bar-spinner" class="spinner">
                         <div class="spinner-icon"></div>
                     </div>
                     <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="0"
                          class="store-items-wrapper mt-30">
-                        <div ng-repeat="product in state.selectedCategory.children  | filter: state.searchQuery | limitTo: ctrl.state.paginationLimit">
+                        <div ng-repeat="product in globalState.selectedCategory.children  | filter: state.searchQuery | limitTo: ctrl.state.paginationLimit">
                             <store-item product="product"
                                         increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
                                         decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
+                                        handle-quantity-unit-select="ctrl.state.cartActions.handleQuantityUnitSelect(product)"
                             ></store-item>
                         </div>
                     </div>
@@ -78,13 +79,13 @@
                     <div class="cart-preview-header display-flex align-center px-16">
                         <img class="w-22 h-22 ml-10" ng-src="assets/icons/button-arrow-up.svg"/>
                         <img class="icon-basket" ng-src="assets/icons/icon-basket-green.svg"><span
-                            class="text-sm font-white mt-8 cart-preview-items-count"> {{state.cartItems.length}}</span></img>
+                            class="text-sm font-white mt-8 cart-preview-items-count"> {{globalState.cartItems.length}}</span></img>
                         <div class="display-flex flex-vertical font-white mr-8 ml-auto">
                             <span class="text-weight-300 font-size-14">סל הקניות שלי</span>
-                            <span class="font-size-18">{{state.cartTotal}}</span>
+                            <span class="font-size-18">{{globalState.cartTotal}}</span>
                         </div>
                         <button type="button" class="proceed-to-checkout-btn font-white font-size-16"
-                                ng-class="{'btn-disabled not-active': !state.cartItems.length}">
+                                ng-class="{'btn-disabled not-active': !globalState.cartItems.length}">
                         <span>
                             <a href="/cart">
                                 המשך לתשלום
@@ -102,12 +103,14 @@
                         </div>
                     </div>
                     <div class="cart-items-preview-wrapper">
-                        <div class="display-flex flex-vertical align-center pt-20" ng-if="!state.cartItems.length">
+                        <div class="display-flex flex-vertical align-center pt-20"
+                             ng-if="!globalState.cartItems.length">
                             <img ng-src="assets/img/empty-basket.png"/>
                             <span class="mt-10 font-size-22 font-blue text-weight-700 font-heebo">סל הקניות שלכם ריק</span>
                             <span class="font-blue font-size-16">התחילו להוסיף מוצרים</span>
                         </div>
-                        <item-preview ng-repeat="product in state.cartItems track by product.id" product="product"
+                        <item-preview ng-repeat="product in globalState.cartItems track by product.id"
+                                      product="product"
                                       increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
                                       decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
                                       remove-product="ctrl.state.cartActions.removeProduct(product)"
@@ -115,11 +118,11 @@
                     </div>
                     <div class="cart-preview-footer px-28 display-flex flex-vertical align-center justify-center">
                         <button type="button" class="btn-green w-full"
-                                ng-class="{'btn-disabled not-active': !state.cartItems.length}">
+                                ng-class="{'btn-disabled not-active': !globalState.cartItems.length}">
                             <a class="w-full h-full" href="/cart">
                                 <div class="display-flex align-center justify-between h-full">
                                     <span class="font-heebo text-weight-500 font-white checkout-text">המשך לתשלום</span>
-                                    <span class="font-heebo text-weight-500 font-white total-sum">{{ctrl.state.currencySign}}{{state.cartTotal}}</span>
+                                    <span class="font-heebo text-weight-500 font-white total-sum">{{ctrl.state.currencySign}}{{globalState.cartTotal}}</span>
                                 </div>
                             </a>
                         </button>
