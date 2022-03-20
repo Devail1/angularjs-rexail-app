@@ -77,7 +77,8 @@
                                 </div>
                                 <div class="display-flex flex-vertical w-2-4 relative">
                                     <span>CVV *</span>
-                                    <input class="checkout-form-input" type="text"
+                                    <input class="checkout-form-input"
+                                           type="text"
                                            ng-model="ctrl.state.formControl.cardCVV"
                                            ng-blur="ctrl.validateFormInput('card-cvv')"
                                            ng-class="ctrl.state.errors.checkout.cardCVV === true ? 'invalid' : ctrl.state.errors.checkout.cardCVV === false ? 'valid' : ''"/>

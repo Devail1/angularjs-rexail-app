@@ -1,4 +1,7 @@
-const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll']);
+const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll', 'cartModule', 'storeModule']);
+
+rexailApp.constant('IMG_BASE_URL', 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/');
+rexailApp.constant('CURRENCY_SIGN', '₪');
 
 rexailApp.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
@@ -6,25 +9,95 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when('/store', {
             templateUrl: 'views/store.html',
+            controller: 'storeController',
+            controllerAs: 'ctrl'
+
         })
         .when('/cart', {
-            templateUrl: 'views/cart.html', controller: 'appController'
+            templateUrl: 'views/cart.html',
+            controller: 'cartController',
+            controllerAs: 'ctrl'
         })
         .when('/checkout', {
-            templateUrl: 'views/checkout.html', // controller: 'SecondController'
+            templateUrl: 'views/checkout.html',
         })
         .otherwise({
             redirectTo: '/store'
         });
 })
 
-rexailApp.controller('appController', function ($http, $scope, $filter, $location, $anchorScroll) {
+rexailApp.controller('appController', function ($rootScope, $scope, $http, $filter, $location, $anchorScroll, IMG_BASE_URL) {
+    $rootScope.state = {
+        storeData: {},
+        categoriesData: [],
+        cartItems: [],
+        cartTotal: '0.00',
+        searchQuery: '',
+        getCurrentPath: function () {
+            return $location.path();
+        }
+    }
+
+    function fetchAppData() {
+        $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
+            .then(function (response) {
+                $rootScope.state.storeData = response.data.data;
+                $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${$rootScope.state.storeData.jsonWebEncryption}`)
+                    .then(function (response) {
+                        // Formatting data products by categories
+                        $rootScope.state.categoriesData = formatData(response.data.data);
+                        $rootScope.state.selectedCategory = $rootScope.state.categoriesData[0]
+                    });
+            });
+    }
+
+    fetchAppData();
+
+    function formatData(array) {
+        return Object.values(array.reduce((obj, current) => {
+            if (!obj[current.productCategory.id]) {
+                obj[current.productCategory.id] = {
+                    id: current.productCategory.id,
+                    name: current.productCategory.name,
+                    children: []
+                }
+            }
+
+            // If there is no primary quantity unit than use the first product selling unit.
+            let primaryQuantityUnit = !current.product.primaryQuantityUnit && current.productSellingUnits[0]
+
+            let productModel = {
+                id: current.id,
+                name: current.product.name,
+                fullName: current.fullName,
+                imageUrl: IMG_BASE_URL.concat(current.imageUrl),
+                price: current.price,
+                promoted: current.promoted,
+                originalPrice: current.originalPrice,
+                productQuality: current.productQuality,
+                currentRelevancy: current.currentRelevancy,
+                primaryQuantityUnit: current.primaryQuantityUnit ? current.primaryQuantityUnit : current.productSellingUnits[0],
+                productSellingUnits: current.productSellingUnits,
+                commentType: current.commentType
+            }
+
+            // Push to all products category
+            if (current.product.id) obj['0'].children.push(productModel)
+            // Push to promoted products category
+            if (current.promoted) obj['1'].children.push(productModel)
+
+            // Continue reformatting
+            obj[current.productCategory.id].children.push(productModel)
+
+            return obj
+        }, {
+            // Initial state manually with default categories
+            0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
+        }));
+    }
+
     const ctrl = this;
     ctrl.state = {
-        cartItems: [],
-        total: '0.00',
-        selectedCategory: null,
-        selectedSortBy: null,
         formControl: {
             userComment: '',
             cardHolderID: null,
@@ -46,78 +119,6 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
                 cardCVV: null,
             }
         }
-    }
-
-    // Get data using http service
-    $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
-        .then(function (response) {
-            ctrl.state.data.storeData = response.data.data;
-            $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${ctrl.state.data.storeData.jsonWebEncryption}`)
-                .then(function (response) {
-                    // Formatting data products by categories
-                    ctrl.state.data.categoriesData = formatData(response.data.data);
-                    // Setting initial category
-                    ctrl.state.selectedCategory = ctrl.state.data.categoriesData[0]
-                });
-        });
-
-    function calculateTotal() {
-        const initialValue = 0;
-        const sumWithInitial = ctrl.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
-        return sumWithInitial.toFixed(2)
-    }
-
-    ctrl.getCurrentPath = function () {
-        return $location.path();
-    }
-
-    ctrl.showMoreCategories = function () {
-        return ctrl.state.data.categoriesData.length > 10
-    }
-
-    ctrl.handleCategoryClick = function (category) {
-        ctrl.state.selectedCategory = category
-
-        // scroll to top
-        $anchorScroll();
-    }
-
-    ctrl.removeProduct = function (product) {
-        product.quantity = null
-        ctrl.state.cartItems = ctrl.state.cartItems.filter(item => item.id !== product.id)
-        ctrl.state.total = calculateTotal();
-    }
-
-    ctrl.increaseProductQuantity = function (product) {
-        console.log(product)
-        if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
-            product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
-            !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
-            ctrl.state.total = calculateTotal();
-        }
-    }
-
-    ctrl.decreaseProductQuantity = function (product) {
-        if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
-            product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
-            !ctrl.state.cartItems.includes(product) && ctrl.state.cartItems.unshift(product)
-        } else ctrl.removeProduct(product)
-        ctrl.state.total = calculateTotal();
-    }
-
-    ctrl.clearCart = function () {
-        ctrl.state.cartItems.forEach(item => item.quantity = null)
-        ctrl.state.cartItems = []
-        ctrl.state.total = calculateTotal();
-    }
-
-    // Products Sort by value
-    ctrl.sortProductsBy = function (value) {
-        ctrl.selectedSortBy = value
-        if (value === 'שם מוצר') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-name', true);
-        if (value === 'מחיר מהנמוך לגבוה') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, '-price', true);
-        if (value === 'מחיר מהגבוהה לנמוך') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'price', true);
-        if (value === 'מוצרים במבצע') ctrl.state.selectedCategory.children = $filter('orderBy')(ctrl.state.selectedCategory.children, 'promoted', true);
     }
 
     // Checkout validations
@@ -163,22 +164,47 @@ rexailApp.controller('appController', function ($http, $scope, $filter, $locatio
         if (!ctrl.state.errors.cart.userComment && !ctrl.state.errors.cart.productComment) $location.path('/checkout').replace();
     };
 
-    // ctrl constants
-    ctrl.imgBaseUrl = 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/'
-
-    // $scope constants & functions
     // Convert str to num expression in order to use in template
     $scope.parseFloat = parseFloat;
+})
 
-    // Setting initial value for pagination limit (infinite scroll)
-    $scope.paginationLimit = 12
-    $scope.paginationStep = 12
 
-    // http get pagination goes here
-    $scope.loadMore = function () {
-        $scope.paginationLimit = $scope.paginationLimit + $scope.paginationStep
+rexailApp.service('cartActionsService', function ($rootScope) {
+    this.increaseProductQuantity = function (product) {
+        if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
+            product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
+            !$rootScope.state.cartItems.includes(product) && $rootScope.state.cartItems.unshift(product)
+            $rootScope.state.cartTotal = this.calculateTotal();
+        }
+    }
+
+    this.decreaseProductQuantity = function (product) {
+        if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
+            product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
+            !$rootScope.state.cartItems.includes(product) && $rootScope.state.cartItems.unshift(product)
+        } else this.removeProduct(product)
+        $rootScope.state.cartTotal = this.calculateTotal();
+    }
+
+    this.removeProduct = function (product) {
+        product.quantity = null
+        $rootScope.state.cartItems = $rootScope.state.cartItems.filter(item => item.id !== product.id)
+        $rootScope.state.cartTotal = this.calculateTotal();
+    }
+
+    this.clearCart = function () {
+        $rootScope.state.cartItems.forEach(item => item.quantity = null)
+        $rootScope.state.cartItems = []
+        $rootScope.state.cartTotal = this.calculateTotal();
+    }
+
+    this.calculateTotal = function () {
+        const initialValue = 0;
+        const sumWithInitial = $rootScope.state.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
+        return sumWithInitial.toFixed(2)
     }
 })
+
 
 // components
 rexailApp.directive('storeItem', function () {
@@ -186,7 +212,6 @@ rexailApp.directive('storeItem', function () {
         templateUrl: 'directives/store-item.html', replace: true,
         scope: {
             product: '=',
-            imgBaseUrl: '=',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
         },
@@ -204,7 +229,6 @@ rexailApp.directive('itemPreview', function () {
         replace: true,
         scope: {
             product: '=',
-            imgBaseUrl: '=',
             removeProduct: '&',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&'
@@ -223,7 +247,6 @@ rexailApp.directive('cartItem', function () {
         replace: true,
         scope: {
             product: '=',
-            imgBaseUrl: '=',
             increaseProductQuantity: '&',
             decreaseProductQuantity: '&',
             removeProduct: '&',
@@ -245,7 +268,10 @@ rexailApp.directive('footer', function () {
 
 rexailApp.directive('navMenu', function () {
     return {
-        templateUrl: 'directives/nav-menu.html', replace: true,
+        templateUrl: 'directives/nav-menu.html',
+        replace: true,
+
+
     }
 })
 
@@ -278,48 +304,49 @@ function handleQuantityUnitSelect(product, quantityUnit) {
     }
 }
 
-function formatData(array) {
-    return Object.values(array.reduce((obj, current) => {
-        if (!obj[current.productCategory.id]) {
-            obj[current.productCategory.id] = {
-                id: current.productCategory.id,
-                name: current.productCategory.name,
-                children: []
-            }
-        }
-
-        // If there is no primary quantity unit than use the first product selling unit.
-        let primaryQuantityUnit = !current.product.primaryQuantityUnit && current.productSellingUnits[0]
-
-        let productModel = {
-            id: current.id,
-            name: current.product.name,
-            fullName: current.fullName,
-            imageUrl: current.imageUrl,
-            price: current.price,
-            promoted: current.promoted,
-            originalPrice: current.originalPrice,
-            productQuality: current.productQuality,
-            currentRelevancy: current.currentRelevancy,
-            primaryQuantityUnit: current.primaryQuantityUnit ? current.primaryQuantityUnit : current.productSellingUnits[0],
-            productSellingUnits: current.productSellingUnits,
-            commentType: current.commentType
-        }
-
-        // Push to all products category
-        if (current.product.id) obj['0'].children.push(productModel)
-        // Push to promoted products category
-        if (current.promoted) obj['1'].children.push(productModel)
-
-        // Continue reformatting
-        obj[current.productCategory.id].children.push(productModel)
-
-        return obj
-    }, {
-        // Initial state manually with default categories
-        0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
-    }))
-}
+//
+// function formatData(array) {
+//     return Object.values(array.reduce((obj, current) => {
+//         if (!obj[current.productCategory.id]) {
+//             obj[current.productCategory.id] = {
+//                 id: current.productCategory.id,
+//                 name: current.productCategory.name,
+//                 children: []
+//             }
+//         }
+//
+//         // If there is no primary quantity unit than use the first product selling unit.
+//         let primaryQuantityUnit = !current.product.primaryQuantityUnit && current.productSellingUnits[0]
+//
+//         let productModel = {
+//             id: current.id,
+//             name: current.product.name,
+//             fullName: current.fullName,
+//             imageUrl: current.imageUrl,
+//             price: current.price,
+//             promoted: current.promoted,
+//             originalPrice: current.originalPrice,
+//             productQuality: current.productQuality,
+//             currentRelevancy: current.currentRelevancy,
+//             primaryQuantityUnit: current.primaryQuantityUnit ? current.primaryQuantityUnit : current.productSellingUnits[0],
+//             productSellingUnits: current.productSellingUnits,
+//             commentType: current.commentType
+//         }
+//
+//         // Push to all products category
+//         if (current.product.id) obj['0'].children.push(productModel)
+//         // Push to promoted products category
+//         if (current.promoted) obj['1'].children.push(productModel)
+//
+//         // Continue reformatting
+//         obj[current.productCategory.id].children.push(productModel)
+//
+//         return obj
+//     }, {
+//         // Initial state manually with default categories
+//         0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
+//     }))
+// }
 
 // Regex Util Functions (copied from regex101 library)
 function validateCardHolderID(IDnum) {

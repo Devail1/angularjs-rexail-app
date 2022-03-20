@@ -95,6 +95,7 @@ html, body {
     z-index: 19 !important;
     animation: loading-bar-spinner 400ms linear infinite;
 }
+
 #loading-bar-spinner.spinner .spinner-icon {
     width: 40px;
     height: 40px;
@@ -103,6 +104,7 @@ html, body {
     border-left-color: #33cc66 !important;
     border-radius: 50%;
 }
+
 @keyframes loading-bar-spinner {
     0% {
         transform: rotate(0deg);
@@ -222,6 +224,12 @@ html, body {
     cursor: pointer;
 }
 
+.category.selected {
+    color: #33cc66;
+    border-bottom: 2px solid #33cc66;
+    font-weight: 600;
+}
+
 .category:hover {
     color: #33cc66;
 }
@@ -229,8 +237,13 @@ html, body {
 .category .show-more {
     width: 150px;
     margin: 5px 0;
+    background-color: #ffffff;
     color: #333333;
     z-index: 10;
+}
+
+.category.show-more:hover {
+    background-color: #F5F3F0;
 }
 
 .category-show-more:hover {
@@ -958,7 +971,7 @@ button.btn-disabled {
     padding: 6px 5px 5px 6px;
     border-radius: 4px;
     background-color: #3c6;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
 }
@@ -986,6 +999,7 @@ button.btn-disabled {
     cursor: pointer;
     font-weight: 500;
 }
+
 /*  */
 
 

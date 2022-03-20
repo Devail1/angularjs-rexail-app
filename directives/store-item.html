@@ -105,7 +105,7 @@
     </div>
     <div class="display-flex flex-vertical align-center px-20 product-info-wrapper">
         <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
-             ng-src="{{imgBaseUrl + product.imageUrl}}">
+             ng-src="{{product.imageUrl}}">
         <span class="font-size-16 text-center mt-5">{{product.name}}</span>
         <div class="display-flex mt-10  product-rating-wrapper">
             <div ng-if="product.currentRelevancy.name === 'low'">

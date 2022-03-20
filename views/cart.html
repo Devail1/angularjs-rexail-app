@@ -15,7 +15,7 @@
         </svg>
         <div class="display-flex justify-between align-center mb-10">
             <div class="display-flex font-white align-center">
-                <span class="items-count">{{ctrl.state.cartItems.length}}</span>
+                <span class="items-count">{{state.cartItems.length}}</span>
                 <img ng-src="assets/icons/icon-basket-white.svg"/>
                 <div class="text-title font-blue mr-5 mt-15 mb-5 ">
                     סל הקניות שלי
@@ -39,13 +39,6 @@
                     <div class="w-2-4">
                         <div class="display-flex align-center">
                             <span>מוצר</span>
-                            <!--                            <button type="button" class="mr-15 c-p" ng-click="ctrl.toggleSortByEvenQuan()"-->
-                            <!--                                    ng-class="ctrl.state.toggleEven ? 'font-green' : 'font-blue'">-->
-                            <!--                                <svg class="h-24 w-h-24 c-p " fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-                            <!--                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"-->
-                            <!--                                          d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>-->
-                            <!--                                </svg>-->
-                            <!--                            </button>-->
                         </div>
                     </div>
                     <div class="display-flex justify-between w-2-4">
@@ -58,17 +51,16 @@
                     </div>
                 </div>
                 <ul id="cart-items-container">
-                    <cart-item ng-repeat="product in ctrl.state.cartItems | filter: ctrl.state.searchQuery"
+                    <cart-item ng-repeat="product in state.cartItems"
                                ng-class="{'border-none':$last}"
                                product="product"
                                img-base-url="ctrl.imgBaseUrl"
-                               increase-product-quantity="ctrl.increaseProductQuantity(product)"
-                               decrease-product-quantity="ctrl.decreaseProductQuantity(product)"
-                               remove-product="ctrl.removeProduct(product)"
-                               validate-cart="ctrl.validateCart()"
+                               increase-product-quantity="ctrl.state.increaseProductQuantity(product)"
+                               decrease-product-quantity="ctrl.state.decreaseProductQuantity(product)"
+                               remove-product="ctrl.state.removeProduct(product)"
                                errors="ctrl.state.errors"
                     ></cart-item>
-                    <div ng-if="!ctrl.state.cartItems.length"
+                    <div ng-if="!state.cartItems.length"
                          class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
                         <span class="text-lg text-weight-500 mt-10 ml-10">העגלה שלכם ריקה</span>
                         <svg class="h-36 w-36" viewBox="0 0 256 256" xml:space="preserve">
@@ -111,12 +103,14 @@
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
                     <div class="display-flex justify-between">
                         <span class="mobile-hide font-gray-900">סה"כ סל קניות </span>
-                        <span class="mobile-hide item-price font-size-16">₪{{ctrl.state.total}}</span>
+                        <span class="mobile-hide item-price font-size-16">₪{{state.cartTotal}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
-                        <button type="button" ng-click="ctrl.validateCart()"
+                        <button type="button"
+                                ng-click="ctrl.validateCart()"
                                 class="mobile-hide h-45 btn-green rounded-10 border-gray-1px"
-                                ng-class="!ctrl.state.cartItems.length ? 'btn-disabled not-active' : ''">
+                                ng-class="{'btn-disabled not-active' : !state.cartItems.length}"
+                        >
                             <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">המשך לתשלום</span>
                         </button>
                         <span class="mobile-hide font-darkgray mt-10 font-size-14">
@@ -132,7 +126,7 @@
     <div class="mobile-footer px-28 display-flex flex-vertical align-center justify-center">
         <button type="button" id="submit-cart-btn" class="btn-green rounded-50 w-full mb-15">
             <span class="font-white text-xl checkout-text">המשך לתשלום</span>
-            <span class="font-white text-xl total-sum">₪{{ctrl.state.total}}</span>
+            <span class="font-white text-xl total-sum">₪{{state.cartTotal}}</span>
         </button>
         <span class="font-darkgray text-lgr ">
       שערוך. עלות סופית לפני שקילה.
