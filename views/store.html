@@ -34,12 +34,11 @@
                     <h1 class="font-heebo font-blue">{{state.selectedCategory.name}}</h1>
                     <div class="sort-items c-p display-flex justify-between relative"
                          ng-click="ctrl.state.isSortDropdownToggled = !ctrl.state.isSortDropdownToggled"
-                         ng-class="{'dropdown-active': ctrl.state.isSortDropdownToggled || ctrl.state.selectedSortBy}">
+                         ng-class="{'dropdown-active': ctrl.state.isSortDropdownToggled, 'selected-sort': ctrl.state.selectedSortBy }">
                                 <span class="font-blue">
                                     {{ctrl.state.selectedSortBy || 'מיין לפי'}}
                                 </span>
                         <svg class="icon-arrow-down"
-                             ng-class="{'rotate-180': ctrl.state.isSortDropdownToggled}"
                              viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
                                   fill="currentColor" fill-rule="evenodd"/>

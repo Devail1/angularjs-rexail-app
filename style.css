@@ -310,6 +310,10 @@ html, body {
     background-color: #fff;
 }
 
+.sort-items.selected-sort {
+    background-color: #fff;
+}
+
 .sort-items.dropdown-active > .icon-arrow-down {
     transform: rotate(180deg);
     transition: transform 0.5s;

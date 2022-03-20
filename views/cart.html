@@ -21,7 +21,7 @@
                     סל הקניות שלי
                 </div>
             </div>
-            <div ng-click="ctrl.clearCart()" class="clear-cart">
+            <div ng-click="ctrl.state.cartActions.clearCart()" class="clear-cart">
                 <div class="display-flex c-p">
                     <svg class="h-20 w-20 font-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -54,10 +54,9 @@
                     <cart-item ng-repeat="product in state.cartItems"
                                ng-class="{'border-none':$last}"
                                product="product"
-                               img-base-url="ctrl.imgBaseUrl"
-                               increase-product-quantity="ctrl.state.increaseProductQuantity(product)"
-                               decrease-product-quantity="ctrl.state.decreaseProductQuantity(product)"
-                               remove-product="ctrl.state.removeProduct(product)"
+                               increase-product-quantity="ctrl.state.cartActions.increaseProductQuantity(product)"
+                               decrease-product-quantity="ctrl.state.cartActions.decreaseProductQuantity(product)"
+                               remove-product="ctrl.state.cartActions.removeProduct(product)"
                                errors="ctrl.state.errors"
                     ></cart-item>
                     <div ng-if="!state.cartItems.length"
@@ -103,7 +102,7 @@
                     <div class="mobile-hide mt-30 border-bottom-gray-1px mb-20"></div>
                     <div class="display-flex justify-between">
                         <span class="mobile-hide font-gray-900">סה"כ סל קניות </span>
-                        <span class="mobile-hide item-price font-size-16">₪{{state.cartTotal}}</span>
+                        <span class="mobile-hide item-price font-size-16">{{ctrl.state.currencySign}}{{state.cartTotal}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="button"
@@ -126,7 +125,7 @@
     <div class="mobile-footer px-28 display-flex flex-vertical align-center justify-center">
         <button type="button" id="submit-cart-btn" class="btn-green rounded-50 w-full mb-15">
             <span class="font-white text-xl checkout-text">המשך לתשלום</span>
-            <span class="font-white text-xl total-sum">₪{{state.cartTotal}}</span>
+            <span class="font-white text-xl total-sum">{{ctrl.state.currencySign}}{{state.cartTotal}}</span>
         </button>
         <span class="font-darkgray text-lgr ">
       שערוך. עלות סופית לפני שקילה.

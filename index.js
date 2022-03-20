@@ -20,6 +20,8 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         })
         .when('/checkout', {
             templateUrl: 'views/checkout.html',
+            controller: 'checkoutController',
+            controllerAs: 'ctrl'
         })
         .otherwise({
             redirectTo: '/store'
@@ -41,11 +43,13 @@ rexailApp.controller('appController', function ($rootScope, $scope, $http, $filt
     function fetchAppData() {
         $http.get('https://test.rexail.co.il/client/public/store/website?domain=testeitan.rexail.co.il')
             .then(function (response) {
+                // Loading store data to root scope
                 $rootScope.state.storeData = response.data.data;
                 $http.get(`https://test.rexail.co.il/client/public/store/catalog?s_jwe=${$rootScope.state.storeData.jsonWebEncryption}`)
                     .then(function (response) {
                         // Formatting data products by categories
                         $rootScope.state.categoriesData = formatData(response.data.data);
+                        // Setting initial category
                         $rootScope.state.selectedCategory = $rootScope.state.categoriesData[0]
                     });
             });
