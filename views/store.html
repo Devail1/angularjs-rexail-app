@@ -7,10 +7,10 @@
                 ng-click="ctrl.handleCategoryClick(category)"
                 ng-class="{'selected': globalState.selectedCategory.id === category.id}"
             >
-                {{category.name}}&nbsp;
+                <button type="button">{{category.name}}&nbsp;</button>
             </li>
-            <div class="display-flex align-center relative" ng-if="globalState.categoriesData.length > 10">
-                <ul class="category category-show-more" ng-mouseover="ctrl.state.isShowMoreCategoriesOpened=true"
+            <li class="display-flex align-center relative" ng-if="globalState.categoriesData.length > 10">
+                <ul class="category show-more-categories" ng-mouseover="ctrl.state.isShowMoreCategoriesOpened=true"
                     ng-mouseleave="ctrl.state.isShowMoreCategoriesOpened = false"> עוד
                     <ul ng-if="ctrl.state.isShowMoreCategoriesOpened"
                          class="categories-show-more display-flex flex-vertical absolute pt-10 rounded-10">
@@ -20,11 +20,11 @@
                             ng-mouseleave="ctrl.state.isShowMoreCategoriesHovered = false"
                             ng-click="ctrl.handleCategoryClick(category)"
                         >
-                            {{category.name}}
+                            <button type="button">{{category.name}}</button>
                         </li>
                     </ul>
                 </ul>
-            </div>
+            </li>
         </ul>
     </nav>
     <div class="container mx-auto pt-20">

@@ -31,6 +31,7 @@ button {
     border: none;
     background-color: transparent;
     cursor: pointer;
+    font-size: unset;
 }
 
 ul, li {
@@ -230,11 +231,7 @@ html, body {
     font-weight: 600;
 }
 
-.category:hover {
-    color: #33cc66;
-}
-
-.category .show-more {
+.category.show-more {
     width: 150px;
     margin: 5px 0;
     background-color: #ffffff;
@@ -242,11 +239,23 @@ html, body {
     z-index: 10;
 }
 
+.category:hover button {
+    color: #33cc66;
+}
+
+.category.show-more button {
+    color: #333333;
+}
+
+.category.show-more:hover button {
+    color: #33cc66;
+}
+
 .category.show-more:hover {
     background-color: #F5F3F0;
 }
 
-.category-show-more:hover {
+.show-more-categories:hover {
     margin-bottom: 0;
 }
 
