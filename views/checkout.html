@@ -93,7 +93,7 @@
                                            ng-required="true"
                                            ng-pattern="/^(0[1-9]|1[0-2])\/?([0-9]{2})$/"
                                            ng-keyup="ctrl.addSlashExp()"
-                                           ng-model="ctrl.state.formControl.cardExpirationDate"
+                                           ng-model="ctrl.state.formControl.cardExpDate"
                                            ng-class="{'invalid': form.cardExpDate.$touched && (form.cardExpDate.$error.required || form.cardExpDate.$error.pattern), 'valid': !form.cardExpDate.$error.required && !form.cardExpDate.$error.pattern}"/>
                                 </div>
                                 <div class="display-flex flex-vertical w-2-4 relative">

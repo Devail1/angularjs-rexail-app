@@ -1,6 +1,6 @@
 const store = angular.module("storeModule", []);
 
-store.controller("storeController", function ($rootScope, $filter, $anchorScroll, cartActionsService, IMG_BASE_URL, CURRENCY_SIGN) {
+store.controller("storeController", function ($rootScope, $filter, $anchorScroll, cartActionsService, CURRENCY_SIGN) {
     const ctrl = this;
     ctrl.state = {
         cartActions: cartActionsService,

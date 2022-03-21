@@ -1,6 +1,6 @@
 const checkout = angular.module("checkoutModule", []);
 
-checkout.controller("checkoutController", function ($http, $location, $rootScope, CURRENCY_SIGN) {
+checkout.controller("checkoutController", function (CURRENCY_SIGN) {
     const ctrl = this;
     ctrl.state = {
         currencySign: CURRENCY_SIGN,

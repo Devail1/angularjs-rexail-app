@@ -221,7 +221,6 @@ rexailApp.directive('cartItem', function () {
             onIncreaseProductQuantity: '&',
             onDecreaseProductQuantity: '&',
             onRemoveProduct: '&',
-            errors: '=',
         },
         controller: 'productController',
         controllerAs: 'ctrl',

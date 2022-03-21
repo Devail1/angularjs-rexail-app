@@ -40,9 +40,9 @@
                 </svg>
             </div>
         </div>
-        <form class="select-form" ng-if="product.commentType">
-            <label class="display-flex relative w-full">
-                <svg ng-class="{'font-green': !errors.productComment || product.comment, 'font-red': errors.productComment}"
+        <form name="form" class="select-form" ng-if="product.commentType">
+            <label for="productCommentSelect" class="display-flex relative w-full">
+                <svg ng-class="{'font-green': form.productCommentSelect.$untouched || form.$valid, 'font-red': form.$invalid}"
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
                      preserveAspectRatio="xMidYMid meet">
@@ -53,11 +53,15 @@
                     </g>
                 </svg>
                 <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
-                        ng-class="{'border-green': !errors.productComment || product.comment, 'border-red': errors.productComment}"
-                        class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between">
+                        ng-class="{'border-green': form.productCommentSelect.$untouched || form.$valid, 'border-red': form.$invalid}"
+                        class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between"
+                        id="productCommentSelect"
+                        name="productCommentSelect"
+                        ng-required="true">
                     <option value="">{{product.commentType.name}}</option>
                 </select>
-                <svg ng-class="{'font-green': !errors.productComment || product.comment, 'font-red': errors.productComment}"
+
+                <svg ng-class="{'font-green': form.productCommentSelect.$untouched || form.$valid, 'font-red': form.$invalid}"
                      width="11"
                      class="select-arrow"
                      height="11" viewBox="0 0 11 11" fill="currentColor"
@@ -67,7 +71,7 @@
                 </svg>
             </label>
             <!-- Show error label if there is an error in form validation -->
-            <div ng-if="errors.productComment && !product.comment" class="mt-5 font-red text-md select-warning">
+            <div ng-if="form.productCommentSelect.$touched && form.$invalid" class="mt-5 font-red text-md select-warning">
                 יש לבחור אפשרות אחת
             </div>
         </form>
@@ -95,9 +99,9 @@
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
             <a ng-if="product.primaryQuantityUnit.sellingUnit.name"
-                 ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
-                 class="relative"
-                 ng-class="{'not-active': product.productSellingUnits.length === 1}">
+               ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
+               class="relative"
+               ng-class="{'not-active': product.productSellingUnits.length === 1}">
             <span class="font-size-13 font-gray-600 unit-label c-p"
                   ng-class="{'dropdown-disabled': product.productSellingUnits.length === 1 ,'dropdown-enabled mr-10':product.productSellingUnits.length > 1}">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
