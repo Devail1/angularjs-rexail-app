@@ -13,7 +13,7 @@
             פירות העונה במבצע של 2 יחידות ב47{{ctrl.currencySign}}. בתוקף עד ה04.01.22
             <div class="tooltip-right-arrow"></div>
         </div>
-        <button type="button" ng-click="onRemoveProduct(product)">
+        <button type="button" ng-click="onRemoveProduct()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red absolute c-p remove-item-btn mt-5"
                  viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -42,7 +42,7 @@
         </div>
         <form class="select-form" ng-if="product.commentType">
             <label class="display-flex relative w-full">
-                <svg ng-class="!errors.productComment || product.comment ? 'font-green' : 'font-red'"
+                <svg ng-class="{'font-green': !errors.productComment || product.comment, 'font-red': errors.productComment}"
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
                      preserveAspectRatio="xMidYMid meet">
@@ -53,11 +53,12 @@
                     </g>
                 </svg>
                 <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
-                        ng-class="!errors.productComment || product.comment ? 'border-green' : 'border-red'"
+                        ng-class="{'border-green': !errors.productComment || product.comment, 'border-red': errors.productComment}"
                         class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between">
                     <option value="">{{product.commentType.name}}</option>
                 </select>
-                <svg ng-class="!errors.productComment || product.comment ? 'font-green' : 'font-red'" width="11"
+                <svg ng-class="{'font-green': !errors.productComment || product.comment, 'font-red': errors.productComment}"
+                     width="11"
                      class="select-arrow"
                      height="11" viewBox="0 0 11 11" fill="currentColor"
                      xmlns="http://www.w3.org/2000/svg">
@@ -93,27 +94,35 @@
         </button>
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
-            <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled" class="relative"
-                 ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
+            <a ng-if="product.primaryQuantityUnit.sellingUnit.name"
+                 ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
+                 class="relative"
+                 ng-class="{'not-active': product.productSellingUnits.length === 1}">
             <span class="font-size-13 font-gray-600 unit-label c-p"
-                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.sellingUnit.name}}
+                  ng-class="{'dropdown-disabled': product.productSellingUnits.length === 1 ,'dropdown-enabled mr-10':product.productSellingUnits.length > 1}">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
                  class="h-7 w-7 font-green mr-2 dropdown-arrow">
             </span>
-                <ul ng-if="ctrl.state.isUnitTypeDropdownToggled" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
+                <ul ng-if="ctrl.state.isUnitTypeDropdownToggled"
+                    class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
                     <li ng-repeat="productSellingUnit in product.productSellingUnits"
-                          ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                          class="dropdown-item "><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
+                        ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
+                        class="dropdown-item ">
+                        <button type="button">{{productSellingUnit.sellingUnit.name}}</button>
+                    </li>
                 </ul>
-            </div>
+            </a>
         </div>
         <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
             <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg">
         </button>
     </div>
     <div class="label-wrapper mobile-hide mt-15">
-        <div class="mx-auto mobile-hide text-weight-500 item-sum">{{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}</div>
-        <div ng-if="product.promoted && product.oldPrice" class="font-darkgray text-weight-300 text-linethrough text-sm">
+        <div class="mx-auto mobile-hide text-weight-500 item-sum">
+            {{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}
+        </div>
+        <div ng-if="product.promoted && product.oldPrice"
+             class="font-darkgray text-weight-300 text-linethrough text-sm">
             {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
         </div>
     </div>

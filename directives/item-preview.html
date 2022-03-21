@@ -30,19 +30,24 @@
         <span class="font-size-16 text-weight-500">
         {{product.quantity}}
       </span>
-        <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled" class="relative"
-             ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
+        <a class="relative"
+                ng-if="product.primaryQuantityUnit.sellingUnit.name"
+                ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
+                ng-class="{'not-active': product.productSellingUnits.length === 1}">
             <span class="font-size-13 font-gray-600 unit-label c-p"
-                  ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.sellingUnit.name}}
+                  ng-class="{'dropdown-disabled': product.productSellingUnits.length === 1, 'dropdown-enabled mr-10': product.productSellingUnits.length > 1}">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
                  class="h-7 w-7 font-green mr-2 dropdown-arrow">
             </span>
-            <ul ng-if="ctrl.state.isUnitTypeDropdownToggled" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
-                    <li ng-repeat="productSellingUnit in product.productSellingUnits"
-                          ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                          class="dropdown-item "><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
+            <ul class="dropdown-menu-sm display-flex flex-vertical align-center absolute"
+                ng-if="ctrl.state.isUnitTypeDropdownToggled">
+                <li ng-repeat="productSellingUnit in product.productSellingUnits"
+                    ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
+                    class="dropdown-item ">
+                    <button type="button">{{productSellingUnit.sellingUnit.name}}</button>
+                </li>
             </ul>
-        </div>
+        </a>
         <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
             <img class="h-8 w-8" ng-src="assets/icons/icon-minus.svg">
         </button>
