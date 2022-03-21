@@ -38,14 +38,14 @@
                 </div>
             </div>
             <div class="mt-30 mb-5">
-                <span class="font-heebo font-size-18 text-weight-700">₪{{product.price}}</span>
+                <span class="font-heebo font-size-18 text-weight-700">{{ctrl.currencySign}}{{product.price}}</span>
                 <span ng-if="product.primaryQuantityUnit.sellingUnit.name"> &hairsp;/&hairsp;
                     <span class="font-heebo text-weight-500">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
                 </span>
             </div>
             <div ng-if="product.promoted && product.originalPrice"
                  class="font-darkgray text-linethrough text-weight-300 font-size-13">
-                <span class="font-heebo ">₪{{product.originalPrice}}</span>/
+                <span class="font-heebo ">{{ctrl.currencySign}}{{product.originalPrice}}</span>/
                 <span class="font-heebo ">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
             </div>
             <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
@@ -145,14 +145,14 @@
     </div>
     <div class="display-flex flex-vertical align-center product-price-wrapper">
         <div>
-            <span class="font-heebo font-size-18 text-weight-700">₪{{product.price}}</span>
+            <span class="font-heebo font-size-18 text-weight-700">{{ctrl.currencySign}}{{product.price}}</span>
             <span ng-if="product.primaryQuantityUnit.sellingUnit.name"> &hairsp;/&hairsp;
                 <span class="font-heebo text-sm text-weight-500">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
             </span>
         </div>
         <div ng-if="product.promoted && product.originalPrice"
              class="font-darkgray text-linethrough text-weight-300 font-size-13">
-            <span class="font-heebo ">₪{{product.originalPrice}}</span>/
+            <span class="font-heebo ">{{ctrl.currencySign}}{{product.originalPrice}}</span>/
             <span class="font-heebo "> {{product.primaryQuantityUnit.sellingUnit.name}}</span>
         </div>
     </div>

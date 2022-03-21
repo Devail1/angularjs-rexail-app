@@ -102,66 +102,13 @@ rexailApp.controller('appController', function ($rootScope, $scope, $http, $filt
             0: {id: 0, name: 'כל המוצרים', children: []}, 1: {id: 1, name: 'מבצעים', children: []}
         }));
     }
-
-    const ctrl = this;
-    ctrl.state = {
-        formControl: {
-            userComment: '',
-            cardHolderID: null,
-        },
-        data: {
-            storeData: [],
-            categoriesData: []
-        },
-        errors: {
-            cart: {
-                userComment: false,
-                productComment: false
-            },
-            checkout: {
-                cardHolderName: null,
-                cardHolderID: null,
-                cardNumber: null,
-                cardExpirationDate: null,
-                cardCVV: null,
-            }
-        }
-    }
-
-    // Checkout validations
-    ctrl.validateFormInput = function (value) {
-        if (value === 'card-holder-name') ctrl.state.errors.checkout.cardHolderName = !validateCardHolderName(ctrl.state.formControl.cardHolderName)
-        if (value === 'card-holder-id') ctrl.state.errors.checkout.cardHolderID = !validateCardHolderID(ctrl.state.formControl.cardHolderID)
-        if (value === 'card-number') ctrl.state.errors.checkout.cardNumber = !validateCardNumber(ctrl.state.formControl.cardNumber)
-        if (value === 'card-expiration-date') ctrl.state.errors.checkout.cardExpirationDate = !validateCardExpirationDate(ctrl.state.formControl.cardExpirationDate)
-        if (value === 'card-cvv') ctrl.state.errors.checkout.cardCVV = !validateCardCVV(ctrl.state.formControl.cardCVV)
-    }
-
-    ctrl.addSlashExp = function () {
-        let expire_date = document.getElementById('exp').value;
-        if (expire_date.length == 2) {
-            document.getElementById('exp').value = expire_date + '/';
-        }
-    }
-
-    // Enable or Disable submit checkout button
-    ctrl.disableCheckoutForm = function () {
-        let formValidations = Object.values(ctrl.state.errors.checkout)
-
-        // checks whether an input form is invalid
-        const isNotValid = (inputError) => (inputError === true || inputError === null);
-
-        return formValidations.some(isNotValid)
-    }
-
-
-    // Convert str to num expression in order to use in template
-    $scope.parseFloat = parseFloat;
 })
 
 
 rexailApp.service('cartActionsService', function ($rootScope) {
-    this.onIncreaseProductQuantity = function (product) {
+    const ctrl = this;
+
+    ctrl.onIncreaseProductQuantity = function (product) {
         if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
             product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
@@ -169,7 +116,7 @@ rexailApp.service('cartActionsService', function ($rootScope) {
         }
     }
 
-    this.onDecreaseProductQuantity = function (product) {
+    ctrl.onDecreaseProductQuantity = function (product) {
         if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
             product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
@@ -177,19 +124,19 @@ rexailApp.service('cartActionsService', function ($rootScope) {
         $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
-    this.onRemoveProduct = function (product) {
+    ctrl.onRemoveProduct = function (product) {
         product.quantity = null
         $rootScope.globalState.cartItems = $rootScope.globalState.cartItems.filter(item => item.id !== product.id)
         $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
-    this.onClearCart = function () {
+    ctrl.onClearCart = function () {
         $rootScope.globalState.cartItems.forEach(item => item.quantity = null)
         $rootScope.globalState.cartItems = []
         $rootScope.globalState.cartTotal = this.calculateTotal();
     }
 
-    this.calculateTotal = function () {
+    ctrl.calculateTotal = function () {
         const initialValue = 0;
         const sumWithInitial = $rootScope.globalState.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
         return sumWithInitial.toFixed(2)
@@ -198,10 +145,12 @@ rexailApp.service('cartActionsService', function ($rootScope) {
 })
 
 
-rexailApp.controller('unitTypeSelectController', function () {
+rexailApp.controller('productController', function (CURRENCY_SIGN) {
     const ctrl = this;
 
-    this.onUnitTypeChange = function (product, quantityUnit) {
+    ctrl.currencySign = CURRENCY_SIGN
+
+    ctrl.onUnitTypeChange = function (product, quantityUnit) {
         // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
         // else, divide the price by the previous unit weight value.
         if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {
@@ -241,7 +190,7 @@ rexailApp.controller('unitTypeSelectController', function () {
                 onIncreaseProductQuantity: '&',
                 onDecreaseProductQuantity: '&',
             },
-            controller: 'unitTypeSelectController',
+            controller: 'productController',
             controllerAs: 'ctrl',
         }
     })
@@ -256,7 +205,7 @@ rexailApp.controller('unitTypeSelectController', function () {
                 onIncreaseProductQuantity: '&',
                 onDecreaseProductQuantity: '&'
             },
-            controller: 'unitTypeSelectController',
+            controller: 'productController',
             controllerAs: 'ctrl',
         }
     })
@@ -272,7 +221,7 @@ rexailApp.controller('unitTypeSelectController', function () {
                 onRemoveProduct: '&',
                 errors: '=',
             },
-            controller: 'unitTypeSelectController',
+            controller: 'productController',
             controllerAs: 'ctrl',
         }
     })

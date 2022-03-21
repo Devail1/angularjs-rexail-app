@@ -46,14 +46,14 @@
                                 <span>שם בעל הכרטיס *</span>
                                 <input class="checkout-form-input" type="text"
                                        ng-model="ctrl.state.formControl.cardHolderName"
-                                       ng-blur="ctrl.validateFormInput('card-holder-name')"
+                                       ng-blur="ctrl.onValidateFormInput('card-holder-name')"
                                        ng-class="ctrl.state.errors.checkout.cardHolderName === true ? 'invalid' : ctrl.state.errors.checkout.cardHolderName === false ? 'valid' : ''"/>
                             </div>
                             <div class="display-flex flex-vertical w-2-4">
                                 <span>ת.ז. בעל הכרטיס *</span>
                                 <input class="checkout-form-input" type="number"
                                        ng-model="ctrl.state.formControl.cardHolderID"
-                                       ng-blur="ctrl.validateFormInput('card-holder-id')"
+                                       ng-blur="ctrl.onValidateFormInput('card-holder-id')"
                                        ng-class="ctrl.state.errors.checkout.cardHolderID === true ? 'invalid' : ctrl.state.errors.checkout.cardHolderID === false ? 'valid' : ''"/>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                 <span>מספר כרטיס אשראי *</span>
                                 <input class="checkout-form-input" type="text"
                                        ng-model="ctrl.state.formControl.cardNumber"
-                                       ng-blur="ctrl.validateFormInput('card-number')"
+                                       ng-blur="ctrl.onValidateFormInput('card-number')"
                                        ng-class="ctrl.state.errors.checkout.cardNumber === true ? 'invalid' : ctrl.state.errors.checkout.cardNumber === false ? 'valid' : ''"/>
 
                             </div>
@@ -72,7 +72,7 @@
                                     <input class="checkout-form-input" id="exp" type="text" placeholder="MM/YY"
                                            ng-keyup="ctrl.addSlashExp()"
                                            ng-model="ctrl.state.formControl.cardExpirationDate"
-                                           ng-blur="ctrl.validateFormInput('card-expiration-date')"
+                                           ng-blur="ctrl.onValidateFormInput('card-expiration-date')"
                                            ng-class="ctrl.state.errors.checkout.cardExpirationDate === true ? 'invalid' : ctrl.state.errors.checkout.cardExpirationDate === false ? 'valid' : ''"/>
                                 </div>
                                 <div class="display-flex flex-vertical w-2-4 relative">
@@ -80,7 +80,7 @@
                                     <input class="checkout-form-input"
                                            type="text"
                                            ng-model="ctrl.state.formControl.cardCVV"
-                                           ng-blur="ctrl.validateFormInput('card-cvv')"
+                                           ng-blur="ctrl.onValidateFormInput('card-cvv')"
                                            ng-class="ctrl.state.errors.checkout.cardCVV === true ? 'invalid' : ctrl.state.errors.checkout.cardCVV === false ? 'valid' : ''"/>
                                     <img class="h-20 w-20 absolute input-placeholder credit-card-svg"
                                          ng-src="/assets/icons/icon-credit-card.svg"/>
@@ -88,8 +88,8 @@
                             </div>
                         </div>
                         <div class="display-flex align-center">
-                            <div class="custom-checkbox" ng-click="toggleCheckbox = !toggleCheckbox"
-                                 ng-class="toggleCheckbox ? 'unchecked' : 'checked'"></div>
+                            <div class="custom-checkbox" ng-click="ctrl.state.shouldSaveCardInfoCheckbox = !ctrl.state.shouldSaveCardInfoCheckbox"
+                                 ng-class="ctrl.state.shouldSaveCardInfoCheckbox ? 'unchecked' : 'checked'"></div>
                             <span class="font-size-14 font-gray-900 mt-2">שמור את פרטי כרטיס האשראי להזמנות עתידיות</span>
                             <img class="mr-8 mt-2 font-green" ng-src="assets/icons/icon-info-2.svg"/>
                         </div>
@@ -105,7 +105,7 @@
                             <button class="btn-primary display-flex align-center justify-center"
                                     ng-class="ctrl.disableCheckoutForm() ? 'btn-disabled not-active' : ''">
                                 <img class="w-20 h-20 ml-4" ng-src="assets/icons/icon-lock-light.svg"/>
-                                סיום הזמנה&emsp;|&emsp;₪{{parseFloat(ctrl.state.total) + 30}}
+                                סיום הזמנה&emsp;|&emsp;{{ctrl.currencySign}}{{parseFloat(ctrl.state.total) + 30}}
                             </button>
                         </div>
                     </div>
@@ -151,19 +151,19 @@
                 </div>
                 <div class="display-flex justify-between align-center mt-25">
                     <span class="font-size-15 font-gray-600 ">סה״כ סל קניות</span>
-                    <span class="font-size-16 font-heebo">₪{{ctrl.state.total}}</span>
+                    <span class="font-size-16 font-heebo">{{ctrl.currencySign}}{{globalState.cartTotal}}</span>
                 </div>
                 <div class="display-flex justify-between align-center my-6">
                     <span class="font-size-15 font-gray-600 ">הנחת קופון</span>
-                    <span class="font-size-16 font-heebo">₪60.00-</span>
+                    <span class="font-size-16 font-heebo">{{ctrl.currencySign}}60.00-</span>
                 </div>
                 <div class="display-flex justify-between align-center my-6">
                     <span class="font-size-15 font-gray-600 ">משלוח</span>
-                    <span class="font-size-16 font-heebo">₪30.00</span>
+                    <span class="font-size-16 font-heebo">{{ctrl.currencySign}}30.00</span>
                 </div>
                 <div class="display-flex justify-between align-center my-6">
                     <span class="font-size-15 font-gray-600 text-weight-500">סה״כ לתשלום</span>
-                    <span class="font-size-16 font-heebo text-weight-500">₪{{parseFloat(ctrl.state.total) + 30}}</span>
+                    <span class="font-size-16 font-heebo text-weight-500">{{ctrl.currencySign}}{{ctrl.parseFloat(ctrl.state.total) + 30}}</span>
                 </div>
                 <div class="text-center">
                     <span class="font-darkgray font-size-14">שערוך. עלות סופית לפי שקילה.</span>

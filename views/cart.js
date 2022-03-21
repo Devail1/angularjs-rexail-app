@@ -1,6 +1,6 @@
 const cart = angular.module("cartModule", []);
 
-cart.controller("cartController", function ($scope, $http, $location, $rootScope, cartActionsService, CURRENCY_SIGN) {
+cart.controller("cartController", function ($location, $rootScope, cartActionsService, CURRENCY_SIGN) {
     const ctrl = this;
     ctrl.state = {
         cartActions: cartActionsService,
@@ -16,7 +16,7 @@ cart.controller("cartController", function ($scope, $http, $location, $rootScope
 
 
     // Cart validations
-    ctrl.validateCart = function () {
+    ctrl.onValidateCart = function () {
         // Getting all products with comments
         let prepProducts = $rootScope.globalState.cartItems.filter(product => product.commentType);
         // Getting all products with selected comment

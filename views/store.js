@@ -1,6 +1,6 @@
 const store = angular.module("storeModule", []);
 
-store.controller("storeController", function ($rootScope, $http, $filter, $anchorScroll, cartActionsService, IMG_BASE_URL,CURRENCY_SIGN) {
+store.controller("storeController", function ($rootScope, $filter, $anchorScroll, cartActionsService, IMG_BASE_URL, CURRENCY_SIGN) {
     const ctrl = this;
     ctrl.state = {
         cartActions: cartActionsService,
@@ -13,11 +13,11 @@ store.controller("storeController", function ($rootScope, $http, $filter, $ancho
     }
 
     // http get pagination goes here
-    ctrl.loadMore = function () {
+    ctrl.onLoadMore = function () {
         ctrl.state.paginationLimit = ctrl.state.paginationLimit + ctrl.state.paginationStep
     }
 
-    ctrl.handleCategoryClick = function (category) {
+    ctrl.onCategoryClick = function (category) {
         $rootScope.globalState.selectedCategory = category
 
         // scroll to top
@@ -25,16 +25,12 @@ store.controller("storeController", function ($rootScope, $http, $filter, $ancho
     }
 
     // Products Sort by value
-    ctrl.sortProductsBy = function (value) {
+    ctrl.onProductsSortBy = function (value) {
         ctrl.state.selectedSortBy = value
         if (value === 'שם מוצר') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, '-name', true);
         if (value === 'מחיר מהנמוך לגבוה') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, '-price', true);
         if (value === 'מחיר מהגבוהה לנמוך') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, 'price', true);
         if (value === 'מוצרים במבצע') $rootScope.globalState.selectedCategory.children = $filter('orderBy')($rootScope.globalState.selectedCategory.children, 'promoted', true);
-    }
-
-    ctrl.handleQuantityUnitSelect = function (product, quantityUnit) {
-        handleQuantityUnitSelect(product, quantityUnit)
     }
 });
 

@@ -10,7 +10,7 @@
             <div class="discount-badge-h-tip"></div>
         </div>
         <div class="hover-tooltip mobile-hide">
-            פירות העונה במבצע של 2 יחידות ב47₪. בתוקף עד ה04.01.22
+            פירות העונה במבצע של 2 יחידות ב47{{ctrl.currencySign}}. בתוקף עד ה04.01.22
             <div class="tooltip-right-arrow"></div>
         </div>
         <button ng-click="onRemoveProduct(product)">
@@ -22,7 +22,7 @@
             </svg>
         </button>
         <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
-             ng-src="{{imgBaseUrl + product.imageUrl}}">
+             ng-src="{{product.imageUrl}}">
     </div>
     <div class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5">
       <span class=" item-desc">
@@ -73,17 +73,17 @@
     </div>
     <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
       <span class="item-price mobile-hide font-size-16 text-weight-300">
-        ₪{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.sellingUnit.name}}
+        {{ctrl.currencySign}}{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.sellingUnit.name}}
       </span>
         <span class="item-price mobile-show">
-        ₪{{(product.price * product.quantity).toFixed(2)}}
+        {{ctrl.currencySign}}{{(product.price * product.quantity).toFixed(2)}}
       </span>
         <div ng-if="product.promoted && product.oldPrice">
         <span class="text-muted mobile-hide font-size-13 text-weight-300">
-          ₪{{product.oldPrice}}/{{product.primaryQuantityUnit.sellingUnit.name}}
+          {{ctrl.currencySign}}{{product.oldPrice}}/{{product.primaryQuantityUnit.sellingUnit.name}}
         </span>
             <span class="text-muted mobile-show">
-          ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
+          {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
         </span>
         </div>
     </div>
@@ -93,16 +93,16 @@
         </div>
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
-            <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="toggleDropdown = !toggleDropdown" class="relative"
+            <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled" class="relative"
                  ng-class="product.productSellingUnits.length === 1 ? 'not-active' : ''">
             <span class="font-size-13 font-gray-600 unit-label c-p"
                   ng-class="product.productSellingUnits.length === 1 ? 'dropdown-disabled' : 'dropdown-enabled mr-10'">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
                  class="h-7 w-7 font-green mr-2 dropdown-arrow">
             </span>
-                <ul ng-if="toggleDropdown" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
+                <ul ng-if="ctrl.state.isUnitTypeDropdownToggled" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
                     <li ng-repeat="productSellingUnit in product.productSellingUnits"
-                          ng-click="handleQuantityUnitSelect(product, productSellingUnit)"
+                          ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
                           class="dropdown-item ">{{productSellingUnit.sellingUnit.name}}</li>
                 </ul>
             </div>
@@ -112,9 +112,9 @@
         </div>
     </div>
     <div class="label-wrapper mobile-hide mt-15">
-        <div class="mx-auto mobile-hide text-weight-500 item-sum">₪{{(product.quantity * product.price).toFixed(2)}}</div>
+        <div class="mx-auto mobile-hide text-weight-500 item-sum">{{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}</div>
         <div ng-if="product.promoted && product.oldPrice" class="font-darkgray text-weight-300 text-linethrough text-sm">
-            ₪{{(product.oldPrice * product.quantity).toFixed(2)}}
+            {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
         </div>
     </div>
     <!-- Discount Ribbon -->
@@ -125,9 +125,9 @@
             <img class="h-36 w-36 font-green mr-15" ng-src="/assets/icons/icon-discount.svg" alt="item-discount"/>
             <div class="text-lg font-white mr-10 font-heebo">
                 <span class="text-weight-500 ">זכית בהנחה!</span>
-                <span> 2 מארזי ענבים ב₪44</span>
+                <span> 2 מארזי ענבים ב{{ctrl.currencySign}}44</span>
             </div>
-            <span class="mr-auto text-lg font-white font-heebo ml-5"> ₪14.00 - </span>
+            <span class="mr-auto text-lg font-white font-heebo ml-5"> {{ctrl.currencySign}}14.00 - </span>
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
             <li class="category"
                 ng-repeat="category in globalState.categoriesData | limitTo: 10"
                 ng-if="category.children.length"
-                ng-click="ctrl.handleCategoryClick(category)"
+                ng-click="ctrl.onCategoryClick(category)"
                 ng-class="{'selected': globalState.selectedCategory.id === category.id}"
             >
                 <button type="button">{{category.name}}&nbsp;</button>
@@ -18,7 +18,7 @@
                             ng-repeat="category in globalState.categoriesData | limitTo: globalState.categoriesData.length : 10 "
                             ng-mouseenter="ctrl.state.isShowMoreCategoriesHovered = true"
                             ng-mouseleave="ctrl.state.isShowMoreCategoriesHovered = false"
-                            ng-click="ctrl.handleCategoryClick(category)"
+                            ng-click="ctrl.onCategoryClick(category)"
                         >
                             <button type="button">{{category.name}}</button>
                         </li>
@@ -45,23 +45,22 @@
                         </svg>
 
                         <ul ng-if="ctrl.state.isSortDropdownToggled" class="dropdown-menu absolute mt-30">
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('שם מוצר')">שם מוצר</li>
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהנמוך לגבוה')">מחיר מהנמוך
+                            <li class="dropdown-item" ng-click="ctrl.onProductsSortBy('שם מוצר')">שם מוצר</li>
+                            <li class="dropdown-item" ng-click="ctrl.onProductsSortBy('מחיר מהנמוך לגבוה')">מחיר מהנמוך
                                 לגבוה
                             </li>
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מחיר מהגבוהה לנמוך')">מחיר מהגבוהה
+                            <li class="dropdown-item" ng-click="ctrl.onProductsSortBy('מחיר מהגבוהה לנמוך')">מחיר מהגבוהה
                                 לנמוך
                             </li>
-                            <li class="dropdown-item" ng-click="ctrl.sortProductsBy('מוצרים במבצע')">מוצרים במבצע</li>
+                            <li class="dropdown-item" ng-click="ctrl.onProductsSortBy('מוצרים במבצע')">מוצרים במבצע</li>
                         </ul>
                     </div>
-
                 </div>
-                <div>
+                <section>
                     <div ng-if="!globalState.selectedCategory" id="loading-bar-spinner" class="spinner">
                         <div class="spinner-icon"></div>
                     </div>
-                    <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="0"
+                    <div infinite-scroll="ctrl.onLoadMore()" infinite-scroll-distance="0"
                          class="store-items-wrapper mt-30">
                         <article ng-repeat="product in globalState.selectedCategory.children  | filter: state.searchQuery | limitTo: ctrl.state.paginationLimit">
                             <store-item product="product"
@@ -70,11 +69,11 @@
                             ></store-item>
                         </article>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div class="cart-preview-wrapper">
-                <div class="cart-preview ">
+                <section class="cart-preview ">
                     <div class="cart-preview-header display-flex align-center px-16">
                         <img class="w-22 h-22 ml-10" ng-src="assets/icons/button-arrow-up.svg"/>
                         <img class="icon-basket" ng-src="assets/icons/icon-basket-green.svg"><span
@@ -127,7 +126,7 @@
                         </button>
                         <span class="font-darkgray font-size-14 mt-5">שערוך. עלות סופית לפני שקילה.</span>
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     </div>
