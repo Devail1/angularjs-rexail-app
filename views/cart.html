@@ -56,7 +56,7 @@
                                product="product"
                                on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
                                on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
-                               on-remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
+                               show-product-comment-error="form.$submitted"
                     ></cart-item>
                     <div ng-if="!globalState.cartItems.length"
                          class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
@@ -108,8 +108,9 @@
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="submit"
-                                class="mobile-hide h-45 btn-green rounded-10 border-gray-1px"
-                                ng-disabled="!globalState.cartItems.length || form.textarea.$invalid"
+                                class="mobile-hide h-45 btn-green rounded-10 border-light-gray"
+                                ng-click="ctrl.onCartSubmit()"
+                                ng-disabled="!globalState.cartItems.length || form.$invalid"
                         >
                             <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">
                                 המשך לתשלום</span>

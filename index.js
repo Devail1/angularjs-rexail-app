@@ -109,37 +109,38 @@ rexailApp.run(function ($rootScope, $http, $location, IMG_BASE_URL) {
 
 // Services
 rexailApp.service('cartActionsService', function ($rootScope) {
-    const ctrl = this;
+    const service = this;
 
-    ctrl.onIncreaseProductQuantity = function (product) {
+    service.onIncreaseProductQuantity = function (product) {
         if (!product.quantity || product.quantity < product.primaryQuantityUnit.maxAmount) {
             product.quantity = product.quantity ? product.quantity + product.primaryQuantityUnit.sellingUnit.amountJumps : product.primaryQuantityUnit.sellingUnit.amountJumps;
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
-            $rootScope.globalState.cartTotal = this.calculateTotal();
+            $rootScope.globalState.cartTotal = service.calculateTotal();
         }
+        console.log(service)
     }
 
-    ctrl.onDecreaseProductQuantity = function (product) {
+    service.onDecreaseProductQuantity = function (product) {
         if (product.quantity > product.primaryQuantityUnit.sellingUnit.amountJumps) {
             product.quantity = product.quantity - product.primaryQuantityUnit.sellingUnit.amountJumps
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
-        } else this.onRemoveProduct(product)
-        $rootScope.globalState.cartTotal = this.calculateTotal();
+        } else service.onRemoveProduct(product)
+        $rootScope.globalState.cartTotal = service.calculateTotal();
     }
 
-    ctrl.onRemoveProduct = function (product) {
+    service.onRemoveProduct = function (product) {
         product.quantity = null
         $rootScope.globalState.cartItems = $rootScope.globalState.cartItems.filter(item => item.id !== product.id)
-        $rootScope.globalState.cartTotal = this.calculateTotal();
+        $rootScope.globalState.cartTotal = service.calculateTotal();
     }
 
-    ctrl.onClearCart = function () {
+    service.onClearCart = function () {
         $rootScope.globalState.cartItems.forEach(item => item.quantity = null)
         $rootScope.globalState.cartItems = []
-        $rootScope.globalState.cartTotal = this.calculateTotal();
+        $rootScope.globalState.cartTotal = service.calculateTotal();
     }
 
-    ctrl.calculateTotal = function () {
+    service.calculateTotal = function () {
         const initialValue = 0;
         const sumWithInitial = $rootScope.globalState.cartItems.reduce((totalSum, product) => totalSum + product['price'] * product.quantity, initialValue)
         return sumWithInitial.toFixed(2)
@@ -152,15 +153,15 @@ rexailApp.controller('productController', function (CURRENCY_SIGN) {
 
     ctrl.currencySign = CURRENCY_SIGN
 
-    ctrl.onUnitTypeChange = function (product, quantityUnit) {
+    ctrl.onUnitTypeChange = function (product, newQuantityUnit) {
         // Check the new unit weight and modify the price accordingly, if the new unit weight is higher, than multiply the price by it,
         // else, divide the price by the previous unit weight value, do the same for old price.
-        if (product.primaryQuantityUnit.estimatedUnitWeight < quantityUnit.estimatedUnitWeight) {
-            product.price = (product.price * quantityUnit.estimatedUnitWeight).toFixed(2)
+        if (product.primaryQuantityUnit.estimatedUnitWeight < newQuantityUnit.estimatedUnitWeight) {
+            product.price = (product.price * newQuantityUnit.estimatedUnitWeight).toFixed(2)
             if (product.originalPrice) {
-                product.originalPrice = (product.originalPrice * quantityUnit.estimatedUnitWeight).toFixed(2)
+                product.originalPrice = (product.originalPrice * newQuantityUnit.estimatedUnitWeight).toFixed(2)
             }
-        } else if (product.primaryQuantityUnit.estimatedUnitWeight !== quantityUnit.estimatedUnitWeight) {
+        } else if (product.primaryQuantityUnit.estimatedUnitWeight !== newQuantityUnit.estimatedUnitWeight) {
             product.price = (product.price / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
             if (product.originalPrice) {
                 product.originalPrice = (product.originalPrice / product.primaryQuantityUnit.estimatedUnitWeight).toFixed(2)
@@ -168,7 +169,7 @@ rexailApp.controller('productController', function (CURRENCY_SIGN) {
         }
 
         // Assign to product the new quantity unit
-        product.primaryQuantityUnit = quantityUnit
+        product.primaryQuantityUnit = newQuantityUnit
 
         // Convert float to int if unit type is not supporting floats
         if (product.primaryQuantityUnit.sellingUnit.amountJumps === 1) {
@@ -218,9 +219,10 @@ rexailApp.directive('cartItem', function () {
         replace: true,
         scope: {
             product: '=',
+            onRemoveProduct: '&',
             onIncreaseProductQuantity: '&',
             onDecreaseProductQuantity: '&',
-            onRemoveProduct: '&',
+            showProductCommentError: '='
         },
         controller: 'productController',
         controllerAs: 'ctrl',

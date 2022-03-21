@@ -88,7 +88,7 @@
                         <button type="button" class="proceed-to-checkout-btn font-white font-size-16"
                                 ng-disabled="!globalState.cartItems.length">
                         <span>
-                            <a ng-href="{{globalState.cartItems.length ? '/cart' : 'javascript:void(0)'}}">
+                            <a ng-href="{{globalState.cartItems.length ? '/cart' : '#'}}">
                                 המשך לתשלום
                             </a>
                         </span>
@@ -120,7 +120,7 @@
                     <div class="cart-preview-footer px-28 display-flex flex-vertical align-center justify-center">
                         <button type="button" class="btn-green w-full"
                                 ng-disabled="!globalState.cartItems.length">
-                            <a ng-href="{{globalState.cartItems.length ? '/cart' : 'javascript:void(0)'}}"
+                            <a ng-href="{{globalState.cartItems.length ? '/cart' : '#'}}"
                                class="w-full h-full">
                                 <div class="display-flex align-center justify-between h-full">
                                     <span class="font-heebo text-weight-500 font-white checkout-text">המשך לתשלום</span>

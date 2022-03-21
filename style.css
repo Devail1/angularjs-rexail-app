@@ -1135,6 +1135,10 @@ button:disabled {
     color: #666666;
 }
 
+.font-gray-300 {
+    color: #999999;
+}
+
 .font-yellow {
     color: #ffcf00;
 }
@@ -1234,6 +1238,22 @@ button:disabled {
 
 .border-white {
     border: 1px solid #ffffff;
+}
+
+.border-gray {
+    border: 1px solid #9e9e9e;
+}
+
+.border-light-gray {
+    border: 1px solid #f8fafb;
+}
+
+.border-bottom-gray-2px {
+    border-bottom: 2px solid #f8fafb;
+}
+
+.border-bottom-gray-1px {
+    border-bottom: 1px solid #f8fafb;
 }
 
 /* Shape */
@@ -2101,15 +2121,4 @@ button:disabled {
         font-family: "Heebo", sans-serif !important;
     }
 
-    .border-bottom-gray-2px {
-        border-bottom: 2px solid #f8fafb;
-    }
-
-    .border-bottom-gray-1px {
-        border-bottom: 1px solid #f8fafb;
-    }
-
-    .border-gray-1px {
-        border: 1px solid #f8fafb;
-    }
 }
