@@ -51,16 +51,18 @@
             <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
                 <div class="toggle-unit-container ">
                     <ul ng-repeat="productSellingUnit in product.productSellingUnits"
-                         ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                         ng-class="(product.productSellingUnits.length === 1 ||
-                            productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.sellingUnit.name) ? 'selected' : ''"
-                         class="toggle-unit  display-flex justify-center align-center"
+                        ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
+                        ng-class="{'selected': (product.productSellingUnits.length === 1 || productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.sellingUnit.name)}"
+                        class="toggle-unit  display-flex justify-center align-center"
                     >
-                        <li><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
+                        <li>
+                            <button type="button">{{productSellingUnit.sellingUnit.name}}</button>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <button type="button" ng-if="!product.quantity " class="add-to-cart-btn" ng-click="onIncreaseProductQuantity()">
+            <button type="button" ng-if="!product.quantity " class="add-to-cart-btn"
+                    ng-click="onIncreaseProductQuantity()">
                 <img ng-src="assets/icons/icon-plus.svg"/>
                 <span class="mr-5 text-weight-500">
                 הוספה לסל
@@ -98,8 +100,8 @@
     <div ng-if="product.quantity" class="quantity-badge font-white">
         <div class="display-flex flex-vertical align-center justify-center mt-2">
 
-        <span class="font-size-14 text-weight-600 font-heebo">{{product.quantity}}</span>
-        <span class="font-size-10 text-weight-400">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
+            <span class="font-size-14 text-weight-600 font-heebo">{{product.quantity}}</span>
+            <span class="font-size-10 text-weight-400">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
         </div>
         <div class="quantity-badge-tip"></div>
     </div>

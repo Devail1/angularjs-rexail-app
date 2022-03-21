@@ -31,9 +31,9 @@
         {{product.quantity}}
       </span>
         <a class="relative"
-                ng-if="product.primaryQuantityUnit.sellingUnit.name"
-                ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
-                ng-class="{'not-active': product.productSellingUnits.length === 1}">
+           ng-if="product.primaryQuantityUnit.sellingUnit.name"
+           ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
+           ng-class="{'not-active': product.productSellingUnits.length === 1}">
             <span class="font-size-13 font-gray-600 unit-label c-p"
                   ng-class="{'dropdown-disabled': product.productSellingUnits.length === 1, 'dropdown-enabled mr-10': product.productSellingUnits.length > 1}">{{product.primaryQuantityUnit.sellingUnit.name}}
             <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
