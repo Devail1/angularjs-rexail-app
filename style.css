@@ -32,6 +32,7 @@ button {
     background-color: transparent;
     cursor: pointer;
     font-size: unset;
+    color: unset;
 }
 
 ul, li {
@@ -196,20 +197,6 @@ html, body {
     height: 32px;
 }
 
-.proceed-to-checkout-btn {
-    width: 85px;
-    height: 46px;
-    background-color: #3c6;
-    border-radius: 6px;
-    padding: 5px 15px 7px 16px;
-}
-
-.proceed-to-checkout-btn.btn-disabled {
-    background-color: #005350;
-    opacity: 40%;
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
 .categories-wrapper {
     z-index: 10;
     width: 100%;
@@ -298,6 +285,7 @@ html, body {
 
 .dropdown-item {
     padding: 10px 6px;
+    text-align: right;
 }
 
 .dropdown-item:hover {
@@ -392,15 +380,21 @@ html, body {
     font-size: 18px;
 }
 
-/*.cart-preview-footer button.btn-disabled {*/
-/*    opacity: 0.4;*/
-/*}*/
+.proceed-to-checkout-btn {
+    width: 85px;
+    height: 46px;
+    background-color: #3c6;
+    border-radius: 6px;
+    padding: 5px 15px 7px 16px;
+}
 
-/*.order-summary * > button.btn-disabled {*/
-/*    opacity: 0.4;*/
-/*}*/
+.proceed-to-checkout-btn:disabled {
+    background-color: #005350;
+    opacity: 40%;
+    background-color: rgba(255, 255, 255, 0.2);
+}
 
-button.btn-disabled {
+button:disabled {
     opacity: 0.4;
 }
 

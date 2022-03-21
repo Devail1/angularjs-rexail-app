@@ -13,7 +13,7 @@
             פירות העונה במבצע של 2 יחידות ב47{{ctrl.currencySign}}. בתוקף עד ה04.01.22
             <div class="tooltip-right-arrow"></div>
         </div>
-        <button ng-click="onRemoveProduct(product)">
+        <button type="button" ng-click="onRemoveProduct(product)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red absolute c-p remove-item-btn mt-5"
                  viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -88,9 +88,9 @@
         </div>
     </div>
     <div class="label-wrapper mobile-hide flex-horizontal justify-center item-quantity-container mt-15">
-        <div class="plus-minus-preview-container" ng-click="onIncreaseProductQuantity()">
+        <button type="button" class="plus-minus-preview-container" ng-click="onIncreaseProductQuantity()">
             <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-plus.svg">
-        </div>
+        </button>
         <div class="display-flex flex-vertical">
             <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
             <div ng-if="product.primaryQuantityUnit.sellingUnit.name" ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled" class="relative"
@@ -103,13 +103,13 @@
                 <ul ng-if="ctrl.state.isUnitTypeDropdownToggled" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
                     <li ng-repeat="productSellingUnit in product.productSellingUnits"
                           ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                          class="dropdown-item ">{{productSellingUnit.sellingUnit.name}}</li>
+                          class="dropdown-item "><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
                 </ul>
             </div>
         </div>
-        <div class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
+        <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
             <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg">
-        </div>
+        </button>
     </div>
     <div class="label-wrapper mobile-hide mt-15">
         <div class="mx-auto mobile-hide text-weight-500 item-sum">{{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}</div>

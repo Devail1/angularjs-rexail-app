@@ -1,4 +1,4 @@
-const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll', 'storeModule', 'cartModule']);
+const rexailApp = angular.module('rexail-app', ['ngRoute', 'infinite-scroll', 'storeModule', 'cartModule', 'checkoutModule']);
 
 rexailApp.constant('IMG_BASE_URL', 'https://s3.eu-central-1.amazonaws.com/images-il.rexail.com/');
 rexailApp.constant('CURRENCY_SIGN', '₪');
@@ -31,7 +31,7 @@ rexailApp.config(function ($routeProvider, $locationProvider) {
         });
 })
 
-rexailApp.controller('appController', function ($rootScope, $scope, $http, $filter, $location, $anchorScroll, IMG_BASE_URL) {
+rexailApp.controller('appController', function ($rootScope, $http, $filter, $location, $anchorScroll, IMG_BASE_URL) {
     $rootScope.globalState = {
         storeData: {},
         categoriesData: [],

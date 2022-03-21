@@ -56,7 +56,7 @@
                                product="product"
                                on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
                                on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
-                               remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
+                               on-remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
                                errors="ctrl.state.errors"
                     ></cart-item>
                     <div ng-if="!globalState.cartItems.length"
@@ -86,15 +86,17 @@
             </div>
             <div class="display-flex flex-vertical">
                 <span class="text-title font-gray-600 text-xl mb-20 mobile-show mt-20"> הערות למכין ההזמנה</span>
-                <div class="order-summary rounded-10">
+                <form name="form" class="order-summary rounded-10">
                     <span class="font-heebo text-lgr text-weight-700 font-blue mobile-hide py-5 my-5 border-bottom-gray-2px">סיכום הזמנה</span>
                     <div class="mt-15 mb-10">
                         <span class="font-gray-600 mobile-hide">הערות למכין ההזמנה</span>
                     </div>
-                    <label>
-                        <textarea ng-model="ctrl.state.formControl.userComment"
-                                  class="order-comment rounded-10 font-size-16"></textarea>
-                    </label>
+                    <label for="textarea"></label>
+                    <textarea type="text" id="textarea" name="textarea"
+                              ng-model="ctrl.state.formControl.userComment"
+                              ng-required="true"
+                              ng-minlength="3"
+                              class="order-comment rounded-10 font-size-16"></textarea>
                     <div ng-if="ctrl.state.errors.userComment" class="text-center mt-2 font-red">נא מלאו הערות
                         למכין
                         ההזמנה
@@ -105,18 +107,19 @@
                         <span class="mobile-hide item-price font-size-16">{{ctrl.state.currencySign}}{{globalState.cartTotal}}</span>
                     </div>
                     <div class="display-flex flex-vertical align-center mt-20">
-                        <button type="button"
+                        <button type="submit"
                                 ng-click="ctrl.onValidateCart()"
                                 class="mobile-hide h-45 btn-green rounded-10 border-gray-1px"
-                                ng-class="{'btn-disabled not-active' : !globalState.cartItems.length}"
+                                ng-disabled="!globalState.cartItems.length || form.textarea.$invalid"
                         >
-                            <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">המשך לתשלום</span>
+                            <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">
+                                המשך לתשלום</span>
                         </button>
                         <span class="mobile-hide font-darkgray mt-10 font-size-14">
                         שערוך. עלות סופית לפני שקילה.
                         </span>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div id="featured-items-wrapper" class="display-flex flex-vertical mt-30">

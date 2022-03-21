@@ -9,7 +9,7 @@
             <div class="discount-badge-h-side"></div>
             <div class="discount-badge-h-tip"></div>
         </div>
-        <button class="cart-preview-btn" type="button" ng-click="onRemoveProduct()">
+        <button type="button" class="cart-preview-btn" type="button" ng-click="onRemoveProduct()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red c-p remove-item-btn preview-btn"
                  viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -24,9 +24,9 @@
         {{product.name}}, {{product.productQuality.name}}
       </span>
     <div class="display-flex flex-vertical align-center mx-auto">
-        <div class="plus-minus-preview-container" ng-click="onIncreaseProductQuantity()">
+        <button type="button" class="plus-minus-preview-container" ng-click="onIncreaseProductQuantity()">
             <img class="h-8 w-8" ng-src="assets/icons/icon-plus.svg">
-        </div>
+        </button>
         <span class="font-size-16 text-weight-500">
         {{product.quantity}}
       </span>
@@ -40,12 +40,12 @@
             <ul ng-if="ctrl.state.isUnitTypeDropdownToggled" class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
                     <li ng-repeat="productSellingUnit in product.productSellingUnits"
                           ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                          class="dropdown-item ">{{productSellingUnit.sellingUnit.name}}</li>
+                          class="dropdown-item "><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
             </ul>
         </div>
-        <div class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
+        <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
             <img class="h-8 w-8" ng-src="assets/icons/icon-minus.svg">
-        </div>
+        </button>
     </div>
     <div class="item-price-wrapper display-flex flex-vertical align-center mr-auto ml-5">
         <span class="item-price font-size-16 text-weight-700">

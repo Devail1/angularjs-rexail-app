@@ -56,16 +56,16 @@
                             productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.sellingUnit.name) ? 'selected' : ''"
                          class="toggle-unit  display-flex justify-center align-center"
                     >
-                        <li>{{productSellingUnit.sellingUnit.name}}</li>
+                        <li><button type="button">{{productSellingUnit.sellingUnit.name}}</button></li>
                     </ul>
                 </div>
             </div>
-            <div ng-if="!product.quantity " class="add-to-cart-btn" ng-click="onIncreaseProductQuantity()">
+            <button type="button" ng-if="!product.quantity " class="add-to-cart-btn" ng-click="onIncreaseProductQuantity()">
                 <img ng-src="assets/icons/icon-plus.svg"/>
                 <span class="mr-5 text-weight-500">
                 הוספה לסל
                 </span>
-            </div>
+            </button>
             <div ng-if="product.quantity" class="add-to-cart-btn ">
                 <button type="button" class="h-full w-full " ng-click="onIncreaseProductQuantity()">
                     <img ng-src="assets/icons/icon-plus.svg"/>
