@@ -117,7 +117,6 @@ rexailApp.service('cartActionsService', function ($rootScope) {
             !$rootScope.globalState.cartItems.includes(product) && $rootScope.globalState.cartItems.unshift(product)
             $rootScope.globalState.cartTotal = service.calculateTotal();
         }
-        console.log(service)
     }
 
     service.onDecreaseProductQuantity = function (product) {
@@ -222,7 +221,7 @@ rexailApp.directive('cartItem', function () {
             onRemoveProduct: '&',
             onIncreaseProductQuantity: '&',
             onDecreaseProductQuantity: '&',
-            showProductCommentError: '='
+            cartFormSubmitted: '='
         },
         controller: 'productController',
         controllerAs: 'ctrl',
