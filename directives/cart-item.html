@@ -40,9 +40,9 @@
                 </svg>
             </div>
         </div>
-        <form name="form" class="select-form" ng-if="product.commentType">
+        <form ng-model="productForm" name="productForm" class="select-form" ng-if="product.commentType">
             <label for="productCommentSelect" class="display-flex relative w-full">
-                <svg ng-class="{'font-green': form.$valid, 'font-red': form.$invalid || cartFormSubmitted }"
+                <svg ng-class="{'font-green': form.$valid, 'font-red': form.$invalid || cartCommentState }"
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
                      preserveAspectRatio="xMidYMid meet">
@@ -53,15 +53,15 @@
                     </g>
                 </svg>
                 <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
-                        ng-class="{'border-green': form.$valid, 'border-red': form.$invalid || cartFormSubmitted }"
+                        ng-class="{'border-green': productForm.$valid, 'border-red': productForm.$invalid || cartCommentState }"
                         class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between"
                         id="productCommentSelect"
                         name="productCommentSelect"
-                        ng-required="true">
+                        ng-required="true"
+                        ng-change="getCartItemFormState(productForm)">
                     <option value="">{{product.commentType.name}}</option>
                 </select>
-
-                <svg ng-class="{'font-green': form.$valid, 'font-red': form.$invalid || cartFormSubmitted }"
+                <svg ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || cartCommentState }"
                      width="11"
                      class="select-arrow"
                      height="11" viewBox="0 0 11 11" fill="currentColor"
@@ -70,8 +70,8 @@
                           fill="currentColor" fill-rule="evenodd"/>
                 </svg>
             </label>
-            <!-- Show error label if there is an error in form validation -->
-            <div ng-if="form.productCommentSelect.$touched && form.$invalid || cartFormSubmitted"
+            <!-- Show error label if there is an error in productForm validation -->
+            <div ng-if="productForm.productCommentSelect.$touched && productForm.$invalid || cartCommentState"
                  class="mt-5 font-red text-md select-warning">
                 יש לבחור אפשרות אחת
             </div>
@@ -122,7 +122,7 @@
             </a>
         </div>
         <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
-            <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg" />
+            <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg"/>
         </button>
     </div>
     <div class="label-wrapper mobile-hide mt-15">

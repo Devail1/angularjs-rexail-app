@@ -9,12 +9,4 @@ cart.controller("cartController", function (cartActionsService, CURRENCY_SIGN, $
             userComment: '',
         },
     }
-
-    // Compare all products with required comments to all products with selected comment
-    ctrl.disableCartSubmit = function () {
-        let prepProducts = $rootScope.globalState.cartItems.filter(product => product.commentType);
-        let validPrepProducts = prepProducts.filter(product => product.commentType && product.comment)
-
-        return (validPrepProducts.length !== prepProducts.length)
-    };
 });

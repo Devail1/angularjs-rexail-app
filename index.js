@@ -216,12 +216,19 @@ rexailApp.directive('cartItem', function () {
     return {
         templateUrl: 'directives/cart-item.html',
         replace: true,
+        require: "ngModel",
         scope: {
             product: '=',
             onRemoveProduct: '&',
             onIncreaseProductQuantity: '&',
             onDecreaseProductQuantity: '&',
-            cartFormSubmitted: '='
+            cartCommentState: '='
+        },
+        link: function (ngModelController) {
+            ngModelController.getCartItemFormState = function (productForm) {
+                // Get productForm state and set it as a sibling to the parent cartForm
+                ngModelController.$parent.$parent.productForm = productForm
+            }
         },
         controller: 'productController',
         controllerAs: 'ctrl',

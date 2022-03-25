@@ -54,9 +54,10 @@
                     <cart-item ng-repeat="product in globalState.cartItems"
                                ng-class="{'border-none':$last}"
                                product="product"
+                               ng-model="cartItem"
                                on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
                                on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
-                               cart-form-submitted="form.$submitted"
+                               cart-comment-state="ctrl.state.formControl.userComment"
                     ></cart-item>
                     <div ng-if="!globalState.cartItems.length"
                          class="font-gray-900  display-flex justify-center mt-20 mb-20 py-5">
@@ -85,7 +86,7 @@
             </div>
             <div class="display-flex flex-vertical">
                 <span class="text-title font-gray-600 text-xl mb-20 mobile-show mt-20"> הערות למכין ההזמנה</span>
-                <form name="form" class="order-summary rounded-10">
+                <form name="cartForm" class="order-summary rounded-10">
                     <span class="font-heebo text-lgr text-weight-700 font-blue mobile-hide py-5 my-5 border-bottom-gray-2px">סיכום הזמנה</span>
                     <div class="mt-15 mb-10">
                         <span class="font-gray-600 mobile-hide">הערות למכין ההזמנה</span>
@@ -96,7 +97,8 @@
                               ng-required="true"
                               ng-minlength="3"
                               class="order-comment rounded-10 font-size-16"></textarea>
-                    <div ng-if="form.textarea.$touched && form.textarea.$invalid" class="text-center mt-2 font-red">נא
+                    <div ng-if="cartForm.textarea.$touched && cartForm.textarea.$invalid"
+                         class="text-center mt-2 font-red">נא
                         מלאו הערות
                         למכין
                         ההזמנה
@@ -109,12 +111,10 @@
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="submit"
                                 class="mobile-hide h-45 btn-green rounded-10 border-light-gray"
-                                ng-click="ctrl.disableCartSubmit()"
-                                ng-disabled="!globalState.cartItems.length || form.$invalid || ctrl.disableCartSubmit()">
+                                ng-disabled="!globalState.cartItems.length || cartForm.$invalid ">
                             <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">
-                                <a ng-href="{{!globalState.cartItems.length || form.$invalid || ctrl.disableCartSubmit() ? '#' : '/checkout' }}">
+                                <a ng-href="{{!globalState.cartItems.length || cartForm.$invalid || productForm.$valid !== true ? '#' : '/checkout' }}">
                                 המשך לתשלום
-
                                 </a>
                             </span>
                         </button>
