@@ -212,7 +212,7 @@ rexailApp.directive('itemPreview', function () {
     }
 })
 
-rexailApp.directive('cartItem', function () {
+rexailApp.directive('cartItem', function ($rootScope) {
     return {
         templateUrl: 'directives/cart-item.html',
         replace: true,
@@ -225,9 +225,11 @@ rexailApp.directive('cartItem', function () {
             cartCommentState: '='
         },
         link: function (ngModelController) {
-            ngModelController.getCartItemFormState = function (productForm) {
-                // Get productForm state and set it as a sibling to the parent cartForm
-                ngModelController.$parent.$parent.productForm = productForm
+            ngModelController.$parent.$parent.productForm = {
+                $valid: function () {
+                    return $rootScope.globalState.cartItems.filter(product => product.commentType).length ===
+                        $rootScope.globalState.cartItems.filter(product => product.commentType && product.comment).length
+                }
             }
         },
         controller: 'productController',

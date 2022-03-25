@@ -111,15 +111,16 @@
                     <div class="display-flex flex-vertical align-center mt-20">
                         <button type="submit"
                                 class="mobile-hide h-45 btn-green rounded-10 border-light-gray"
-                                ng-disabled="!globalState.cartItems.length || cartForm.$invalid ">
+                                ng-disabled="!globalState.cartItems.length || cartForm.$invalid || !productForm.$valid()">
                             <span class="mobile-hide font-white font-size-18 text-weight-500 mx-auto my-auto">
-                                <a ng-href="{{!globalState.cartItems.length || cartForm.$invalid || productForm.$valid !== true ? '#' : '/checkout' }}">
+                                <a ng-href="{{!globalState.cartItems.length || cartForm.$invalid || !productForm.$valid() ? '#' : '/checkout' }}">
                                 המשך לתשלום
                                 </a>
                             </span>
                         </button>
                         <span class="mobile-hide font-darkgray mt-10 font-size-14">
                         שערוך. עלות סופית לפני שקילה.
+                            {{ productForm.$valid()}}
                         </span>
                     </div>
                 </form>
