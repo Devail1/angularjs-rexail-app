@@ -1,149 +1,243 @@
-<div id={{product.id}} class="cart-item display-flex align-center">
-    <div class="thumbnail-container ml-10">
-        <div ng-if="product.promoted" class="discount-badge-h display-flex align-center justify-center">
-            <div class="display-flex">
-                <img class="h-20 w-20 font-green mr-15 discount-badge-icon" ng-src="assets/icons/icon-discount.svg"
-                     alt="item-discount"/>
-                <div class="discount-badge-text font-white mr-10">מבצע</div>
-            </div>
-            <div class="discount-badge-h-side"></div>
-            <div class="discount-badge-h-tip"></div>
-        </div>
-        <div class="hover-tooltip mobile-hide">
-            פירות העונה במבצע של 2 יחידות ב47{{ctrl.currencySign}}. בתוקף עד ה04.01.22
-            <div class="tooltip-right-arrow"></div>
-        </div>
-        <button type="button" ng-click="onRemoveProduct()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-36 w-36 font-red absolute c-p remove-item-btn mt-5"
-                 viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clip-rule="evenodd"/>
-            </svg>
-        </button>
-        <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
-             ng-src="{{product.imageUrl}}">
+<div id="{{product.id}}" class="cart-item display-flex align-center">
+  <div class="thumbnail-container ml-10">
+    <div
+      ng-if="product.promoted"
+      class="discount-badge-h display-flex align-center justify-center"
+    >
+      <div class="display-flex">
+        <img
+          class="h-20 w-20 font-green mr-15 discount-badge-icon"
+          ng-src="assets/icons/icon-discount.svg"
+          alt="item-discount"
+        />
+        <div class="discount-badge-text font-white mr-10">מבצע</div>
+      </div>
+      <div class="discount-badge-h-side"></div>
+      <div class="discount-badge-h-tip"></div>
     </div>
-    <div class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5">
-      <span class=" item-desc">
-        {{product.name}}
-      </span>
-        <div class="display-flex align-center">
-            <span class="text-weight-700 mx-5 text-lg my-auto mobile-show">{{product.quantity}}</span>
-            <div class="select-unit my-3 border-green rounded-25 display-flex align-center justify-between mr-10 mobile-show">
-          <span class="text-lg mr-15">
-            יח'
-          </span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 font-green ml-10" fill="none"
-                     viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/>
-                </svg>
-            </div>
-        </div>
-        <form ng-model="productForm" name="productForm" class="select-form" ng-if="product.commentType">
-            <label for="productCommentSelect" class="display-flex relative w-full">
-                <svg ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
-                     xmlns="http://www.w3.org/2000/svg"
-                     class="h-16 w-16 absolute knife-icon" viewBox="0 0 512.000000 512.000000"
-                     preserveAspectRatio="xMidYMid meet">
-                    <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none"
-                       fill="currentColor">
-                        <path d="M4288 4823 l-86 -88 14 -150 15 -149 -756 -756 -755 -755 288 -288 287 -287 913 913 912 912 -368 368 c-202 202 -369 367 -372 367 -3 0 -44 -39 -92 -87z"/>
-                        <path d="M1297 1502 l-1299 -1299 29 -11 c99 -41 331 -54 507 -27 636 96 1423 550 2296 1324 130 115 560 522 560 530 0 10 -774 781 -785 781 -6 0 -594 -584 -1308 -1298z"/>
-                    </g>
-                </svg>
-                <select ng-model="product.comment" ng-options="option.name for option in product.commentType.comments"
-                        ng-class="{'border-green': productForm.$valid, 'border-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
-                        class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between"
-                        id="productCommentSelect"
-                        name="productCommentSelect"
-                        ng-required="true">
-                    <option value="">{{product.commentType.name}}</option>
-                </select>
-                <svg ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
-                     width="11"
-                     class="select-arrow"
-                     height="11" viewBox="0 0 11 11" fill="currentColor"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
-                          fill="currentColor" fill-rule="evenodd"/>
-                </svg>
-            </label>
-            <!-- Show error label if there is an error in productForm validation -->
-            <div ng-if="productForm.productCommentSelect.$touched && productForm.$invalid || productForm.$invalid && cartCommentState"
-                 class="mt-5 font-red text-md select-warning">
-                יש לבחור אפשרות אחת
-            </div>
-        </form>
+    <div class="hover-tooltip mobile-hide">
+      פירות העונה במבצע של 2 יחידות ב47{{ctrl.currencySign}}. בתוקף עד ה04.01.22
+      <div class="tooltip-right-arrow"></div>
     </div>
-    <div class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15 ">
-      <span class="item-price mobile-hide font-size-16 text-weight-300">
-        {{ctrl.currencySign}}{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.sellingUnit.name}}
-      </span>
-        <span class="item-price mobile-show">
-        {{ctrl.currencySign}}{{(product.price * product.quantity).toFixed(2)}}
-      </span>
-        <div ng-if="product.promoted && product.oldPrice">
-        <span class="text-muted mobile-hide font-size-13 text-weight-300">
-          {{ctrl.currencySign}}{{product.oldPrice}}/{{product.primaryQuantityUnit.sellingUnit.name}}
-        </span>
-            <span class="text-muted mobile-show">
-          {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
-        </span>
-        </div>
+    <button type="button" ng-click="onRemoveProduct()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-36 w-36 font-red absolute c-p remove-item-btn mt-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+    <img
+      ng-if="product.imageUrl"
+      alt="product-thumbnail"
+      class="item-thumbnail"
+      ng-src="{{product.imageUrl}}"
+    />
+  </div>
+  <div
+    class="w-2-4 mr-10 display-flex flex-vertical justify-center h-full py-5"
+  >
+    <span class="item-desc"> {{product.name}} </span>
+    <div class="display-flex align-center">
+      <span class="text-weight-700 mx-5 text-lg my-auto mobile-show"
+        >{{product.quantity}}</span
+      >
+      <div
+        class="select-unit my-3 border-green rounded-25 display-flex align-center justify-between mr-10 mobile-show"
+      >
+        <span class="text-lg mr-15"> יח' </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-16 w-16 font-green ml-10"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="3"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
     </div>
-    <div class="label-wrapper mobile-hide flex-horizontal justify-center item-quantity-container mt-15">
-        <button type="button" class="plus-minus-preview-container" ng-click="onIncreaseProductQuantity()">
-            <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-plus.svg">
-        </button>
-        <div class="display-flex flex-vertical">
-            <div class="mx-auto mobile-hide text-weight-500 item-quantity">{{product.quantity}}</div>
-            <a ng-if="product.primaryQuantityUnit.sellingUnit.name"
-               ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
-               class="relative"
-               ng-class="{'not-active': product.productSellingUnits.length === 1}">
-            <span class="font-size-13 font-gray-600 unit-label c-p"
-                  ng-class="{
+    <form
+      ng-model="productForm"
+      name="productForm"
+      class="select-form"
+      ng-if="product.commentType"
+    >
+      <label for="productCommentSelect" class="display-flex relative w-full">
+        <svg
+          ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-16 w-16 absolute knife-icon"
+          viewBox="0 0 512.000000 512.000000"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <g
+            transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+            stroke="none"
+            fill="currentColor"
+          >
+            <path
+              d="M4288 4823 l-86 -88 14 -150 15 -149 -756 -756 -755 -755 288 -288 287 -287 913 913 912 912 -368 368 c-202 202 -369 367 -372 367 -3 0 -44 -39 -92 -87z"
+            />
+            <path
+              d="M1297 1502 l-1299 -1299 29 -11 c99 -41 331 -54 507 -27 636 96 1423 550 2296 1324 130 115 560 522 560 530 0 10 -774 781 -785 781 -6 0 -594 -584 -1308 -1298z"
+            />
+          </g>
+        </svg>
+        <select
+          ng-model="product.comment"
+          ng-options="option.name for option in product.commentType.comments"
+          ng-class="{'border-green': productForm.$valid, 'border-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
+          class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between"
+          id="productCommentSelect"
+          name="productCommentSelect"
+          ng-required="true"
+        >
+          <option value="">{{product.commentType.name}}</option>
+        </select>
+        <svg
+          ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || productForm.$invalid && cartCommentState }"
+          width="11"
+          class="select-arrow"
+          height="11"
+          viewBox="0 0 11 11"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.5 6.746 1.341 2.587a.786.786 0 0 0-1.11 1.111l4.713 4.715a.786.786 0 0 0 1.112 0l4.714-4.715a.786.786 0 0 0-1.111-1.11L5.5 6.745z"
+            fill="currentColor"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </label>
+      <!-- Show error label if there is an error in productForm validation -->
+      <div
+        ng-if="productForm.productCommentSelect.$touched && productForm.$invalid || productForm.$invalid && cartCommentState"
+        class="mt-5 font-red text-md select-warning"
+      >
+        יש לבחור אפשרות אחת
+      </div>
+    </form>
+  </div>
+  <div
+    class="w-1-4 item-price-wrapper display-flex flex-vertical align-center mt-15"
+  >
+    <span class="item-price mobile-hide font-size-16 text-weight-300">
+      {{ctrl.currencySign}}{{product.price}}&hairsp;/&hairsp;{{product.primaryQuantityUnit.sellingUnit.name}}
+    </span>
+    <span class="item-price mobile-show">
+      {{ctrl.currencySign}}{{(product.price * product.quantity).toFixed(2)}}
+    </span>
+    <div ng-if="product.promoted && product.oldPrice">
+      <span class="text-muted mobile-hide font-size-13 text-weight-300">
+        {{ctrl.currencySign}}{{product.oldPrice}}/{{product.primaryQuantityUnit.sellingUnit.name}}
+      </span>
+      <span class="text-muted mobile-show">
+        {{ctrl.currencySign}}{{(product.oldPrice *
+        product.quantity).toFixed(2)}}
+      </span>
+    </div>
+  </div>
+  <div
+    class="label-wrapper mobile-hide flex-horizontal justify-center item-quantity-container mt-15"
+  >
+    <button
+      type="button"
+      class="plus-minus-preview-container"
+      ng-click="onIncreaseProductQuantity()"
+    >
+      <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-plus.svg" />
+    </button>
+    <div class="display-flex flex-vertical">
+      <div class="mx-auto mobile-hide text-weight-500 item-quantity">
+        {{product.quantity}}
+      </div>
+      <a
+        ng-if="product.primaryQuantityUnit.sellingUnit.name"
+        ng-click="ctrl.state.isUnitTypeDropdownToggled = !ctrl.state.isUnitTypeDropdownToggled"
+        class="relative"
+        ng-class="{'not-active': product.productSellingUnits.length === 1}"
+      >
+        <span
+          class="font-size-13 font-gray-600 unit-label c-p"
+          ng-class="{
                   'dropdown-disabled': product.productSellingUnits.length === 1,
-                  'dropdown-enabled mr-10':product.productSellingUnits.length > 1}">
-                {{product.primaryQuantityUnit.sellingUnit.name}}
-                <img ng-if="product.productSellingUnits.length > 1" ng-src="assets/icons/icon-arrow-down.svg"
-                     class="h-7 w-7 font-green mr-2 dropdown-arrow"/>
-            </span>
-                <ul ng-if="ctrl.state.isUnitTypeDropdownToggled"
-                    class="dropdown-menu-sm display-flex flex-vertical align-center absolute">
-                    <li ng-repeat="productSellingUnit in product.productSellingUnits"
-                        ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                        class="dropdown-item ">
-                        <button type="button">{{productSellingUnit.sellingUnit.name}}</button>
-                    </li>
-                </ul>
-            </a>
-        </div>
-        <button type="button" class="plus-minus-preview-container" ng-click="onDecreaseProductQuantity()">
-            <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg"/>
-        </button>
+                  'dropdown-enabled mr-10':product.productSellingUnits.length > 1}"
+        >
+          {{product.primaryQuantityUnit.sellingUnit.name}}
+          <img
+            ng-if="product.productSellingUnits.length > 1"
+            ng-src="assets/icons/icon-arrow-down.svg"
+            class="h-7 w-7 font-green mr-2 dropdown-arrow"
+          />
+        </span>
+        <ul
+          ng-if="ctrl.state.isUnitTypeDropdownToggled"
+          class="dropdown-menu-sm display-flex flex-vertical align-center absolute"
+        >
+          <li
+            ng-repeat="productSellingUnit in product.productSellingUnits"
+            ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
+            class="dropdown-item"
+          >
+            <button type="button">
+              {{productSellingUnit.sellingUnit.name}}
+            </button>
+          </li>
+        </ul>
+      </a>
     </div>
-    <div class="label-wrapper mobile-hide mt-15">
-        <div class="mx-auto mobile-hide text-weight-500 item-sum">
-            {{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}
-        </div>
-        <div ng-if="product.promoted && product.oldPrice"
-             class="font-darkgray text-weight-300 text-linethrough text-sm">
-            {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
-        </div>
+    <button
+      type="button"
+      class="plus-minus-preview-container"
+      ng-click="onDecreaseProductQuantity()"
+    >
+      <img class="h-8 w-8 absolute" ng-src="assets/icons/icon-minus.svg" />
+    </button>
+  </div>
+  <div class="label-wrapper mobile-hide mt-15">
+    <div class="mx-auto mobile-hide text-weight-500 item-sum">
+      {{ctrl.currencySign}}{{(product.quantity * product.price).toFixed(2)}}
     </div>
-    <!-- Discount Ribbon -->
-    <div class="mobile-show discount-ribbon-wrapper" ng-if="$index == (ctrl.state.products.length / 2).toFixed(0)">
-        <div class="discount-ribbon absolute display-flex align-center px-20">
-            <div class="discount-ribbon-tip-right"></div>
-            <div class="discount-ribbon-tip-left"></div>
-            <img class="h-36 w-36 font-green mr-15" ng-src="/assets/icons/icon-discount.svg" alt="item-discount"/>
-            <div class="text-lg font-white mr-10 font-heebo">
-                <span class="text-weight-500 ">זכית בהנחה!</span>
-                <span> 2 מארזי ענבים ב{{ctrl.currencySign}}44</span>
-            </div>
-            <span class="mr-auto text-lg font-white font-heebo ml-5"> {{ctrl.currencySign}}14.00 - </span>
-        </div>
+    <div
+      ng-if="product.promoted && product.oldPrice"
+      class="font-darkgray text-weight-300 text-linethrough text-sm"
+    >
+      {{ctrl.currencySign}}{{(product.oldPrice * product.quantity).toFixed(2)}}
     </div>
+  </div>
+  <!-- Discount Ribbon -->
+  <div
+    class="mobile-show discount-ribbon-wrapper"
+    ng-if="$index == (ctrl.state.products.length / 2).toFixed(0)"
+  >
+    <div class="discount-ribbon absolute display-flex align-center px-20">
+      <div class="discount-ribbon-tip-right"></div>
+      <div class="discount-ribbon-tip-left"></div>
+      <img
+        class="h-36 w-36 font-green mr-15"
+        ng-src="/assets/icons/icon-discount.svg"
+        alt="item-discount"
+      />
+      <div class="text-lg font-white mr-10 font-heebo">
+        <span class="text-weight-500">זכית בהנחה!</span>
+        <span> 2 מארזי ענבים ב{{ctrl.currencySign}}44</span>
+      </div>
+      <span class="mr-auto text-lg font-white font-heebo ml-5">
+        {{ctrl.currencySign}}14.00 -
+      </span>
+    </div>
+  </div>
 </div>

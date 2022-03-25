@@ -1,161 +1,327 @@
-<div class="store-item rounded-10 display-flex flex-vertical align-center justify-around">
-    <div class="store-item-overlay font-gray-900 text-sm">
-        <div class="display-flex flex-vertical align-center justify-around">
-            <span class="mb-60">{{product.fullName}}</span>
-            <div class="display-flex product-rating-wrapper absolute">
-                <div ng-if="product.currentRelevancy.name === 'low'">
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                </div>
-                <div ng-if="product.currentRelevancy.name === 'medium'">
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                </div>
-                <div ng-if="product.currentRelevancy.name === 'high'">
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="mt-30 mb-5">
-                <span class="font-heebo font-size-18 text-weight-700">{{ctrl.currencySign}}{{product.price}}</span>
-                <span ng-if="product.primaryQuantityUnit.sellingUnit.name"> &hairsp;/&hairsp;
-                    <span class="font-heebo text-weight-500">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
-                </span>
-            </div>
-            <div ng-if="product.promoted && product.originalPrice"
-                 class="font-darkgray text-linethrough text-weight-300 font-size-13">
-                <span class="font-heebo ">{{ctrl.currencySign}}{{product.originalPrice}}</span>/
-                <span class="font-heebo ">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
-            </div>
-            <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
-                <div class="toggle-unit-container ">
-                    <ul ng-repeat="productSellingUnit in product.productSellingUnits"
-                        ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
-                        ng-class="{'selected': (product.productSellingUnits.length === 1 || productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.sellingUnit.name)}"
-                        class="toggle-unit  display-flex justify-center align-center"
-                    >
-                        <li>
-                            <button type="button">{{productSellingUnit.sellingUnit.name}}</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <button type="button" ng-if="!product.quantity " class="add-to-cart-btn"
-                    ng-click="onIncreaseProductQuantity()">
-                <img ng-src="assets/icons/icon-plus.svg"/>
-                <span class="mr-5 text-weight-500">
-                הוספה לסל
-                </span>
-            </button>
-            <div ng-if="product.quantity" class="add-to-cart-btn ">
-                <button type="button" class="h-full w-full " ng-click="onIncreaseProductQuantity()">
-                    <img ng-src="assets/icons/icon-plus.svg"/>
-                </button>
-                <span class="text-lg mx-12 text-weight-500">
-                {{product.quantity}}
-                </span>
-                <button type="button" class="h-full w-full " ng-click="onDecreaseProductQuantity()">
-                    <img class="mb-4" ng-src="assets/icons/icon-minus.svg"/>
-                </button>
-            </div>
+<div
+  class="store-item rounded-10 display-flex flex-vertical align-center justify-around"
+>
+  <div class="store-item-overlay font-gray-900 text-sm">
+    <div class="display-flex flex-vertical align-center justify-around">
+      <span class="mb-60">{{product.fullName}}</span>
+      <div class="display-flex product-rating-wrapper absolute">
+        <div ng-if="product.currentRelevancy.name === 'low'">
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-gray"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-gray"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
         </div>
-    </div>
-    <div ng-if="product.promoted" class="discount-badge-v badge-sm">
-        <div class="display-flex flex-vertical align-center">
-            <img class="h-16 w-16 font-green mt-3" ng-src="assets/icons/icon-discount.svg" alt="item-discount">
-            <div class="font-white text-xs mt-2">מבצע</div>
-            <div class="discount-badge-v-tip badge-sm"></div>
+        <div ng-if="product.currentRelevancy.name === 'medium'">
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-gray"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
         </div>
-        <div class="discount-badge-v-side badge-sm"></div>
+        <div ng-if="product.currentRelevancy.name === 'high'">
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+          <svg
+            class="h-20 w-20 font-yellow"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="mt-30 mb-5">
+        <span class="font-heebo font-size-18 text-weight-700"
+          >{{ctrl.currencySign}}{{product.price}}</span
+        >
+        <span ng-if="product.primaryQuantityUnit.sellingUnit.name">
+          &hairsp;/&hairsp;
+          <span class="font-heebo text-weight-500"
+            >{{product.primaryQuantityUnit.sellingUnit.name}}</span
+          >
+        </span>
+      </div>
+      <div
+        ng-if="product.promoted && product.originalPrice"
+        class="font-darkgray text-linethrough text-weight-300 font-size-13"
+      >
+        <span class="font-heebo"
+          >{{ctrl.currencySign}}{{product.originalPrice}}</span
+        >/
+        <span class="font-heebo"
+          >{{product.primaryQuantityUnit.sellingUnit.name}}</span
+        >
+      </div>
+      <div class="toggle-unit-wrapper display-flex flex-vertical align-center">
+        <div class="toggle-unit-container">
+          <ul
+            ng-repeat="productSellingUnit in product.productSellingUnits"
+            ng-click="ctrl.onUnitTypeChange(product, productSellingUnit)"
+            ng-class="{'selected': (product.productSellingUnits.length === 1 || productSellingUnit.sellingUnit.name === product.primaryQuantityUnit.sellingUnit.name)}"
+            class="toggle-unit display-flex justify-center align-center"
+          >
+            <li>
+              <button type="button">
+                {{productSellingUnit.sellingUnit.name}}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        type="button"
+        ng-if="!product.quantity "
+        class="add-to-cart-btn"
+        ng-click="onIncreaseProductQuantity()"
+      >
+        <img ng-src="assets/icons/icon-plus.svg" />
+        <span class="mr-5 text-weight-500"> הוספה לסל </span>
+      </button>
+      <div ng-if="product.quantity" class="add-to-cart-btn">
+        <button
+          type="button"
+          class="h-full w-full"
+          ng-click="onIncreaseProductQuantity()"
+        >
+          <img ng-src="assets/icons/icon-plus.svg" />
+        </button>
+        <span class="text-lg mx-12 text-weight-500">
+          {{product.quantity}}
+        </span>
+        <button
+          type="button"
+          class="h-full w-full"
+          ng-click="onDecreaseProductQuantity()"
+        >
+          <img class="mb-4" ng-src="assets/icons/icon-minus.svg" />
+        </button>
+      </div>
     </div>
-    <div ng-if="product.productQuality.displayQuality" class="item-tag-wrapper">
-        <div class="item-tag rounded-10 text-weight-400">{{product.productQuality.name}}</div>
-        <svg class="h-36 w-36 font-green item-card-info rotate-180" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                  clip-rule="evenodd"/>
+  </div>
+  <div ng-if="product.promoted" class="discount-badge-v badge-sm">
+    <div class="display-flex flex-vertical align-center">
+      <img
+        class="h-16 w-16 font-green mt-3"
+        ng-src="assets/icons/icon-discount.svg"
+        alt="item-discount"
+      />
+      <div class="font-white text-xs mt-2">מבצע</div>
+      <div class="discount-badge-v-tip badge-sm"></div>
+    </div>
+    <div class="discount-badge-v-side badge-sm"></div>
+  </div>
+  <div ng-if="product.productQuality.displayQuality" class="item-tag-wrapper">
+    <div class="item-tag rounded-10 text-weight-400">
+      {{product.productQuality.name}}
+    </div>
+    <svg
+      class="h-36 w-36 font-green item-card-info rotate-180"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </div>
+  <div ng-if="product.quantity" class="quantity-badge font-white">
+    <div class="display-flex flex-vertical align-center justify-center mt-2">
+      <span class="font-size-14 text-weight-600 font-heebo"
+        >{{product.quantity}}</span
+      >
+      <span class="font-size-10 text-weight-400"
+        >{{product.primaryQuantityUnit.sellingUnit.name}}</span
+      >
+    </div>
+    <div class="quantity-badge-tip"></div>
+  </div>
+  <div
+    class="display-flex flex-vertical align-center px-20 product-info-wrapper"
+  >
+    <img
+      ng-if="product.imageUrl"
+      alt="product-thumbnail"
+      class="item-thumbnail"
+      ng-src="{{product.imageUrl}}"
+    />
+    <span class="font-size-16 text-center mt-5">{{product.name}}</span>
+    <div class="display-flex mt-10 product-rating-wrapper">
+      <div ng-if="product.currentRelevancy.name === 'low'">
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
         </svg>
+        <svg
+          class="h-20 w-20 font-gray"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+        <svg
+          class="h-20 w-20 font-gray"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+      </div>
+      <div ng-if="product.currentRelevancy.name === 'medium'">
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+        <svg
+          class="h-20 w-20 font-gray"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+      </div>
+      <div ng-if="product.currentRelevancy.name === 'high'">
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+        <svg
+          class="h-20 w-20 font-yellow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+          />
+        </svg>
+      </div>
     </div>
-    <div ng-if="product.quantity" class="quantity-badge font-white">
-        <div class="display-flex flex-vertical align-center justify-center mt-2">
-
-            <span class="font-size-14 text-weight-600 font-heebo">{{product.quantity}}</span>
-            <span class="font-size-10 text-weight-400">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
-        </div>
-        <div class="quantity-badge-tip"></div>
+  </div>
+  <div class="display-flex flex-vertical align-center product-price-wrapper">
+    <div>
+      <span class="font-heebo font-size-18 text-weight-700"
+        >{{ctrl.currencySign}}{{product.price}}</span
+      >
+      <span ng-if="product.primaryQuantityUnit.sellingUnit.name">
+        &hairsp;/&hairsp;
+        <span class="font-heebo text-sm text-weight-500"
+          >{{product.primaryQuantityUnit.sellingUnit.name}}</span
+        >
+      </span>
     </div>
-    <div class="display-flex flex-vertical align-center px-20 product-info-wrapper">
-        <img ng-if="product.imageUrl" alt="product-thumbnail" class="item-thumbnail "
-             ng-src="{{product.imageUrl}}">
-        <span class="font-size-16 text-center mt-5">{{product.name}}</span>
-        <div class="display-flex mt-10  product-rating-wrapper">
-            <div ng-if="product.currentRelevancy.name === 'low'">
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-            </div>
-            <div ng-if="product.currentRelevancy.name === 'medium'">
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-gray" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-            </div>
-            <div ng-if="product.currentRelevancy.name === 'high'">
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <svg class="h-20 w-20 font-yellow" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-            </div>
-        </div>
+    <div
+      ng-if="product.promoted && product.originalPrice"
+      class="font-darkgray text-linethrough text-weight-300 font-size-13"
+    >
+      <span class="font-heebo"
+        >{{ctrl.currencySign}}{{product.originalPrice}}</span
+      >/
+      <span class="font-heebo">
+        {{product.primaryQuantityUnit.sellingUnit.name}}</span
+      >
     </div>
-    <div class="display-flex flex-vertical align-center product-price-wrapper">
-        <div>
-            <span class="font-heebo font-size-18 text-weight-700">{{ctrl.currencySign}}{{product.price}}</span>
-            <span ng-if="product.primaryQuantityUnit.sellingUnit.name"> &hairsp;/&hairsp;
-                <span class="font-heebo text-sm text-weight-500">{{product.primaryQuantityUnit.sellingUnit.name}}</span>
-            </span>
-        </div>
-        <div ng-if="product.promoted && product.originalPrice"
-             class="font-darkgray text-linethrough text-weight-300 font-size-13">
-            <span class="font-heebo ">{{ctrl.currencySign}}{{product.originalPrice}}</span>/
-            <span class="font-heebo "> {{product.primaryQuantityUnit.sellingUnit.name}}</span>
-        </div>
-    </div>
+  </div>
 </div>

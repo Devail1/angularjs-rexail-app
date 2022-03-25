@@ -1,101 +1,172 @@
 <header>
-    <div ng-if="globalState.getCurrentPath().includes('store')" class="navbar-maximized">
-        <div class="container mx-auto font-white relative">
-            <div class=" pt-20 display-flex align-center  justify-around  px-5 ">
-                <div class="search-box-container mr-auto ">
-                    <label>
-                        <input ng-model="globalState.searchQuery" class="search-box border-white"
-                               ng-model-options="{debounce: 800}"
-                               ng-minlength="3" placeholder="חיפוש מוצר"/>
-                    </label>
-                    <img class="search-icon" ng-src="assets/icons/icon-search.svg"/>
-                </div>
-                <div class="display-flex align-center mr-auto justify-between w-250">
-                    <div class="display-flex align-center justify-evenly w-full c-p ">
-                        <img ng-src="assets/icons/icon-navigation.svg"/>
-                        <span class="mr-5">לאן מגיעים?</span>
-                    </div>
-                    <div class="display-flex align-center justify-evenly w-full mr-35 c-p">
-                        <img ng-src="assets/icons/icon-user.svg"/>
-                        <span class="mr-5">התחברות</span>
-                    </div>
-                </div>
-            </div>
-            <div class="display-flex align-center mt-30">
-                <img ng-src="assets/img/logo.png"/>
-                <div>
-                    <div class="text-title mb-5">{{globalState.storeData.store.name}}</div>
-                    <div class="display-flex align-center my-3 c-p">
-                        <svg class="ml-5 font-white" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
-                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>5787A4CF-E477-4052-B600-AC339D58DC01</title>
-                            <g id="Store" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <g id="HP-" transform="translate(-1380.000000, -169.000000)" stroke="none"
-                                   fill="currentColor">
-                                    <g id="Store" transform="translate(1097.000000, 90.000000)">
-                                        <g id="Text" transform="translate(0.000000, 38.000000)">
-                                            <g id="More-info" transform="translate(0.000000, 40.000000)">
-                                                <g id="icon/info-2" transform="translate(283.000000, 1.000000)">
-                                                    <path d="M8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 Z M8,1.45454545 C4.38504527,1.45454545 1.45454545,4.38504527 1.45454545,8 C1.45454545,11.6149547 4.38504527,14.5454545 8,14.5454545 C11.6149547,14.5454545 14.5454545,11.6149547 14.5454545,8 C14.5454545,4.38504527 11.6149547,1.45454545 8,1.45454545 Z M8,6.63636364 C8.40166164,6.63636364 8.72727273,7.00945968 8.72727273,7.46969697 L8.72727273,7.46969697 L8.72727273,10.8030303 C8.72727273,11.2632676 8.40166164,11.6363636 8,11.6363636 C7.59833836,11.6363636 7.27272727,11.2632676 7.27272727,10.8030303 L7.27272727,10.8030303 L7.27272727,7.46969697 C7.27272727,7.00945968 7.59833836,6.63636364 8,6.63636364 Z M7.48574052,4.30392234 C7.76975819,4.01990467 8.23024181,4.01990467 8.51425948,4.30392234 C8.79827714,4.58794001 8.79827714,5.04842363 8.51425948,5.3324413 C8.23024181,5.61645896 7.76975819,5.61645896 7.48574052,5.3324413 C7.20172286,5.04842363 7.20172286,4.58794001 7.48574052,4.30392234 Z"
-                                                          id="Combined-Shape"></path>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                        אודות | אזורי חלוקה
-                    </div>
-                    <div class="display-flex align-center my-3 c-p">
-                        <img class="ml-5" ng-src="assets/icons/icon-location-2.svg"/>
-                        {{globalState.storeData.store.businessFullAddressWithCity}}
-                    </div>
-                </div>
-            </div>
+  <div
+    ng-if="globalState.getCurrentPath().includes('store')"
+    class="navbar-maximized"
+  >
+    <div class="container mx-auto font-white relative">
+      <div class="pt-20 display-flex align-center justify-around px-5">
+        <div class="search-box-container mr-auto">
+          <label>
+            <input
+              ng-model="globalState.searchQuery"
+              class="search-box border-white"
+              ng-model-options="{debounce: 800}"
+              ng-minlength="3"
+              placeholder="חיפוש מוצר"
+            />
+          </label>
+          <img class="search-icon" ng-src="assets/icons/icon-search.svg" />
         </div>
-    </div>
-    <div class="navbar-minimized">
-        <div class="container mx-auto h-full display-flex align-center justify-between px-5 ">
-            <div class="display-flex align-center">
-                <a href="#">
-                    <img class="logo-img round w-60 h-60" ng-src="assets/img/logo.png" alt="logo"/>
-                </a>
-                <div class="text-title mb-5 mr-10">{{globalState.storeData.store.name}}</div>
-            </div>
-            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="search-box-container ml-10">
-                <label>
-                    <input ng-model="searchQuery" class="search-box"
-                           ng-model-options="{debounce: 800}"
-                           ng-minlength="3" placeholder="חיפוש מוצר"/>
-                </label>
-                <img class="search-icon" ng-src="assets/icons/icon-search.svg"/>
-            </div>
-            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="display-flex align-center w-250">
-                <img class="h-32 w-32" ng-src="assets/icons/icon-delivery-rounded.svg"/>
-                <div class="mr-10">
-                    <span class="text-weight-400">משה דיין 20, תל אביב</span>
-                    <br/>
-                    <span class="text-weight-300">מחר, 12:00-16:00</span>
-                </div>
-            </div>
-            <div ng-if="!globalState.getCurrentPath().includes('checkout')" class="display-flex c-p align-center">
-                <img class="h-32 w-32" ng-src="assets/icons/icon-user.svg"/>
-                <div class="display-flex align-center mr-5 ml-5">
-                    <span class="text-weight-400">היי אינסה!</span>
-                    <svg class="mr-10 h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </div>
-            </div>
-            <div ng-if="globalState.getCurrentPath().includes('checkout')" class="c-p">
-                <a class="display-flex align-center" href="/cart">
-                    <span class="ml-5">חזרה לסל הקניות</span>
-                    <img ng-src="assets/icons/icon-arrow-left.svg"/>
-                </a>
-            </div>
+        <div class="display-flex align-center mr-auto justify-between w-250">
+          <div class="display-flex align-center justify-evenly w-full c-p">
+            <img ng-src="assets/icons/icon-navigation.svg" />
+            <span class="mr-5">לאן מגיעים?</span>
+          </div>
+          <div
+            class="display-flex align-center justify-evenly w-full mr-35 c-p"
+          >
+            <img ng-src="assets/icons/icon-user.svg" />
+            <span class="mr-5">התחברות</span>
+          </div>
         </div>
+      </div>
+      <div class="display-flex align-center mt-30">
+        <img ng-src="assets/img/logo.png" />
+        <div>
+          <div class="text-title mb-5">
+            {{globalState.storeData.store.name}}
+          </div>
+          <div class="display-flex align-center my-3 c-p">
+            <svg
+              class="ml-5 font-white"
+              width="16px"
+              height="16px"
+              viewBox="0 0 16 16"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <title>5787A4CF-E477-4052-B600-AC339D58DC01</title>
+              <g
+                id="Store"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+              >
+                <g
+                  id="HP-"
+                  transform="translate(-1380.000000, -169.000000)"
+                  stroke="none"
+                  fill="currentColor"
+                >
+                  <g id="Store" transform="translate(1097.000000, 90.000000)">
+                    <g id="Text" transform="translate(0.000000, 38.000000)">
+                      <g
+                        id="More-info"
+                        transform="translate(0.000000, 40.000000)"
+                      >
+                        <g
+                          id="icon/info-2"
+                          transform="translate(283.000000, 1.000000)"
+                        >
+                          <path
+                            d="M8,0 C12.418278,0 16,3.581722 16,8 C16,12.418278 12.418278,16 8,16 C3.581722,16 0,12.418278 0,8 C0,3.581722 3.581722,0 8,0 Z M8,1.45454545 C4.38504527,1.45454545 1.45454545,4.38504527 1.45454545,8 C1.45454545,11.6149547 4.38504527,14.5454545 8,14.5454545 C11.6149547,14.5454545 14.5454545,11.6149547 14.5454545,8 C14.5454545,4.38504527 11.6149547,1.45454545 8,1.45454545 Z M8,6.63636364 C8.40166164,6.63636364 8.72727273,7.00945968 8.72727273,7.46969697 L8.72727273,7.46969697 L8.72727273,10.8030303 C8.72727273,11.2632676 8.40166164,11.6363636 8,11.6363636 C7.59833836,11.6363636 7.27272727,11.2632676 7.27272727,10.8030303 L7.27272727,10.8030303 L7.27272727,7.46969697 C7.27272727,7.00945968 7.59833836,6.63636364 8,6.63636364 Z M7.48574052,4.30392234 C7.76975819,4.01990467 8.23024181,4.01990467 8.51425948,4.30392234 C8.79827714,4.58794001 8.79827714,5.04842363 8.51425948,5.3324413 C8.23024181,5.61645896 7.76975819,5.61645896 7.48574052,5.3324413 C7.20172286,5.04842363 7.20172286,4.58794001 7.48574052,4.30392234 Z"
+                            id="Combined-Shape"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            אודות | אזורי חלוקה
+          </div>
+          <div class="display-flex align-center my-3 c-p">
+            <img class="ml-5" ng-src="assets/icons/icon-location-2.svg" />
+            {{globalState.storeData.store.businessFullAddressWithCity}}
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="navbar-minimized">
+    <div
+      class="container mx-auto h-full display-flex align-center justify-between px-5"
+    >
+      <div class="display-flex align-center">
+        <a href="#">
+          <img
+            class="logo-img round w-60 h-60"
+            ng-src="assets/img/logo.png"
+            alt="logo"
+          />
+        </a>
+        <div class="text-title mb-5 mr-10">
+          {{globalState.storeData.store.name}}
+        </div>
+      </div>
+      <div
+        ng-if="!globalState.getCurrentPath().includes('checkout')"
+        class="search-box-container ml-10"
+      >
+        <label>
+          <input
+            ng-model="searchQuery"
+            class="search-box"
+            ng-model-options="{debounce: 800}"
+            ng-minlength="3"
+            placeholder="חיפוש מוצר"
+          />
+        </label>
+        <img class="search-icon" ng-src="assets/icons/icon-search.svg" />
+      </div>
+      <div
+        ng-if="!globalState.getCurrentPath().includes('checkout')"
+        class="display-flex align-center w-250"
+      >
+        <img
+          class="h-32 w-32"
+          ng-src="assets/icons/icon-delivery-rounded.svg"
+        />
+        <div class="mr-10">
+          <span class="text-weight-400">משה דיין 20, תל אביב</span>
+          <br />
+          <span class="text-weight-300">מחר, 12:00-16:00</span>
+        </div>
+      </div>
+      <div
+        ng-if="!globalState.getCurrentPath().includes('checkout')"
+        class="display-flex c-p align-center"
+      >
+        <img class="h-32 w-32" ng-src="assets/icons/icon-user.svg" />
+        <div class="display-flex align-center mr-5 ml-5">
+          <span class="text-weight-400">היי אינסה!</span>
+          <svg
+            class="mr-10 h-16 w-16"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        ng-if="globalState.getCurrentPath().includes('checkout')"
+        class="c-p"
+      >
+        <a class="display-flex align-center" href="/cart">
+          <span class="ml-5">חזרה לסל הקניות</span>
+          <img ng-src="assets/icons/icon-arrow-left.svg" />
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
-</div>
