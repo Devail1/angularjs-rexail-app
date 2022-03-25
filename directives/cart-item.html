@@ -57,8 +57,7 @@
                         class="select-unit c-p mt-10 rounded-25 w-full display-flex align-center justify-between"
                         id="productCommentSelect"
                         name="productCommentSelect"
-                        ng-required="true"
-                        ng-change="getCartItemFormState(productForm)">
+                        ng-required="true">
                     <option value="">{{product.commentType.name}}</option>
                 </select>
                 <svg ng-class="{'font-green': productForm.$valid, 'font-red': productForm.$invalid || productForm.$invalid && cartCommentState }"

@@ -55,6 +55,7 @@
                                ng-class="{'border-none':$last}"
                                product="product"
                                ng-model="cartItem"
+                               on-remove-product="ctrl.state.cartActions.onRemoveProduct(product)"
                                on-increase-product-quantity="ctrl.state.cartActions.onIncreaseProductQuantity(product)"
                                on-decrease-product-quantity="ctrl.state.cartActions.onDecreaseProductQuantity(product)"
                                cart-comment-state="ctrl.state.formControl.userComment"
@@ -98,7 +99,8 @@
                               ng-minlength="3"
                               class="order-comment rounded-10 font-size-16"></textarea>
                     <div ng-if="cartForm.textarea.$touched && cartForm.textarea.$invalid"
-                         class="text-center mt-2 font-red">נא
+                         class="text-center mt-2 font-red">
+                        נא
                         מלאו הערות
                         למכין
                         ההזמנה
@@ -120,8 +122,7 @@
                         </button>
                         <span class="mobile-hide font-darkgray mt-10 font-size-14">
                         שערוך. עלות סופית לפני שקילה.
-                            {{ productForm.$valid()}}
-                        </span>
+                          </span>
                     </div>
                 </form>
             </div>
